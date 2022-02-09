@@ -1,0 +1,36 @@
+.menu-card {
+    background-color: white;
+    padding: 20px;
+    padding-top: 5px;
+    padding-bottom: 5px;
+    margin: 10px;
+    max-width: 500px;
+    columns: 2;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;;
+}
+
+.menu-item-title {
+    color: #164e63;
+    font-size: 16px;
+    font-weight: 400;
+}
+
+.menu-item-price {
+    color: #0e7490;
+}
+
+.item-button {
+    border: gray solid 1px;
+    border-radius: 10px;
+    margin: 5px;
+}
+
+.item-button-add {
+    color: green;
+}
+
+.item-button-remove {
+    color: red
+}

@@ -1,0 +1,18 @@
+<div>
+    <div class="menu" *ngFor="let menuItem of menuItems; let i=index">
+        <mat-card class="menu-card">
+            <mat-card-header>
+                <mat-card-title class="menu-item-title">
+                    {{ menuItem.title }}
+                </mat-card-title>
+                <mat-card-subtitle class="menu-item-price">
+                    {{ '₹' + menuItem.price }}
+                </mat-card-subtitle>
+            </mat-card-header>
+            <div>
+                <button class="item-button item-button-add" mat-stroked-button (click)="onAdd(i)">+</button>
+                <button class="item-button item-button-remove" mat-stroked-button color="warn" (click)="onRemove(i)">-</button>
+            </div>
+        </mat-card>
+    </div>
+</div>

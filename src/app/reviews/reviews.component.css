@@ -1,0 +1,26 @@
+.review {
+    padding: 20px;
+    padding-top: 5px;
+    padding-bottom: 5px;
+    margin: 10px;
+}
+
+.review-profile-image {
+    height: 50px;
+    width: 50px;
+    background-size: cover;
+}
+
+.review-card {
+    max-width: 500px;
+}
+
+.review-title {
+    font-weight: 300;
+    font-size: 18px;
+}
+
+.rating {
+    fill: #ff0;
+    color: #ff0
+}

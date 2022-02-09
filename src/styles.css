@@ -1,4 +1,38 @@
 /* You can add global styles to this file, and also import other style files */
 
+@import '../node_modules/css-star-rating/css/star-rating.css';
+
 html, body { height: 100%; }
 body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+
+.rating.color-default .star-container .star svg {
+    fill: #ffc058 !important;
+}
+
+.rating.color-default .star-container .star i {
+    color: #ffc058 !important;
+}
+
+.rating.color-ok .star-container .star svg {
+    fill: #ffc058 !important;
+}
+
+.rating.color-ok .star-container .star i {
+    color: #ffc058 !important;
+}
+
+.rating.color-positive .star-container .star svg {
+    fill: #ffc058 !important;
+}
+
+.rating.color-positive .star-container .star i {
+    color: #ffc058 !important;
+}
+
+.rating.color-negative .star-container .star svg {
+    fill: #ffc058 !important;
+}
+
+.rating.color-negative .star-container .star i {
+    color: #ffc058 !important;
+}
