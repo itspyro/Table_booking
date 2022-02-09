@@ -9,8 +9,10 @@ import {MatCardModule} from '@angular/material/card';
 import { StarRatingModule } from 'angular-star-rating';
 import { MenuComponent } from './menu/menu.component';
 import {MatButtonModule} from '@angular/material/button';
-import { OrdersComponent } from './orders/orders.component';
 import {MatDividerModule} from '@angular/material/divider';
+import { HeaderComponent } from './header/header.component';
+import { FooterComponent } from './footer/footer.component';
+import { AboutComponent } from './about/about.component';
 
 
 @NgModule({
@@ -18,7 +20,9 @@ import {MatDividerModule} from '@angular/material/divider';
     AppComponent,
     ReviewsComponent,
     MenuComponent,
-    OrdersComponent,
+    HeaderComponent,
+    FooterComponent,
+    AboutComponent,
   ],
   imports: [
     BrowserModule,
