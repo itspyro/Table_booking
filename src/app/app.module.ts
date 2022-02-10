@@ -13,6 +13,12 @@ import { MatDividerModule } from '@angular/material/divider';
 import { HeaderComponent } from './header/header.component';
 import { FooterComponent } from './footer/footer.component';
 import { AboutComponent } from './about/about.component';
+import { FilterComponent } from './components/filter/filter.component';
+import { RestaurantCardComponent } from './components/restaurant-card/restaurant-card.component';
+import { HttpClientModule } from '@angular/common/http';
+import { FormsModule } from '@angular/forms';
+import { FlexLayoutModule } from '@angular/flex-layout';
+
 
 @NgModule({
   declarations: [
@@ -22,6 +28,8 @@ import { AboutComponent } from './about/about.component';
     HeaderComponent,
     FooterComponent,
     AboutComponent,
+    FilterComponent,
+    RestaurantCardComponent,
   ],
   imports: [
     BrowserModule,
@@ -31,6 +39,9 @@ import { AboutComponent } from './about/about.component';
     StarRatingModule.forRoot(),
     MatButtonModule,
     MatDividerModule,
+    HttpClientModule,
+    FormsModule,
+    FlexLayoutModule
   ],
   providers: [],
   bootstrap: [AppComponent],

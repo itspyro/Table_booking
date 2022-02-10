@@ -12,3 +12,12 @@
 .example-full-width {
     width: 100%;
   }
+
+app-filter{
+    float: left;
+    padding-right: 20px;
+    padding-top: 20px;
+}
+app-restuarant-card{
+    float: right;
+}
