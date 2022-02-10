@@ -10,9 +10,19 @@ import { StarRatingModule } from 'angular-star-rating';
 import { MenuComponent } from './menu/menu.component';
 import { MatButtonModule } from '@angular/material/button';
 import { MatDividerModule } from '@angular/material/divider';
+import { HeaderComponent } from './header/header.component';
+import { FooterComponent } from './footer/footer.component';
+import { AboutComponent } from './about/about.component';
 
 @NgModule({
-  declarations: [AppComponent, ReviewsComponent, MenuComponent],
+  declarations: [
+    AppComponent,
+    ReviewsComponent,
+    MenuComponent,
+    HeaderComponent,
+    FooterComponent,
+    AboutComponent,
+  ],
   imports: [
     BrowserModule,
     AppRoutingModule,
