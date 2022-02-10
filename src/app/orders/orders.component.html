@@ -1,0 +1,36 @@
+<div>
+  <div *ngFor="let order of orders; let i = index">
+    <mat-card class="order-card">
+      <mat-card-header class="order-card-header">
+        <div
+          class="restaurant-image"
+          mat-card-avatar
+          [ngStyle]="{
+            'background-image': 'url(' + order.restaurant.image + ')'
+          }"
+        ></div>
+        <mat-card-title>{{ order.restaurant.name }}</mat-card-title>
+        <mat-card-subtitle>{{ order.restaurant.address }}</mat-card-subtitle>
+      </mat-card-header>
+      <hr />
+      <mat-card-content>
+        <div *ngFor="let item of order.foodOrder.items">
+          <p class="order-food-items">
+            {{ item.title }}
+          </p>
+          <p class="order-food-items-quantitiy">
+            {{ "₹" + item.price + " x " + item.quantity }}
+          </p>
+        </div>
+      </mat-card-content>
+      <hr />
+      <mat-card-content>
+        <p>Table for {{ order.tableOrder.persons }}</p>
+        <div class="order-total">
+          <p>{{ order.tableOrder.date }} at {{ order.tableOrder.arrival }}</p>
+          <p>₹ {{ getTotal(i) }}</p>
+        </div>
+      </mat-card-content>
+    </mat-card>
+  </div>
+</div>

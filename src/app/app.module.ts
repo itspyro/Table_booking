@@ -13,6 +13,7 @@ import { MatDividerModule } from '@angular/material/divider';
 import { HeaderComponent } from './header/header.component';
 import { FooterComponent } from './footer/footer.component';
 import { AboutComponent } from './about/about.component';
+import { OrdersComponent } from './orders/orders.component';
 
 @NgModule({
   declarations: [
@@ -22,6 +23,7 @@ import { AboutComponent } from './about/about.component';
     HeaderComponent,
     FooterComponent,
     AboutComponent,
+    OrdersComponent,
   ],
   imports: [
     BrowserModule,
