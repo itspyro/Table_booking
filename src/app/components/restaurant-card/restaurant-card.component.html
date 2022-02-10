@@ -1,15 +1,24 @@
 <div class="container">
-    <div fxLayout="row wrap" fxLayoutGap="16px grid">
-      <div fxFlex="20%" fxFlex.xs="100%" fxFlex.sm="33%" *ngFor="let restaurant of restaurantCard">
-        <mat-card (click)="restaurantProfile()" >
-          <mat-card-header>
-            <mat-card-title>{{restaurant.name}}</mat-card-title>
-          </mat-card-header>
-          <img mat-card-image src={{restaurant.imgURL}} alt="restauarant image">
-          <mat-card-content>
-            <p>{{restaurant.description}}</p>
-          </mat-card-content>
-        </mat-card>
-      </div>
+  <div fxLayout="row wrap" fxLayoutGap="16px grid">
+    <div
+      fxFlex="20%"
+      fxFlex.xs="100%"
+      fxFlex.sm="33%"
+      *ngFor="let restaurant of restaurantCard"
+    >
+      <mat-card (click)="restaurantProfile()">
+        <mat-card-header>
+          <mat-card-title>{{ restaurant.name }}</mat-card-title>
+        </mat-card-header>
+        <img
+          mat-card-image
+          src="{{ restaurant.imgUrl }}"
+          alt="restauarant image"
+        />
+        <mat-card-content>
+          <p>{{ restaurant.description }}</p>
+        </mat-card-content>
+      </mat-card>
     </div>
   </div>
+</div>
