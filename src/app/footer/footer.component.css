@@ -1,4 +1,5 @@
 .footer{
+    display: flex;
     height: 15vw; 
     background-color: rgb(83,111,64);
 }

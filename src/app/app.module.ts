@@ -18,6 +18,7 @@ import { RestaurantCardComponent } from './components/restaurant-card/restaurant
 import { HttpClientModule } from '@angular/common/http';
 import { FormsModule } from '@angular/forms';
 import { FlexLayoutModule } from '@angular/flex-layout';
+import { HomeComponent } from './components/home.component';
 
 
 @NgModule({
@@ -30,6 +31,7 @@ import { FlexLayoutModule } from '@angular/flex-layout';
     AboutComponent,
     FilterComponent,
     RestaurantCardComponent,
+    HomeComponent
   ],
   imports: [
     BrowserModule,
