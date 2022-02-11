@@ -19,6 +19,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { FormsModule } from '@angular/forms';
 import { FlexLayoutModule } from '@angular/flex-layout';
 
+import { OrdersComponent } from './orders/orders.component';
 
 @NgModule({
   declarations: [
@@ -30,6 +31,7 @@ import { FlexLayoutModule } from '@angular/flex-layout';
     AboutComponent,
     FilterComponent,
     RestaurantCardComponent,
+    OrdersComponent,
   ],
   imports: [
     BrowserModule,
@@ -41,7 +43,7 @@ import { FlexLayoutModule } from '@angular/flex-layout';
     MatDividerModule,
     HttpClientModule,
     FormsModule,
-    FlexLayoutModule
+    FlexLayoutModule,
   ],
   providers: [],
   bootstrap: [AppComponent],
