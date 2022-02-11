@@ -13,6 +13,8 @@ import {MatDividerModule} from '@angular/material/divider';
 import { HeaderComponent } from './header/header.component';
 import { FooterComponent } from './footer/footer.component';
 import { AboutComponent } from './about/about.component';
+import { RestprofileComponent } from './restprofile/restprofile.component';
+import { HeadingComponent } from './heading/heading.component';
 
 
 @NgModule({
@@ -23,6 +25,8 @@ import { AboutComponent } from './about/about.component';
     HeaderComponent,
     FooterComponent,
     AboutComponent,
+    RestprofileComponent,
+    HeadingComponent,
   ],
   imports: [
     BrowserModule,
