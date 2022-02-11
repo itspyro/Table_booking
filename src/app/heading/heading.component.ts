@@ -1,3 +1,4 @@
+import { Input } from '@angular/core';
 import { Component, OnInit } from '@angular/core';
 
 @Component({
@@ -11,5 +12,5 @@ export class HeadingComponent implements OnInit {
 
   ngOnInit(): void {
   }
-  name="About Us";
+  @Input() name: string="about us";
 }
