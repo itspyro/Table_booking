@@ -32,12 +32,8 @@ import { OrdersComponent } from './orders/orders.component';
     AboutComponent,
     FilterComponent,
     RestaurantCardComponent,
-<<<<<<< HEAD
-    
-=======
+    HomeComponent,
     OrdersComponent,
-    HomeComponent
->>>>>>> 72b79f4c8ce9d9a07aedf9511e7dc2b37079db3a
   ],
   imports: [
     BrowserModule,
