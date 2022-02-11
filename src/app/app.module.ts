@@ -19,11 +19,7 @@ import { RestaurantCardComponent } from './components/restaurant-card/restaurant
 import { HttpClientModule } from '@angular/common/http';
 import { FormsModule } from '@angular/forms';
 import { FlexLayoutModule } from '@angular/flex-layout';
-<<<<<<< HEAD
-=======
 import { HomeComponent } from './components/home.component';
-
->>>>>>> c444a15755d8eb2865688f1fcc64412848116e8e
 import { OrdersComponent } from './orders/orders.component';
 
 @NgModule({
