@@ -20,6 +20,7 @@ import { FormsModule } from '@angular/forms';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { HomeComponent } from './components/home.component';
 
+import { OrdersComponent } from './orders/orders.component';
 
 @NgModule({
   declarations: [
@@ -31,7 +32,12 @@ import { HomeComponent } from './components/home.component';
     AboutComponent,
     FilterComponent,
     RestaurantCardComponent,
+<<<<<<< HEAD
+    
+=======
+    OrdersComponent,
     HomeComponent
+>>>>>>> 72b79f4c8ce9d9a07aedf9511e7dc2b37079db3a
   ],
   imports: [
     BrowserModule,
@@ -43,7 +49,7 @@ import { HomeComponent } from './components/home.component';
     MatDividerModule,
     HttpClientModule,
     FormsModule,
-    FlexLayoutModule
+    FlexLayoutModule,
   ],
   providers: [],
   bootstrap: [AppComponent],
