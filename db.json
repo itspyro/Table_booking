@@ -26,7 +26,7 @@
       "id": 2,
       "name": "PizzaHut",
       "description": "Pizza special",
-      "imgUrl": "https://images.pexels.com/photos/3028127/pexels-photo-3028127.jpeg",
+      "imgUrl": "https://thumbs.dreamstime.com/z/pizza-hut-logo-22575794.jpg",
       "filters": {
         "pure_veg": true,
         "rating": 4,
@@ -48,7 +48,139 @@
       "id": 3,
       "name": "The Oven",
       "description": "Pizza special",
-      "imgUrl": "https://cdn.pixabay.com/photo/2016/02/23/23/32/restaurant-1218743_1280.jpg",
+      "imgUrl": "https://content3.jdmagicbox.com/comp/lucknow/s6/0522px522.x522.180816151829.l1s6/catalogue/the-oven-lucknow-mz7zjubm4y.jpg",
+      "filters": {
+        "pure_veg": true,
+        "rating": 3,
+        "cuisine": {
+          "southIndian": false,
+          "punjabi": true,
+          "bengali": false,
+          "gujarati": true,
+          "chinese": false
+        },
+        "isPrivate": true,
+        "wifi": false,
+        "outdoor_siting": true,
+        "date": "",
+        "time": ""
+      }
+    },
+    {
+      "id": 4,
+      "name": "The Khichdi Express",
+      "description": "Rolls",
+      "imgUrl": "https://cdn.pixabay.com/photo/2013/12/31/21/47/restaurant-237060_1280.jpg",
+      "filters": {
+        "pure_veg": true,
+        "rating": 4,
+        "cuisine": {
+          "southIndian": true,
+          "punjabi": true,
+          "bengali": true,
+          "gujarati": false,
+          "chinese": false
+        },
+        "isPrivate": true,
+        "wifi": true,
+        "outdoor_siting": false,
+        "date": "",
+        "time": ""
+      }
+    },
+    {
+      "id": 5,
+      "name": "The Kalika Hut",
+      "description": "Pizza special",
+      "imgUrl": "https://cdn.pixabay.com/photo/2020/03/17/00/38/restaurant-4938702_1280.jpg",
+      "filters": {
+        "pure_veg": true,
+        "rating": 3,
+        "cuisine": {
+          "southIndian": true,
+          "punjabi": true,
+          "bengali": true,
+          "gujarati": false,
+          "chinese": false
+        },
+        "isPrivate": false,
+        "wifi": false,
+        "outdoor_siting": true,
+        "date": "",
+        "time": ""
+      }
+    },
+    {
+      "id": 6,
+      "name": "China Town Fast Food",
+      "description": "Momo special",
+      "imgUrl": "https://cdn.pixabay.com/photo/2021/02/08/07/39/chef-5993951_1280.jpg",
+      "filters": {
+        "pure_veg": "",
+        "rating": 2,
+        "cuisine": {
+          "southIndian": "",
+          "punjabi": "",
+          "bengali": "",
+          "gujarati": "",
+          "chinese": true
+        },
+        "isPrivate": "",
+        "wifi": "",
+        "outdoor_siting": "",
+        "date": "",
+        "time": ""
+      }
+    },
+    {
+      "id": 1,
+      "name": "McDonalds",
+      "description": "burger special",
+      "imgUrl": "https://cdn.pixabay.com/photo/2016/04/20/00/41/mcdonalds-1340199_1280.jpg",
+      "filters": {
+        "pure_veg": true,
+        "rating": 4,
+        "cuisine": {
+          "southIndian": false,
+          "punjabi": true,
+          "bengali": false,
+          "gujarati": true,
+          "chinese": true
+        },
+        "isPrivate": false,
+        "wifi": false,
+        "outdoor_siting": true,
+        "date": "",
+        "time": ""
+      }
+    },
+    {
+      "id": 2,
+      "name": "PizzaHut",
+      "description": "Pizza special",
+      "imgUrl": "https://thumbs.dreamstime.com/z/pizza-hut-logo-22575794.jpg",
+      "filters": {
+        "pure_veg": true,
+        "rating": 4,
+        "cuisine": {
+          "southIndian": true,
+          "punjabi": true,
+          "bengali": true,
+          "gujarati": true,
+          "chinese": true
+        },
+        "isPrivate": true,
+        "wifi": true,
+        "outdoor_siting": false,
+        "date": "",
+        "time": ""
+      }
+    },
+    {
+      "id": 3,
+      "name": "The Oven",
+      "description": "Pizza special",
+      "imgUrl": "https://content3.jdmagicbox.com/comp/lucknow/s6/0522px522.x522.180816151829.l1s6/catalogue/the-oven-lucknow-mz7zjubm4y.jpg",
       "filters": {
         "pure_veg": true,
         "rating": 3,
