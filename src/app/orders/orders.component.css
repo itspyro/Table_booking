@@ -131,6 +131,7 @@ hr {
   background-color: #f43f5e;
   border-radius: 50px;
   color: #fafafa;
+  padding: 0 16px;
 }
 
 .order-cancel-button:hover {
