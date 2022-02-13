@@ -12,10 +12,7 @@
 .example-full-width {
   width: 100%;
 }
-.home {
-  float: top;
-  display: flex;
-}
+
 app-footer {
   float: bottom;
 }
