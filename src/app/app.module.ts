@@ -70,10 +70,7 @@ import { MatFormField, MatFormFieldControl, MatLabel } from '@angular/material/f
     MatIconModule,
     MatSnackBarModule,
     ScrollingModule,
-    MatCardContent,
     MatTabsModule,
-    MatFormField,
-    MatLabel,
     MatIconModule
   ],
   providers: [],
