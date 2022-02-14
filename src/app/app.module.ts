@@ -28,14 +28,14 @@ import { DailogComponent } from './auth/dailog/dailog.component';
 import {MatTabsModule} from '@angular/material/tabs';
 import {MatInputModule} from '@angular/material/input';
 //import {MatButtonModule} from '@angular/material/button';
-import {MatIconModule} from '@angular/material/icon';
+import {MatIcon, MatIconModule} from '@angular/material/icon';
 //import {FormsModule} from '@angular/forms';
 import {MatSnackBarModule} from '@angular/material/snack-bar';
 import {MatCheckboxModule} from '@angular/material/checkbox';
 //import {MatDialogModule} from '@angular/material/dialog';
 import {ScrollingModule} from '@angular/cdk/scrolling';
 import { MatCardContent } from '@angular/material/card';
-import { MatLabel } from '@angular/material/form-field';
+import { MatFormField, MatFormFieldControl, MatLabel } from '@angular/material/form-field';
 @NgModule({
   declarations: [
     AppComponent,
@@ -51,19 +51,7 @@ import { MatLabel } from '@angular/material/form-field';
     HomeComponent,
     OrdersComponent,
     AuthComponent,
-    DailogComponent,
-    MatCheckboxModule,
-    MatTabsModule,
-    MatInputModule,
-    MatIconModule,
-    MatSnackBarModule,
-    ScrollingModule,
-    MatCardContent,
-    MatLabel
-    
-    
-
-   
+    DailogComponent
   ],
   imports: [
     BrowserModule,
@@ -76,6 +64,17 @@ import { MatLabel } from '@angular/material/form-field';
     HttpClientModule,
     FormsModule,
     FlexLayoutModule,
+    MatCheckboxModule,
+    MatTabsModule,
+    MatInputModule,
+    MatIconModule,
+    MatSnackBarModule,
+    ScrollingModule,
+    MatCardContent,
+    MatTabsModule,
+    MatFormField,
+    MatLabel,
+    MatIconModule
   ],
   providers: [],
   bootstrap: [AppComponent],
