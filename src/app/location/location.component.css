@@ -1,0 +1,31 @@
+.headline{
+    font-size: 3vw;
+    color: rgb(240,80,6);
+}
+.under{
+    height: 2vw;
+    background-color: rgb(240,80,6);
+    width: 40%;
+}
+.location{
+    height: 14vw;
+    background-color: rgb(83,111,64);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.inner{
+    display: flex;
+    height: 30%;
+    background-color: white;
+}
+.inner button{
+    padding: 2%;
+}
+.detect{
+    display: flex;
+}
+#compass{
+    width: 20%;
+    cursor: pointer;
+}
