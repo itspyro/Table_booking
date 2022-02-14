@@ -20,8 +20,9 @@ import { HomeComponent } from './components/home.component';
 import { OrdersComponent } from './orders/orders.component';
 import { LocationComponent } from './location/location.component';
 import { MaterialModule } from './material/material.module';
-
-
+import { AuthComponent } from './auth/auth.component';
+import { ScrollingModule } from '@angular/cdk/scrolling';
+import { DailogComponent } from './auth/dailog/dailog.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -36,7 +37,9 @@ import { MaterialModule } from './material/material.module';
     RestaurantCardComponent,
     HomeComponent,
     OrdersComponent,
-    LocationComponent
+    LocationComponent,
+    AuthComponent,
+    DailogComponent,
   ],
   imports: [
     BrowserModule,
@@ -46,6 +49,7 @@ import { MaterialModule } from './material/material.module';
     HttpClientModule,
     FormsModule,
     FlexLayoutModule,
+    ScrollingModule,
     MaterialModule
   ],
   providers: [],
