@@ -4,11 +4,8 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ReviewsComponent } from './reviews/reviews.component';
-import { MatCardModule } from '@angular/material/card';
 import { StarRatingModule } from 'angular-star-rating';
 import { MenuComponent } from './menu/menu.component';
-import { MatButtonModule } from '@angular/material/button';
-import { MatDividerModule } from '@angular/material/divider';
 import { HeaderComponent } from './header/header.component';
 import { FooterComponent } from './footer/footer.component';
 import { AboutComponent } from './about/about.component';
@@ -21,6 +18,9 @@ import { FormsModule } from '@angular/forms';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { HomeComponent } from './components/home.component';
 import { OrdersComponent } from './orders/orders.component';
+import { LocationComponent } from './location/location.component';
+import { MaterialModule } from './material/material.module';
+
 
 @NgModule({
   declarations: [
@@ -36,18 +36,17 @@ import { OrdersComponent } from './orders/orders.component';
     RestaurantCardComponent,
     HomeComponent,
     OrdersComponent,
+    LocationComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     BrowserAnimationsModule,
-    MatCardModule,
     StarRatingModule.forRoot(),
-    MatButtonModule,
-    MatDividerModule,
     HttpClientModule,
     FormsModule,
     FlexLayoutModule,
+    MaterialModule
   ],
   providers: [],
   bootstrap: [AppComponent],
