@@ -25,17 +25,21 @@ import { AuthComponent } from './auth/auth.component';
 import { DailogComponent } from './auth/dailog/dailog.component';
 //import {MatCheckboxModule} from '@angular/material/checkbox';
 //import {MatTabsModule} from '@angular/material/tabs';
-import {MatTabsModule} from '@angular/material/tabs';
-import {MatInputModule} from '@angular/material/input';
+import { MatTabsModule } from '@angular/material/tabs';
+import { MatInputModule } from '@angular/material/input';
 //import {MatButtonModule} from '@angular/material/button';
-import {MatIcon, MatIconModule} from '@angular/material/icon';
+import { MatIcon, MatIconModule } from '@angular/material/icon';
 //import {FormsModule} from '@angular/forms';
-import {MatSnackBarModule} from '@angular/material/snack-bar';
-import {MatCheckboxModule} from '@angular/material/checkbox';
-//import {MatDialogModule} from '@angular/material/dialog';
-import {ScrollingModule} from '@angular/cdk/scrolling';
+import { MatSnackBarModule } from '@angular/material/snack-bar';
+import { MatCheckboxModule } from '@angular/material/checkbox';
+import { MatDialogModule } from '@angular/material/dialog';
+import { ScrollingModule } from '@angular/cdk/scrolling';
 import { MatCardContent } from '@angular/material/card';
-import { MatFormField, MatFormFieldControl, MatLabel } from '@angular/material/form-field';
+import {
+  MatFormField,
+  MatFormFieldControl,
+  MatLabel,
+} from '@angular/material/form-field';
 @NgModule({
   declarations: [
     AppComponent,
@@ -51,7 +55,7 @@ import { MatFormField, MatFormFieldControl, MatLabel } from '@angular/material/f
     HomeComponent,
     OrdersComponent,
     AuthComponent,
-    DailogComponent
+    DailogComponent,
   ],
   imports: [
     BrowserModule,
@@ -71,7 +75,8 @@ import { MatFormField, MatFormFieldControl, MatLabel } from '@angular/material/f
     MatSnackBarModule,
     ScrollingModule,
     MatTabsModule,
-    MatIconModule
+    MatIconModule,
+    MatDialogModule,
   ],
   providers: [],
   bootstrap: [AppComponent],
