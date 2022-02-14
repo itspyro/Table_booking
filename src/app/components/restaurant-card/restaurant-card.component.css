@@ -6,3 +6,7 @@ mat-card {
   background-color: rgb(83, 111, 64);
 }
 
+mat-card .restaurant-image{
+  width: 250px;
+  height: 250px;
+}
