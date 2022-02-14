@@ -1,18 +1,140 @@
+* {
+  margin: 0;
+  padding: 0;
+}
+
 .restaurant-image {
-  width: 50px;
-  height: 50px;
+  width: 65px;
+  height: 65px;
   background-size: cover;
   border-radius: 10px;
 }
 
+.orders-container {
+  width: 100%;
+  flex-direction: column;
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+
 .order-card {
   margin: 10px;
-  padding: 10px;
-  max-width: 500px;
+  padding: 0;
+  width: 700px;
+  background-color: #fafafa;
+  border-radius: 12px;
+  box-shadow: 0 20px 30px 0 rgba(0, 0, 0, 0.07);
+}
+
+.order-card-header {
+  background-color: #eee;
+  padding: 20px;
+  display: flex;
+  align-items: center;
+  border-top-left-radius: 5px;
+  border-top-right-radius: 5px;
+  border-top-left-radius: 12px;
+  border-top-right-radius: 12px;
+}
+
+.order-card-text {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  /* align-items: center; */
+  justify-content: center;
+}
+
+.order-card-restaurant {
+  color: #444;
+  letter-spacing: 1px;
+  font-weight: bold;
+  font-size: 24px;
+}
+
+.order-card-location {
+  margin: 0;
+  letter-spacing: 0.8px;
+  font-size: 16px;
+}
+
+.order-card-items {
+  margin: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.order-food-items {
+  margin-left: 20px;
+}
+
+.order-food-item {
+  color: #444;
+  margin: 5px 0;
+  font-size: 16px;
+}
+
+.order-food-item-quantity {
+  margin: 0;
+  color: #777;
+}
+
+hr {
+  margin: 0 20px;
+}
+
+.total {
+  border-top: 2px dashed #999;
+}
+
+.order-card-total {
+  margin: 20px;
+  padding: 0 20px;
+}
+
+.order-table-details {
+  color: #444;
+  margin-bottom: 5px;
+  font-size: 16px;
+  font-weight: bold;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+}
+
+.order-time {
+  color: #777;
+  margin-bottom: 0;
 }
 
 .order-total {
   columns: 2;
   justify-content: space-between;
   display: flex;
+}
+
+.order-total-price {
+  font-weight: bold;
+  color: #555;
+  font-size: 20px;
+  margin-bottom: 0;
+}
+
+.order-card-footer {
+  display: flex;
+  justify-content: end;
+  padding: 20px;
+}
+
+.order-cancel-button {
+  background-color: #f43f5e;
+  border-radius: 50px;
+  color: #fafafa;
+  padding: 0 16px;
+}
+
+.order-cancel-button:hover {
+  background-color: #e11d48;
+  box-shadow: 0 8px 12px 0 rgba(0, 0, 0, 0.1);
 }
