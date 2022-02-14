@@ -21,7 +21,21 @@ import { FormsModule } from '@angular/forms';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { HomeComponent } from './components/home.component';
 import { OrdersComponent } from './orders/orders.component';
-
+import { AuthComponent } from './auth/auth.component';
+import { DailogComponent } from './auth/dailog/dailog.component';
+//import {MatCheckboxModule} from '@angular/material/checkbox';
+//import {MatTabsModule} from '@angular/material/tabs';
+import {MatTabsModule} from '@angular/material/tabs';
+import {MatInputModule} from '@angular/material/input';
+//import {MatButtonModule} from '@angular/material/button';
+import {MatIconModule} from '@angular/material/icon';
+//import {FormsModule} from '@angular/forms';
+import {MatSnackBarModule} from '@angular/material/snack-bar';
+import {MatCheckboxModule} from '@angular/material/checkbox';
+//import {MatDialogModule} from '@angular/material/dialog';
+import {ScrollingModule} from '@angular/cdk/scrolling';
+import { MatCardContent } from '@angular/material/card';
+import { MatLabel } from '@angular/material/form-field';
 @NgModule({
   declarations: [
     AppComponent,
@@ -36,6 +50,20 @@ import { OrdersComponent } from './orders/orders.component';
     RestaurantCardComponent,
     HomeComponent,
     OrdersComponent,
+    AuthComponent,
+    DailogComponent,
+    MatCheckboxModule,
+    MatTabsModule,
+    MatInputModule,
+    MatIconModule,
+    MatSnackBarModule,
+    ScrollingModule,
+    MatCardContent,
+    MatLabel
+    
+    
+
+   
   ],
   imports: [
     BrowserModule,
