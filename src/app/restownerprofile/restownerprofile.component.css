@@ -2,28 +2,24 @@ mat-card{
     margin: 10px;
 }
 img{
-    height: 150px;
+    height: 200px;
     width: auto;
     display: flex;
     border-radius: 10px;
 }
 
-mat-card .profile-image{
-    float: left;
-    height: 300px; 
-}
-
 .infomation{
     display: grid;
-    grid-template-columns: 1fr 1fr ;
-    grid-gap: 20px;
+    grid-template-columns: auto auto ;
+    grid-gap: 40px;
 }
 .infomation .right-info{
     display: grid;
-    grid-template-columns: 0.4fr 0.1fr ;
+    grid-template-columns: auto auto ;
+    grid-gap: 10px;
 }
 .infomation .left-info{
     display: grid;
-    grid-template-columns: 0.8fr 1fr ;
-    grid-gap: 1px;
+    grid-template-columns: auto auto ;
+    grid-gap: 10px;
 }
