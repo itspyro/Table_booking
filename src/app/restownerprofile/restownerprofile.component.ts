@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { DailogComponent } from 'app/auth/dailog/dailog.component';
+import { UpdatableinfoComponent } from './updatableinfo/updatableinfo.component';
 
 @Component({
   selector: 'app-restownerprofile',
@@ -20,7 +21,7 @@ export class RestownerprofileComponent implements OnInit {
   }
 
   openModifyDialog(){
-    this.dailog.open(DailogComponent);
+    this.dailog.open(UpdatableinfoComponent);
   }
 
 }
