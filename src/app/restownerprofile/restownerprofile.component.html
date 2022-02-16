@@ -7,6 +7,8 @@
             <mat-card class="personal-info">
                 <mat-card-header>
                     <mat-card-title>Personal Infomation</mat-card-title>
+                    <button (click)="isModify = true" *ngIf="!isModify">Modify</button>
+                    <button (click)="isModify=false" *ngIf="isModify">Submit</button>
                 </mat-card-header>
                 <mat-card-content>
                     <div class="infomation">
@@ -14,16 +16,19 @@
                             <div>
                                 <p>Restaurant Name: </p>
                                 <p>Owner Name: </p>
-                                <p>Location:  </p>
-                                <p>No of Table:  </p>
-                                <p>Charge per Table:  </p>
+                                <p>Location: </p>
+                                <p>No of Table: </p>
+                                <p>Charge per Table: </p>
+                                <p>Time Slot: </p>
                             </div>
-                            <div>
-                                <p>{{restowner.name}}</p>
+                            <div class="fixed">
+                                <p *ngIf="!isModify">{{restowner.name}}</p>
+                                <p *ngIf="isModify"><input type="text"></p>
                                 <p>Owner Name: </p>
-                                <p>Location:  </p>
-                                <p>No of Table:  </p>
-                                <p>Charge per Table:  </p>
+                                <p>Location: </p>
+                                <p>No of Table: </p>
+                                <p>Charge per Table: </p>
+                                <p>Time Slot: </p>
                             </div>
                         </div>
                         <div class="right-info">
@@ -34,19 +39,17 @@
                                 <p>Pure Veg:  </p>
                                 <p>AC:  </p>
                             </div>
-                            <div>
+                            <div class="fixed">
                                 <p >123456789123</p>
-                                <p >Email: </p>
+                                <p *ngIf="!isModify">Email: </p>
+                                <p *ngIf="isModify"><input type="text"></p>
                                 <p >Phone : </p>
                                 <p>Pure Veg:  </p>
                                 <p>AC:  </p>
                             </div>
                         </div>
-                        
-                        
                     </div>
                 </mat-card-content>
-
             </mat-card>
         </div>
     </div>

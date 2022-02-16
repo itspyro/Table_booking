@@ -6,6 +6,7 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./restownerprofile.component.css']
 })
 export class RestownerprofileComponent implements OnInit {
+  isModify : boolean = false;
 
   restowner = {
     'restName':'Tamasha',
