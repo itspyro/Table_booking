@@ -23,6 +23,7 @@ import { MaterialModule } from './material/material.module';
 import { AuthComponent } from './auth/auth.component';
 import { ScrollingModule } from '@angular/cdk/scrolling';
 import { DailogComponent } from './auth/dailog/dailog.component';
+
 @NgModule({
   declarations: [
     AppComponent,
