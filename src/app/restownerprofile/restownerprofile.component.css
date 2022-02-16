@@ -10,18 +10,16 @@ img{
 
 .infomation{
     display: grid;
-    grid-template-columns: 1fr 1fr ;
+    grid-template-columns: auto auto ;
     grid-gap: 40px;
 }
 .infomation .right-info{
     display: grid;
-    grid-template-columns: 0.4fr 0.5fr ;
+    grid-template-columns: auto auto ;
+    grid-gap: 10px;
 }
 .infomation .left-info{
     display: grid;
-    grid-template-columns: 1fr 1fr ;
-    grid-gap: 1px;
-}
-.fixed{
-    position: static;
+    grid-template-columns: auto auto ;
+    grid-gap: 10px;
 }

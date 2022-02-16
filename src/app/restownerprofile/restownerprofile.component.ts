@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { MatDialog } from '@angular/material/dialog';
+import { DailogComponent } from 'app/auth/dailog/dailog.component';
 
 @Component({
   selector: 'app-restownerprofile',
@@ -10,11 +12,15 @@ export class RestownerprofileComponent implements OnInit {
 
   restowner = {
     'restName':'Tamasha',
-    'name':'vismay Vinodbhai Tandel'
+    'name':'vismay Vinodbhai tandel vismay tandel vismay tandel '
   }
-  constructor() { }
+  constructor(private dailog:MatDialog) { }
 
   ngOnInit(): void {
+  }
+
+  openModifyDialog(){
+    this.dailog.open(DailogComponent);
   }
 
 }

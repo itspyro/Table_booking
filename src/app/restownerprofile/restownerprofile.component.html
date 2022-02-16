@@ -7,7 +7,7 @@
             <mat-card class="personal-info">
                 <mat-card-header>
                     <mat-card-title>Personal Infomation</mat-card-title>
-                    <button (click)="isModify = true" *ngIf="!isModify">Modify</button>
+                    <button (click)="openModifyDialog()" *ngIf="!isModify">Modify</button>
                     <button (click)="isModify=false" *ngIf="isModify">Submit</button>
                 </mat-card-header>
                 <mat-card-content>
@@ -22,8 +22,7 @@
                                 <p>Time Slot: </p>
                             </div>
                             <div class="fixed">
-                                <p *ngIf="!isModify">{{restowner.name}}</p>
-                                <p *ngIf="isModify"><input type="text"></p>
+                                <p>{{restowner.name}}</p>
                                 <p>Owner Name: </p>
                                 <p>Location: </p>
                                 <p>No of Table: </p>
@@ -41,8 +40,7 @@
                             </div>
                             <div class="fixed">
                                 <p >123456789123</p>
-                                <p *ngIf="!isModify">Email: </p>
-                                <p *ngIf="isModify"><input type="text"></p>
+                                <p >Email: </p>
                                 <p >Phone : </p>
                                 <p>Pure Veg:  </p>
                                 <p>AC:  </p>
