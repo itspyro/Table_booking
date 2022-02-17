@@ -20,7 +20,7 @@ export class RestaurantService implements OnInit {
 
   getRestaurants() {
     this.http
-      .get<Restaurant[]>('http://localhost:3000/restaurant')
+      .get<Restaurant[]>('http://localhost:8080/api/restaurant/all')
       .subscribe((resData) => {
         resData.map((restaurant) => {
           this.restaurants.push(restaurant);
