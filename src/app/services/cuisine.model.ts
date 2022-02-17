@@ -4,4 +4,5 @@ export interface Cuisines {
   bengali: boolean;
   gujarati: boolean;
   chinese: boolean;
+  italian: boolean;
 }

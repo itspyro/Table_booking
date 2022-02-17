@@ -1,0 +1,84 @@
+<div class="container">
+    <div fxLayout ="col wrap" class="profile-info">
+        <mat-card class="profile-image">
+            <img src="https://content3.jdmagicbox.com/comp/lucknow/s6/0522px522.x522.180816151829.l1s6/catalogue/the-oven-lucknow-mz7zjubm4y.jpg">
+        </mat-card>
+        <div Fxlayout="row wrap">
+            <mat-card class="personal-info">
+                <mat-card-header>
+                    <mat-card-title>Personal Infomation</mat-card-title>
+                    <button (click)="openModifyDialog()" *ngIf="!isModify">Modify</button>
+                    <button (click)="isModify=false" *ngIf="isModify">Submit</button>
+                </mat-card-header>
+                <mat-card-content>
+                    <div class="infomation">
+                        <div class="left-info">
+                            <div>
+                                <p>Restaurant Name: </p>
+                                <p>Owner Name: </p>
+                                <p>Location: </p>
+                                <p>No of Table: </p>
+                                <p>Charge per Table: </p>
+                                <p>Time Slot: </p>
+                            </div>
+                            <div class="fixed">
+                                <p>{{restowner.name}}</p>
+                                <p>Owner Name: </p>
+                                <p>Location: </p>
+                                <p>No of Table: </p>
+                                <p>Charge per Table: </p>
+                                <p>Time Slot: </p>
+                            </div>
+                        </div>
+                        <div class="right-info">
+                            <div>
+                                <p >GST No.:</p>
+                                <p >Email: </p>
+                                <p >Phone : </p>
+                                <p>Pure Veg:  </p>
+                                <p>AC:  </p>
+                            </div>
+                            <div class="fixed">
+                                <p >123456789123</p>
+                                <p >Email: </p>
+                                <p >Phone : </p>
+                                <p>Pure Veg:  </p>
+                                <p>AC:  </p>
+                            </div>
+                        </div>
+                    </div>
+                </mat-card-content>
+            </mat-card>
+        </div>
+    </div>
+    <mat-card class="Cuisine"> 
+        <mat-card-header>
+            <mat-card-title>
+                Cuisine
+            </mat-card-title>
+            <mat-card-content>
+
+            </mat-card-content>
+        </mat-card-header>
+    </mat-card>
+    <mat-card class="Menu"> 
+        <mat-card-header>
+            <mat-card-title>
+                Menu
+            </mat-card-title>
+            <mat-card-content>
+
+            </mat-card-content>
+        </mat-card-header>
+    </mat-card>
+    <mat-card class="review"> 
+        <mat-card-header>
+            <mat-card-title>
+                Review
+            </mat-card-title>
+            <mat-card-content>
+
+            </mat-card-content>
+        </mat-card-header>
+    </mat-card>
+</div>
