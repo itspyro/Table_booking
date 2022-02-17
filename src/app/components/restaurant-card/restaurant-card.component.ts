@@ -23,9 +23,9 @@ export class RestaurantCardComponent implements OnInit {
     //     this.restaurantCard = Response;
     //   });
   }
-  restaurantProfile() {
-    //this.router.navigateByUrl('restaurant-info')
-  }
+  // restaurantProfile() {
+  //   //this.router.navigateByUrl('restaurant-info')
+  // }
 
   ngOnInit(): void {
     this.restaurantService.getRestaurants();

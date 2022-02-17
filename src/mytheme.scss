@@ -1,10 +1,81 @@
-
 @use '@angular/material' as mat;
 
 @include mat.core();
-// @import url('./custom-pallete.scss');
+//@import url('./custom-pallete.scss');
 
-$mytheme-primary: mat.define-palette(mat.$green-palette, 700);
+/* For use in src/lib/core/theming/_palette.scss */
+$md-mcgpalette0: (
+    50 : #ebeee8,
+    100 : #cdd4c6,
+    200 : #acb7a0,
+    300 : rgb(222, 235, 210),
+    400 : #71855d,
+    500 : rgb(88, 111, 64),
+    600 : #50673a,
+    700 : rgb(71, 92, 50),
+    800 : rgb(61, 82, 42),
+    900 : rgb(45, 64, 28),
+    A100 : #b9ff83,
+    A200 : #9cff50,
+    A400 : #80ff1d,
+    A700 : #71ff03,
+    contrast: (
+        50 : #000000,
+        100 : #000000,
+        200 : #000000,
+        300 : #000000,
+        400 : #ffffff,
+        500 : #ffffff,
+        600 : #ffffff,
+        700 : #ffffff,
+        800 : #ffffff,
+        900 : #ffffff,
+        A100 : #000000,
+        A200 : #000000,
+        A400 : #000000,
+        A700 : #000000,
+    )
+);
+
+
+
+// $dark-primary-text: rgba(black, 0.87);
+// $light-primary-text: white;
+
+//   $wfs-green-palette: (
+//   50: #d0f8a5,
+//   100: #bcec89,
+//   200: #b0dd80,
+//   300: #acd87d,
+//   400: #a4ce78,
+//   500: #9dc572,
+//   600: #9ec772,
+//   700: #96bd6c,
+//   800: #90b668,
+//   900: #8eb368,
+//   A100: #85a761,
+//   A200: #6e8b4f,
+//   A400: #67814b,
+//   A700: #586f40,
+//   contrast: (
+//     50: $dark-primary-text,
+//     100: $dark-primary-text,
+//     200: $dark-primary-text,
+//     300: $dark-primary-text,
+//     400: $dark-primary-text,
+//     500: $light-primary-text,
+//     600: $light-primary-text,
+//     700: $light-primary-text,
+//     800: $light-primary-text,
+//     900: $light-primary-text,
+//     A100: $dark-primary-text,
+//     A200: $dark-primary-text,
+//     A400: $dark-primary-text,
+//     A700: $light-primary-text,
+//   )
+// );
+
+$mytheme-primary: mat.define-palette($md-mcgpalette0, 500,300,600 );
 $mytheme-accent: mat.define-palette(mat.$green-palette, A200, A100, A400);
 
 // The "warn" palette is optional and defaults to red if not specified.

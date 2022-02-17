@@ -24,6 +24,7 @@ import { AuthComponent } from './auth/auth.component';
 import { ScrollingModule } from '@angular/cdk/scrolling';
 import { RestownerprofileComponent } from './restownerprofile/restownerprofile.component';
 import { UpdatableinfoComponent } from './restownerprofile/updatableinfo/updatableinfo.component';
+
 @NgModule({
   declarations: [
     AppComponent,
