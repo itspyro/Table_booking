@@ -1,4 +1,6 @@
 import { Filters } from './filter.model';
+import { Recipe } from './recipe.model';
+import { Review } from './review.model';
 
 export interface Restaurant {
   restaurantId: number;
@@ -10,4 +12,7 @@ export interface Restaurant {
   description: string;
   cuisines: any;
   user: number;
+  photos: string[];
+  menu: Recipe[];
+  reviews: Review[];
 }
