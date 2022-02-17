@@ -5,13 +5,15 @@ import { AuthComponent } from './auth/auth.component';
 import { HomeComponent } from './components/home.component';
 import { OrdersComponent } from './orders/orders.component';
 import { RestownerprofileComponent } from './restownerprofile/restownerprofile.component';
+import { RestprofileComponent } from './restprofile/restprofile.component';
 
 const routes: Routes = [
   { path: '', component: AboutComponent },
   { path: 'restaurants', component: HomeComponent },
   { path: 'orders', component: OrdersComponent },
   { path: 'auth', component: AuthComponent },
-  { path: 'restownerprofile', component: RestownerprofileComponent}
+  { path: 'restownerprofile', component: RestownerprofileComponent},
+  { path: 'rest_profile/:id', component: RestprofileComponent}
 ];
 
 @NgModule({

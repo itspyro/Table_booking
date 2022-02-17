@@ -53,8 +53,8 @@
 
 
     <div class="view_bar">
-      <nav mat-tab-nav-bar dynamicHeight  mat-align-tabs="center" [backgroundColor]="background" [tabPanel]="tabPanel">
-            <a mat-tab-link class="tab" [ngStyle]="{backgroundColor:(activeLink == 'Overview'?'rgb(222, 235, 210)':'rgb(255,255,255)')}" (click)="activeLink = 'Overview'" [active]="activeLink == 'Overview'"> 
+      <nav mat-tab-nav-bar dynamicHeight  mat-align-tabs="center" [tabPanel]="tabPanel">
+            <a mat-tab-link (click)="activeLink = 'Overview'" [active]="activeLink == 'Overview'"> 
                 <mat-icon>description</mat-icon>Overview
             </a>
             <a mat-tab-link (click)="activeLink = 'Reviews'" [active]="activeLink == 'Reviews'">
@@ -67,12 +67,11 @@
                 <mat-icon>collections</mat-icon>Photos
             </a>
         </nav>
-        <mat-tab-nav-panel #tabPanel></mat-tab-nav-panel>
-    </div>
-
-
-    <div class="space">
-      
+        <mat-tab-nav-panel #tabPanel>
+          <app-reviews *ngIf="activeLink == 'Reviews'"></app-reviews>
+          <app-menu *ngIf="activeLink == 'Menu'"></app-menu>
+        </mat-tab-nav-panel>
+        
     </div>
 
 </div>
