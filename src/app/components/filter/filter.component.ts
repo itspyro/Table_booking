@@ -21,6 +21,6 @@ export class FilterComponent {
     //   console.warn(result);
     //   })
     console.log(filters);
-    this.restaurantService.applyFilters(filters);
+    //this.restaurantService.applyFilters(filters);
   }
 }

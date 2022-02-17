@@ -1,9 +1,13 @@
 import { Filters } from './filter.model';
 
 export interface Restaurant {
-  id: number;
-  name: string;
-  description: string;
-  imgUrl: string;
-  filters: Filters;
+  restaurantId: number,
+  restaurantName: string,
+  address: string,
+  gstIn: string,
+  contact: string,
+  nonVeg: boolean,
+  description: string,
+  cuisines: any,
+  user: number
 }
