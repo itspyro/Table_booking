@@ -1,5 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import {ThemePalette} from '@angular/material/core';
+import { Restaurant } from 'app/services/restaurant.model';
 
 @Component({
   selector: 'app-restprofile',
@@ -26,40 +27,16 @@ export class RestprofileComponent implements OnInit {
       "city":"New Delhi"
     },
     "opening_hours":{
-      "Mon":{
         "start":"10:30 am",
         "end":"10 pm"
-      },
-      "Tues":{
-        "start":"10:30 am",
-        "end":"10 pm"
-      },
-      "Wed":{
-        "start":"10:30 am",
-        "end":"10 pm"
-      },
-      "Thurs":{
-        "start":"10:30 am",
-        "end":"10 pm"
-      },
-      "Fri":{
-        "start":"10:30 am",
-        "end":"11 pm"
-      },
-      "Sat":{
-        "start":"10:30 am",
-        "end":"11:30 pm"
-      },
-      "Sun":{
-        "start":"10:30 am",
-        "end":"11 pm"
-      }
     },
     "cuisines":["South Indian","Gujrati","Bengali","Marathi","Italian","Punjabi Rasoi","Mediterranean"]
   };
 
   activeLink = 'Overview';
-  background: ThemePalette = undefined;
+  //background: ThemePalette = undefined;
+
+  //@Input() restaurant_details: Restaurant[]=[];
 
   isOpen(){
     var datetime=this.getTodayDay();
