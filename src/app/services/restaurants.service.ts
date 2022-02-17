@@ -24,13 +24,24 @@ export class RestaurantService implements OnInit {
         httpStatusCode: number;
         responseMessage: string;
         restaurants: Restaurant[];
-      }>('localhost:8080/api/restaurant/all')
+      }>('http://localhost:8080/api/restaurant/all')
       .subscribe((resData) => {
-        console.log(resData.httpStatusCode);
         resData.restaurants.map((restaurant) => {
           this.restaurants.push(restaurant);
         });
         this.restaurantList.next(this.restaurants.slice());
+      });
+  }
+
+  getRestaurantsById(id: number) {
+    this.http
+      .get<{
+        httpStatusCode: number;
+        responseMessage: string;
+        restaurants: Restaurant[];
+      }>('http://localhost:8080/api/restaurant/' + id)
+      .subscribe((resData) => {
+        this.selectedRestaurant.next(resData.restaurants[0]);
       });
   }
 
@@ -41,7 +52,7 @@ export class RestaurantService implements OnInit {
   //   this.selectedRestaurant.next(filteredRestaurant[0]);
   // }
 
-  // applyFilters(filters: Filters) {
+  // applyFilters(filters) {
   //   const filteredRestaurants = this.restaurants.filter((restaurant) => {
   //     return (
   //       (filters.rating > 0
@@ -52,9 +63,6 @@ export class RestaurantService implements OnInit {
   //         : true) &&
   //       (filters.pure_veg == true
   //         ? restaurant.filters.pure_veg == filters.pure_veg
-  //         : true) &&
-  //       (filters.wifi == true
-  //         ? restaurant.filters.wifi == filters.wifi
   //         : true) &&
   //       (filters.cuisine.southIndian == true
   //         ? restaurant.filters.cuisine.southIndian ==

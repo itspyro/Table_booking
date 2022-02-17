@@ -5,5 +5,4 @@ export interface Filters {
   rating: number;
   cuisine: Cuisines;
   isPrivate: boolean;
-  wifi: boolean;
 }
