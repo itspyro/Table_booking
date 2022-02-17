@@ -23,6 +23,7 @@ import { MaterialModule } from './material/material.module';
 import { AuthComponent } from './auth/auth.component';
 import { ScrollingModule } from '@angular/cdk/scrolling';
 import { DailogComponent } from './auth/dailog/dailog.component';
+import { RestownerprofileComponent } from './restownerprofile/restownerprofile.component';
 
 @NgModule({
   declarations: [
@@ -41,6 +42,7 @@ import { DailogComponent } from './auth/dailog/dailog.component';
     LocationComponent,
     AuthComponent,
     DailogComponent,
+    RestownerprofileComponent,
   ],
   imports: [
     BrowserModule,
