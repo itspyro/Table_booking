@@ -48,12 +48,6 @@ export class RestaurantService implements OnInit {
         (filters.pure_veg == true
           ? restaurant.filters.pure_veg == filters.pure_veg
           : true) &&
-        (filters.wifi == true
-          ? restaurant.filters.wifi == filters.wifi
-          : true) &&
-        (filters.outdoor_sitting == true
-          ? restaurant.filters.outdoor_sitting == filters.outdoor_sitting
-          : true) &&
         (filters.cuisine.southIndian == true
           ? restaurant.filters.cuisine.southIndian ==
             filters.cuisine.southIndian
