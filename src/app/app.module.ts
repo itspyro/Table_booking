@@ -24,6 +24,7 @@ import { AuthComponent } from './auth/auth.component';
 import { ScrollingModule } from '@angular/cdk/scrolling';
 import { DailogComponent } from './auth/dailog/dailog.component';
 import { RestownerprofileComponent } from './restownerprofile/restownerprofile.component';
+import { UpdatableinfoComponent } from './restownerprofile/updatableinfo/updatableinfo.component';
 
 @NgModule({
   declarations: [
@@ -43,6 +44,7 @@ import { RestownerprofileComponent } from './restownerprofile/restownerprofile.c
     AuthComponent,
     DailogComponent,
     RestownerprofileComponent,
+    UpdatableinfoComponent,
   ],
   imports: [
     BrowserModule,

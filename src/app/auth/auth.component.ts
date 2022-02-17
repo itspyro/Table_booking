@@ -16,4 +16,11 @@ export class AuthComponent implements DailogComponent {
     this.dialog.open(DailogComponent);
     console.error('Openning!');
   }
+
+  onLoginButton(loginInfo){
+    console.log(loginInfo)
+  }
+  onSubmitButton(registerationInfo){
+    console.log(registerationInfo)
+  }
 }

@@ -6,7 +6,4 @@ export interface Filters {
   cuisine: Cuisines;
   isPrivate: boolean;
   wifi: boolean;
-  outdoor_sitting: boolean;
-  date: string;
-  time: string;
 }

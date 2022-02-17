@@ -1,4 +1,7 @@
 import { Component, OnInit } from '@angular/core';
+import { MatDialog } from '@angular/material/dialog';
+import { DailogComponent } from 'app/auth/dailog/dailog.component';
+import { UpdatableinfoComponent } from './updatableinfo/updatableinfo.component';
 
 @Component({
   selector: 'app-restownerprofile',
@@ -6,14 +9,19 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./restownerprofile.component.css']
 })
 export class RestownerprofileComponent implements OnInit {
+  isModify : boolean = false;
 
   restowner = {
     'restName':'Tamasha',
-    'name':'vismay Vinodbhai Tandel'
+    'name':'vismay Vinodbhai tandel vismay tandel vismay tandel '
   }
-  constructor() { }
+  constructor(private dailog:MatDialog) { }
 
   ngOnInit(): void {
+  }
+
+  openModifyDialog(){
+    this.dailog.open(UpdatableinfoComponent);
   }
 
 }
