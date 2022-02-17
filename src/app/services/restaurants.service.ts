@@ -20,56 +20,57 @@ export class RestaurantService implements OnInit {
 
   getRestaurants() {
     this.http
-      .get<Restaurant[]>('http://localhost:3000/restaurant')
+      .get<{httpStatusCode:number;responseMessage:string;restaurants:Restaurant[]}>('localhost:8080/api/restaurant/all')
       .subscribe((resData) => {
-        resData.map((restaurant) => {
+        console.log(resData.httpStatusCode)
+        resData.restaurants.map((restaurant) => {
           this.restaurants.push(restaurant);
         });
         this.restaurantList.next(this.restaurants.slice());
       });
   }
 
-  selectRestaurant(id: number) {
-    const filteredRestaurant = this.restaurants.filter((restuarant) => {
-      return restuarant.id === id;
-    });
-    this.selectedRestaurant.next(filteredRestaurant[0]);
-  }
+  // selectRestaurant(id: number) {
+  //   const filteredRestaurant = this.restaurants.filter((restuarant) => {
+  //     return restuarant.id === id;
+  //   });
+  //   this.selectedRestaurant.next(filteredRestaurant[0]);
+  // }
 
-  applyFilters(filters: Filters) {
-    const filteredRestaurants = this.restaurants.filter((restaurant) => {
-      return (
-        (filters.rating > 0
-          ? restaurant.filters.rating >= filters.rating
-          : true) &&
-        (filters.isPrivate == true
-          ? restaurant.filters.isPrivate == filters.isPrivate
-          : true) &&
-        (filters.pure_veg == true
-          ? restaurant.filters.pure_veg == filters.pure_veg
-          : true) &&
-        (filters.wifi == true
-          ? restaurant.filters.wifi == filters.wifi
-          : true) &&
-        (filters.cuisine.southIndian == true
-          ? restaurant.filters.cuisine.southIndian ==
-            filters.cuisine.southIndian
-          : true) &&
-        (filters.cuisine.punjabi == true
-          ? restaurant.filters.cuisine.punjabi == filters.cuisine.punjabi
-          : true) &&
-        (filters.cuisine.bengali == true
-          ? restaurant.filters.cuisine.bengali == filters.cuisine.bengali
-          : true) &&
-        (filters.cuisine.gujarati == true
-          ? restaurant.filters.cuisine.gujarati == filters.cuisine.gujarati
-          : true) &&
-        (filters.cuisine.chinese == true
-          ? restaurant.filters.cuisine.chinese == filters.cuisine.chinese
-          : true)
-      );
-    });
+  // applyFilters(filters: Filters) {
+  //   const filteredRestaurants = this.restaurants.filter((restaurant) => {
+  //     return (
+  //       (filters.rating > 0
+  //         ? restaurant.filters.rating >= filters.rating
+  //         : true) &&
+  //       (filters.isPrivate == true
+  //         ? restaurant.filters.isPrivate == filters.isPrivate
+  //         : true) &&
+  //       (filters.pure_veg == true
+  //         ? restaurant.filters.pure_veg == filters.pure_veg
+  //         : true) &&
+  //       (filters.wifi == true
+  //         ? restaurant.filters.wifi == filters.wifi
+  //         : true) &&
+  //       (filters.cuisine.southIndian == true
+  //         ? restaurant.filters.cuisine.southIndian ==
+  //           filters.cuisine.southIndian
+  //         : true) &&
+  //       (filters.cuisine.punjabi == true
+  //         ? restaurant.filters.cuisine.punjabi == filters.cuisine.punjabi
+  //         : true) &&
+  //       (filters.cuisine.bengali == true
+  //         ? restaurant.filters.cuisine.bengali == filters.cuisine.bengali
+  //         : true) &&
+  //       (filters.cuisine.gujarati == true
+  //         ? restaurant.filters.cuisine.gujarati == filters.cuisine.gujarati
+  //         : true) &&
+  //       (filters.cuisine.chinese == true
+  //         ? restaurant.filters.cuisine.chinese == filters.cuisine.chinese
+  //         : true)
+  //     );
+  //   });
 
-    this.restaurantList.next(filteredRestaurants);
-  }
+  //   this.restaurantList.next(filteredRestaurants);
+  // }
 }
