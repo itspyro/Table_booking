@@ -18,23 +18,23 @@
     <div class="detail">
       <div class="left">
         <div class="name">
-          {{details.name}}
+          {{details.restaurantName}}
         </div>
-        <p class="location">{{details.location.street+", "+details.location.city}}</p>
+        <p class="location">{{address_props["street"]+", "+address_props["city"]}}</p>
         <div class="open">
-          <span [style.color]="isOpen()?'green':'red'">{{(isOpen()?"Open : ":"Closed : ")}}</span>{{getTodayDay()[3].start+"-"+getTodayDay()[3].end+" (Today)"}}
+          <span [style.color]="isOpen()?'green':'red'">{{(isOpen()?"Open : ":"Closed : ")}}</span>{{details.opening_hours.start+"-"+details.opening_hours.end+" (Today)"}}
           <button mat-icon-button [matMenuTriggerFor]="menu" matTooltip="Check Opening Hours" aria-label="opening hours info">
             <mat-icon>info</mat-icon>
           </button>
           <mat-menu #menu="matMenu">
             <table>
-              <tr><td class="day">Monday</td><td>{{details.opening_hours["Mon"].start}}</td><td>-</td><td>{{details.opening_hours["Mon"].end}}</td></tr>
-              <tr><td class="day">Tuesday</td><td>{{details.opening_hours["Tues"].start}}</td><td>-</td><td>{{details.opening_hours["Tues"].end}}</td></tr>
-              <tr><td class="day">Wednesday</td><td>{{details.opening_hours["Wed"].start}}</td><td>-</td><td>{{details.opening_hours["Wed"].end}}</td></tr>
-              <tr><td class="day">Thursday</td><td>{{details.opening_hours["Thurs"].start}}</td><td>-</td><td>{{details.opening_hours["Thurs"].end}}</td></tr>
-              <tr><td class="day">Friday</td><td>{{details.opening_hours["Fri"].start}}</td><td>-</td><td>{{details.opening_hours["Fri"].end}}</td></tr>
-              <tr><td class="day">Saturday</td><td>{{details.opening_hours["Sat"].start}}</td><td>-</td><td>{{details.opening_hours["Sat"].end}}</td></tr>
-              <tr><td class="day">Sunday</td><td>{{details.opening_hours["Sun"].start}}</td><td>-</td><td>{{details.opening_hours["Sun"].end}}</td></tr>
+              <tr><td class="day">Monday</td><td>{{details.opening_hours.start}}</td><td>-</td><td>{{details.opening_hours.end}}</td></tr>
+              <tr><td class="day">Tuesday</td><td>{{details.opening_hours.start}}</td><td>-</td><td>{{details.opening_hours.end}}</td></tr>
+              <tr><td class="day">Wednesday</td><td>{{details.opening_hours.start}}</td><td>-</td><td>{{details.opening_hours.end}}</td></tr>
+              <tr><td class="day">Thursday</td><td>{{details.opening_hours.start}}</td><td>-</td><td>{{details.opening_hours.end}}</td></tr>
+              <tr><td class="day">Friday</td><td>{{details.opening_hours.start}}</td><td>-</td><td>{{details.opening_hours.end}}</td></tr>
+              <tr><td class="day">Saturday</td><td>{{details.opening_hours.start}}</td><td>-</td><td>{{details.opening_hours.end}}</td></tr>
+              <tr><td class="day">Sunday</td><td>{{details.opening_hours.start}}</td><td>-</td><td>{{details.opening_hours.end}}</td></tr>
             </table>
           </mat-menu>
         </div>
