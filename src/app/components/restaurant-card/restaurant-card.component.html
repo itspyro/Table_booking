@@ -4,9 +4,9 @@
       fxFlex="25%"
       fxFlex.xs="100%"
       fxFlex.sm="33%"
-      *ngFor="let restaurant of restaurantCard"
+      *ngFor="let restaurant of restaurants"
     >
-      <mat-card >
+      <mat-card (click)="onNavigateProfile(restaurant.restaurantId)">
         <mat-card-header>
           <mat-card-title>{{ restaurant.restaurantName }}</mat-card-title>
         </mat-card-header>

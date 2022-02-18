@@ -13,6 +13,8 @@
   width: 100%;
 }
 
-app-footer {
-  float: bottom;
+.home {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
 }

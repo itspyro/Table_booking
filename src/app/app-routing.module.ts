@@ -12,8 +12,9 @@ const routes: Routes = [
   { path: 'restaurants', component: HomeComponent },
   { path: 'orders', component: OrdersComponent },
   { path: 'auth', component: AuthComponent },
-  { path: 'restownerprofile', component: RestownerprofileComponent},
-  { path: 'rest_profile/:id', component: RestprofileComponent}
+  { path: 'restownerprofile', component: RestownerprofileComponent },
+  { path: 'rest_profile/:id', component: RestprofileComponent },
+  { path: '**', redirectTo: '' },
 ];
 
 @NgModule({

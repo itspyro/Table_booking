@@ -1,79 +1,123 @@
 <div class="rest_profile">
-    <div class="gallery container-fluid">
-        <div class="row row1">
-          <div class="col-sm-8 photo"></div>
-          <div class="col-sm-4 photo">
-              <div class="row row2">
-                <div class="col-sm-6 photo"></div>
-                <div class="col-sm-6 photo"></div>
-              </div>
-              <div class="row row2">
-                <div class="col-sm-6 photo"></div>
-                <div class="col-sm-6 photo"></div>
-              </div>
-          </div>
+  <div class="gallery container-fluid">
+    <div class="row row1">
+      <div class="col-sm-8 photo"></div>
+      <div class="col-sm-4 photo">
+        <div class="row row2">
+          <div class="col-sm-6 photo"></div>
+          <div class="col-sm-6 photo"></div>
         </div>
-    </div>
-
-    <div class="detail">
-      <div class="left">
-        <div class="name">
-          {{details.name}}
-        </div>
-        <p class="location">{{details.location.street+", "+details.location.city}}</p>
-        <div class="open">
-          <span [style.color]="isOpen()?'green':'red'">{{(isOpen()?"Open : ":"Closed : ")}}</span>{{getTodayDay()[3].start+"-"+getTodayDay()[3].end+" (Today)"}}
-          <button mat-icon-button [matMenuTriggerFor]="menu" matTooltip="Check Opening Hours" aria-label="opening hours info">
-            <mat-icon>info</mat-icon>
-          </button>
-          <mat-menu #menu="matMenu">
-            <table>
-              <tr><td class="day">Monday</td><td>{{details.opening_hours["Mon"].start}}</td><td>-</td><td>{{details.opening_hours["Mon"].end}}</td></tr>
-              <tr><td class="day">Tuesday</td><td>{{details.opening_hours["Tues"].start}}</td><td>-</td><td>{{details.opening_hours["Tues"].end}}</td></tr>
-              <tr><td class="day">Wednesday</td><td>{{details.opening_hours["Wed"].start}}</td><td>-</td><td>{{details.opening_hours["Wed"].end}}</td></tr>
-              <tr><td class="day">Thursday</td><td>{{details.opening_hours["Thurs"].start}}</td><td>-</td><td>{{details.opening_hours["Thurs"].end}}</td></tr>
-              <tr><td class="day">Friday</td><td>{{details.opening_hours["Fri"].start}}</td><td>-</td><td>{{details.opening_hours["Fri"].end}}</td></tr>
-              <tr><td class="day">Saturday</td><td>{{details.opening_hours["Sat"].start}}</td><td>-</td><td>{{details.opening_hours["Sat"].end}}</td></tr>
-              <tr><td class="day">Sunday</td><td>{{details.opening_hours["Sun"].start}}</td><td>-</td><td>{{details.opening_hours["Sun"].end}}</td></tr>
-            </table>
-          </mat-menu>
+        <div class="row row2">
+          <div class="col-sm-6 photo"></div>
+          <div class="col-sm-6 photo"></div>
         </div>
       </div>
+    </div>
+  </div>
 
-      <div class="right">
-        <div class="rating_block"><div><p>Dining Rating : </p></div><div class="rating"><p>{{details.rating}}</p><mat-icon>star_rate</mat-icon></div></div>
-        <div class="buttons">
-          <button mat-raised-button style="background-color:rgb(88,111,64);color: whitesmoke;">Book Now <mat-icon>restaurant_menu</mat-icon></button>
-          <button mat-raised-button>Add Review <mat-icon>post_add</mat-icon></button>
-          <button mat-raised-button>Directions <mat-icon>directions</mat-icon></button>
+  <div class="detail">
+    <div class="left">
+      <div class="name">
+        {{ restaurant.restaurantName }}
+      </div>
+      <!-- <p class="location">{{details.location.street+", "+details.location.city}}</p> -->
+      <div class="open">
+        <span [style.color]="isOpen() ? 'green' : 'red'">{{
+          isOpen() ? "Open : " : "Closed : "
+        }}</span
+        >{{ getTodayDay()[3].start + "-" + getTodayDay()[3].end + " (Today)" }}
+        <button
+          mat-icon-button
+          [matMenuTriggerFor]="menu"
+          matTooltip="Check Opening Hours"
+          aria-label="opening hours info"
+        >
+          <mat-icon>info</mat-icon>
+        </button>
+        <mat-menu #menu="matMenu">
+          <table>
+            <tr *ngFor="let day of week_days">
+              <td class="day">{{ day }}</td>
+              <td>{{ restaurant.opening_hours.start }}</td>
+              <td>-</td>
+              <td>{{ restaurant.opening_hours.end }}</td>
+            </tr>
+            <!-- <tr><td class="day">Tuesday</td><td>{{restaurant.opening_hours}.start}</td><td>-</td><td>{{restaurant.opening_hours}}</td></tr>
+              <tr><td class="day">Wednesday</td><td>{{restaurant.opening_hours.start}}</td><td>-</td><td>{{restaurant.opening_hours}}</td></tr>
+              <tr><td class="day">Thursday</td><td>{{restaurant.opening_hours.start}}</td><td>-</td><td>{{restaurant.opening_hours}}</td></tr>
+              <tr><td class="day">Friday</td><td>{{restaurant.opening_hours.start}}</td><td>-</td><td>{{restaurant.opening_hours}}</td></tr>
+              <tr><td class="day">Saturday</td><td>{{restaurant.opening_hours.start}}</td><td>-</td><td>{{restaurant.opening_hours}}</td></tr>
+              <tr><td class="day">Sunday</td><td>{{restaurant.opening_hours.start}}</td><td>-</td><td>{{restaurant.opening_hours}}</td></tr> -->
+          </table>
+        </mat-menu>
+      </div>
+    </div>
+    .start
+
+    <div class="right">
+      <div class="rating_block">
+        <div><p>Dining Rating :</p></div>
+        <div class="rating">
+          <p>{{ restaurant.rating }}</p>
+          <mat-icon>star_rate</mat-icon>
         </div>
       </div>
-      
+      <div class="buttons">
+        <button
+          mat-raised-button
+          style="background-color: rgb(88, 111, 64); color: whitesmoke"
+        >
+          Book Now <mat-icon>restaurant_menu</mat-icon>
+        </button>
+        <button mat-raised-button>
+          Add Review <mat-icon>post_add</mat-icon>
+        </button>
+        <button mat-raised-button>
+          Directions <mat-icon>directions</mat-icon>
+        </button>
+      </div>
     </div>
+  </div>
 
-
-    <div class="view_bar">
-      <nav mat-tab-nav-bar dynamicHeight  mat-align-tabs="center" [tabPanel]="tabPanel">
-            <a mat-tab-link (click)="activeLink = 'Overview'" [active]="activeLink == 'Overview'"> 
-                <mat-icon>description</mat-icon>Overview
-            </a>
-            <a mat-tab-link (click)="activeLink = 'Reviews'" [active]="activeLink == 'Reviews'">
-                <mat-icon>post_add</mat-icon>Reviews
-            </a>
-            <a mat-tab-link (click)="activeLink = 'Menu'" [active]="activeLink == 'Menu'"> 
-                <mat-icon>restaurant_menu</mat-icon>Menu
-            </a>
-            <a mat-tab-link (click)="activeLink = 'Photos'" [active]="activeLink == 'Photos'"> 
-                <mat-icon>collections</mat-icon>Photos
-            </a>
-        </nav>
-        <mat-tab-nav-panel #tabPanel>
-          <app-reviews *ngIf="activeLink == 'Reviews'"></app-reviews>
-          <app-menu *ngIf="activeLink == 'Menu'"></app-menu>
-        </mat-tab-nav-panel>
-        
-    </div>
-
+  <div class="view_bar">
+    <nav
+      mat-tab-nav-bar
+      dynamicHeight
+      mat-align-tabs="center"
+      [tabPanel]="tabPanel"
+    >
+      <a
+        mat-tab-link
+        (click)="activeLink = 'Overview'"
+        [active]="activeLink == 'Overview'"
+      >
+        <mat-icon>description</mat-icon>Overview
+      </a>
+      <a
+        mat-tab-link
+        (click)="activeLink = 'Reviews'"
+        [active]="activeLink == 'Reviews'"
+      >
+        <mat-icon>post_add</mat-icon>Reviews
+      </a>
+      <a
+        mat-tab-link
+        (click)="activeLink = 'Menu'"
+        [active]="activeLink == 'Menu'"
+      >
+        <mat-icon>restaurant_menu</mat-icon>Menu
+      </a>
+      <a
+        mat-tab-link
+        (click)="activeLink = 'Photos'"
+        [active]="activeLink == 'Photos'"
+      >
+        <mat-icon>collections</mat-icon>Photos
+      </a>
+    </nav>
+    <mat-tab-nav-panel #tabPanel>
+      <app-reviews *ngIf="activeLink == 'Reviews'"></app-reviews>
+      <app-menu *ngIf="activeLink == 'Menu'"></app-menu>
+    </mat-tab-nav-panel>
+  </div>
 </div>
-
-    

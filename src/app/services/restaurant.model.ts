@@ -1,4 +1,3 @@
-import { Filters } from './filter.model';
 import { Recipe } from './recipe.model';
 import { Review } from './review.model';
 
@@ -10,9 +9,7 @@ export interface Restaurant {
   contact: string;
   nonVeg: boolean;
   description: string;
+  rating?: number;
+  opening_hours?: any;
   cuisines: any;
-  user: number;
-  photos: string[];
-  menu: Recipe[];
-  reviews: Review[];
 }
