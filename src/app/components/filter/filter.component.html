@@ -1,11 +1,17 @@
 <mat-card class="filterCard">
   <form #filter="ngForm" (ngSubmit)="onSubmit(filter.value)">
-    <input type="text" name="rating" ngModel size="5" /> Rating<br /><br />
+    Rating<br />
+    <input type="range" min="0" max="5" name="rating" ngModel size="5" />
+    <br /><br />
     <h1>Cuisine</h1>
     <ul>
       <fieldset ngModelGroup="cuisine">
         <div *ngFor="let cuisine of cuisines">
-          <input type="checkbox" name="{{ cuisine.cuisineName }}" ngModel />
+          <input
+            type="checkbox"
+            name="{{ cuisine.cuisineName.replace(' ', '') }}"
+            ngModel
+          />
           {{ cuisine.cuisineName }}
           <br /><br />
         </div>
