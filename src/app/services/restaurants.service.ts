@@ -2,17 +2,17 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable, OnInit } from '@angular/core';
 import { Restaurant } from './restaurant.model';
 import { Subject } from 'rxjs';
+import { Cuisine } from './cuisine.model';
 
 @Injectable({
   providedIn: 'root',
 })
 export class RestaurantService implements OnInit {
   restaurants: Restaurant[] = [];
-  cuisines: string[] = [];
+  cuisines: Cuisine[] = [];
 
   restaurantList = new Subject<Restaurant[]>();
-  cuisineList = new Subject<string[]>();
-
+  cuisineList = new Subject<Cuisine[]>();
   selectedRestaurant = new Subject<Restaurant>();
 
   constructor(private http: HttpClient) {}
@@ -28,9 +28,7 @@ export class RestaurantService implements OnInit {
         restaurants: Restaurant[];
       }>(url)
       .subscribe((resData) => {
-        resData.restaurants.map((restaurant) => {
-          this.restaurants.push(restaurant);
-        });
+        this.restaurants = resData.restaurants;
         this.restaurantList.next(this.restaurants.slice());
       });
   }
@@ -59,9 +57,7 @@ export class RestaurantService implements OnInit {
         }[];
       }>('http://localhost:8080/api/cuisines/')
       .subscribe((resData) => {
-        resData.cuisines.map((cuisine) => {
-          this.cuisines.push(cuisine.cuisineName);
-        });
+        this.cuisines = resData.cuisines;
         this.cuisineList.next(this.cuisines.slice());
       });
   }
@@ -71,44 +67,12 @@ export class RestaurantService implements OnInit {
 
     this.http.get(url).subscribe(() => {});
   }
-  // selectRestaurant(id: number) {
-  //   const filteredRestaurant = this.restaurants.filter((restuarant) => {
-  //     return restuarant.id === id;
-  //   });
-  //   this.selectedRestaurant.next(filteredRestaurant[0]);
-  // }
 
-  // applyFilters(filters) {
-  //   const filteredRestaurants = this.restaurants.filter((restaurant) => {
-  //     return (
-  //       (filters.rating > 0
-  //         ? restaurant.filters.rating >= filters.rating
-  //         : true) &&
-  //       (filters.isPrivate == true
-  //         ? restaurant.filters.isPrivate == filters.isPrivate
-  //         : true) &&
-  //       (filters.pure_veg == true
-  //         ? restaurant.filters.pure_veg == filters.pure_veg
-  //         : true) &&
-  //       (filters.cuisine.southIndian == true
-  //         ? restaurant.filters.cuisine.southIndian ==
-  //           filters.cuisine.southIndian
-  //         : true) &&
-  //       (filters.cuisine.punjabi == true
-  //         ? restaurant.filters.cuisine.punjabi == filters.cuisine.punjabi
-  //         : true) &&
-  //       (filters.cuisine.bengali == true
-  //         ? restaurant.filters.cuisine.bengali == filters.cuisine.bengali
-  //         : true) &&
-  //       (filters.cuisine.gujarati == true
-  //         ? restaurant.filters.cuisine.gujarati == filters.cuisine.gujarati
-  //         : true) &&
-  //       (filters.cuisine.chinese == true
-  //         ? restaurant.filters.cuisine.chinese == filters.cuisine.chinese
-  //         : true)
-  //     );
-  //   });
+  applyFilters(filters) {
+    const filteredRestaurants = this.restaurants.filter((restaurant) => {
+      return filters.rating > 0 ? restaurant.rating >= filters.rating : true;
+    });
 
-  //   this.restaurantList.next(filteredRestaurants);
-  // }
+    this.restaurantList.next(filteredRestaurants);
+  }
 }

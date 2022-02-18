@@ -1,4 +1,4 @@
-export interface Cuisines {
+export interface Cuisine {
   cuisineId: number;
   cuisineName: string;
 }

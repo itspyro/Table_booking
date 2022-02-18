@@ -5,8 +5,8 @@
     <ul>
       <fieldset ngModelGroup="cuisine">
         <div *ngFor="let cuisine of cuisines">
-          <input type="checkbox" [name]="cuisine" ngModel />
-          {{ cuisine }}
+          <input type="checkbox" name="{{ cuisine.cuisineName }}" ngModel />
+          {{ cuisine.cuisineName }}
           <br /><br />
         </div>
       </fieldset>

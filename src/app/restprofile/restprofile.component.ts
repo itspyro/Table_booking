@@ -10,36 +10,38 @@ import { RestaurantService } from 'app/services/restaurants.service';
 })
 export class RestprofileComponent implements OnInit {
   id: number = 0;
-  restaurant: Restaurant = {
-    restaurantId: 1,
-    restaurantName: 'Tamasha',
-    rating: 5,
-    address: '242, Connaught Place, New Delhi, 251001, near ground',
-    // location: {
-    //   pin_code: '251001',
-    //   building_no: '242',
-    //   street: 'Connaught Place',
-    //   landmark: 'near ground',
-    //   city: 'New Delhi',
-    // },
-    opening_hours: {
-      start: '10:30 am',
-      end: '10 pm',
-    },
-    cuisines: [
-      'South Indian',
-      'Gujrati',
-      'Bengali',
-      'Marathi',
-      'Italian',
-      'Punjabi Rasoi',
-      'Mediterranean',
-    ],
-    gstIn: '',
-    contact: '',
-    nonVeg: true,
-    description: '',
-  };
+  restaurant?: Restaurant;
+  isLoading: boolean = true;
+  //  = {
+  //   restaurantId: 1,
+  //   restaurantName: 'Tamasha',
+  //   rating: 5,
+  //   address: '242, Connaught Place, New Delhi, 251001, near ground',
+  //   // location: {
+  //   //   pin_code: '251001',
+  //   //   building_no: '242',
+  //   //   street: 'Connaught Place',
+  //   //   landmark: 'near ground',
+  //   //   city: 'New Delhi',
+  //   // },
+  //   opening_hours: {
+  //     start: '10:30 am',
+  //     end: '10 pm',
+  //   },
+  //   cuisines: [
+  //     'South Indian',
+  //     'Gujrati',
+  //     'Bengali',
+  //     'Marathi',
+  //     'Italian',
+  //     'Punjabi Rasoi',
+  //     'Mediterranean',
+  //   ],
+  //   gstIn: '',
+  //   contact: '',
+  //   nonVeg: true,
+  //   description: '',
+  // };
 
   week_days = [
     'Sunday',
@@ -59,10 +61,13 @@ export class RestprofileComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.id = +atob(this.route.snapshot.params['id']);
-    this.restaurantService.getRestaurantsById(this.id);
+    this.restaurantService.getRestaurantsById(
+      +atob(this.route.snapshot.params['id'])
+    );
     this.restaurantService.selectedRestaurant.subscribe((restaurant) => {
       this.restaurant = restaurant;
+      this.isLoading = !this.restaurant;
+      console.log(this.isLoading);
     });
   }
 
@@ -139,7 +144,7 @@ export class RestprofileComponent implements OnInit {
       curr_date.getHours(),
       curr_date.getMinutes(),
       this.today_day,
-      this.restaurant.opening_hours[this.today_day],
+      this.restaurant?.opening_hours[this.today_day],
     ];
   }
 }

@@ -1,4 +1,8 @@
-<div class="rest_profile">
+<div class="container" *ngIf="isLoading">
+  <mat-spinner></mat-spinner>
+</div>
+
+<div class="rest_profile" *ngIf="!isLoading">
   <div class="gallery container-fluid">
     <div class="row row1">
       <div class="col-sm-8 photo"></div>
@@ -18,9 +22,9 @@
   <div class="detail">
     <div class="left">
       <div class="name">
-        {{ restaurant.restaurantName }}
+        {{ restaurant?.restaurantName }}
       </div>
-      <!-- <p class="location">{{details.location.street+", "+details.location.city}}</p> -->
+      <p class="location">{{ restaurant?.address }}</p>
       <div class="open">
         <span [style.color]="isOpen() ? 'green' : 'red'">{{
           isOpen() ? "Open : " : "Closed : "
@@ -38,16 +42,10 @@
           <table>
             <tr *ngFor="let day of week_days">
               <td class="day">{{ day }}</td>
-              <td>{{ restaurant.opening_hours.start }}</td>
+              <td>{{ restaurant?.opening_hours?.start }}</td>
               <td>-</td>
-              <td>{{ restaurant.opening_hours.end }}</td>
+              <td>{{ restaurant?.opening_hours?.end }}</td>
             </tr>
-            <!-- <tr><td class="day">Tuesday</td><td>{{restaurant.opening_hours}.start}</td><td>-</td><td>{{restaurant.opening_hours}}</td></tr>
-              <tr><td class="day">Wednesday</td><td>{{restaurant.opening_hours.start}}</td><td>-</td><td>{{restaurant.opening_hours}}</td></tr>
-              <tr><td class="day">Thursday</td><td>{{restaurant.opening_hours.start}}</td><td>-</td><td>{{restaurant.opening_hours}}</td></tr>
-              <tr><td class="day">Friday</td><td>{{restaurant.opening_hours.start}}</td><td>-</td><td>{{restaurant.opening_hours}}</td></tr>
-              <tr><td class="day">Saturday</td><td>{{restaurant.opening_hours.start}}</td><td>-</td><td>{{restaurant.opening_hours}}</td></tr>
-              <tr><td class="day">Sunday</td><td>{{restaurant.opening_hours.start}}</td><td>-</td><td>{{restaurant.opening_hours}}</td></tr> -->
           </table>
         </mat-menu>
       </div>
@@ -58,7 +56,7 @@
       <div class="rating_block">
         <div><p>Dining Rating :</p></div>
         <div class="rating">
-          <p>{{ restaurant.rating }}</p>
+          <p>{{ restaurant?.rating }}</p>
           <mat-icon>star_rate</mat-icon>
         </div>
       </div>

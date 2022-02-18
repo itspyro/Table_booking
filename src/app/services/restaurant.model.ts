@@ -9,7 +9,10 @@ export interface Restaurant {
   contact: string;
   nonVeg: boolean;
   description: string;
-  rating?: number;
-  opening_hours?: any;
+  rating: number;
+  opening_hours: {
+    start: string;
+    end: string;
+  };
   cuisines: any;
 }
