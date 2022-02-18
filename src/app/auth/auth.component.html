@@ -1,130 +1,186 @@
 <div class="center-content">
-    <mat-card class="example-card">
-      <mat-card-header>
-        <mat-card-title>Login/Register</mat-card-title>
-        <mat-card-subtitle>Restaurant Table </mat-card-subtitle>
-      </mat-card-header>
-      <mat-card-content>
-        <mat-tab-group>
-          <mat-tab label="Login">
-            <form #loginForm="ngForm" (ngSubmit)="onLoginButton(loginForm.value)">
-              <mat-form-field class="example-full-width">
-                <mat-label>Email</mat-label>
-                <input type="email" matInput placeholder="Email" ngModel name="email">
-                <mat-icon matSuffix>email</mat-icon>
-              </mat-form-field>
-    
-              <mat-form-field class="example-full-width">
-                <mat-label>Password</mat-label>
-                <input type="password" matInput placeholder="Password" ngModel name="password">
-                <mat-icon matSuffix>vpn_key</mat-icon>
-              </mat-form-field>
-              <button type="submit" color="primary" >Login</button>
-            </form>
-            
-          </mat-tab>
-          <mat-tab label="Register">
-            <form #registerForm="ngForm" (ngSubmit)="onSubmitButton(registerForm.value)">
+  <mat-card class="example-card">
+    <mat-card-header>
+      <mat-card-title>Login/Register</mat-card-title>
+      <mat-card-subtitle>Restaurant Table </mat-card-subtitle>
+    </mat-card-header>
+    <mat-card-content>
+      <mat-tab-group>
+        <mat-tab label="Login">
+          <form #loginForm="ngForm" (ngSubmit)="onLoginButton(loginForm.value)">
+            <mat-form-field class="example-full-width">
+              <mat-label>Email</mat-label>
+              <input
+                type="email"
+                matInput
+                placeholder="Email"
+                ngModel
+                name="email"
+                required
+                email
+              />
+              <mat-icon matSuffix>email</mat-icon>
+            </mat-form-field>
 
-              <mat-form-field class="example-full-width">
-                <mat-label>Username</mat-label>
-                <input type="text" matInput placeholder="Username" name="userName" ngModel>
-                <mat-icon matSuffix>man</mat-icon>
-              </mat-form-field>
+            <mat-form-field class="example-full-width">
+              <mat-label>Password</mat-label>
+              <input
+                type="password"
+                matInput
+                placeholder="Password"
+                ngModel
+                name="password"
+                required
+                minlength="6"
+              />
+              <mat-icon matSuffix>vpn_key</mat-icon>
+            </mat-form-field>
+            <button type="submit" color="primary" [disabled]="!loginForm.valid">
+              Login
+            </button>
+          </form>
+        </mat-tab>
+        <mat-tab label="Register">
+          <form
+            #registerForm="ngForm"
+            (ngSubmit)="onSubmitButton(registerForm.value)"
+          >
+            <mat-form-field class="example-full-width">
+              <mat-label>Username</mat-label>
+              <input
+                type="text"
+                matInput
+                placeholder="Username"
+                name="userName"
+                ngModel
+                required
+                minlength="3"
+              />
+              <mat-icon matSuffix>man</mat-icon>
+            </mat-form-field>
 
-              <mat-form-field class="example-full-width">
-                <mat-label>Email</mat-label>
-                <input type="email" matInput placeholder="Email" name="email" ngModel>
-                <mat-icon matSuffix>email</mat-icon>
-              </mat-form-field>
-    
-              <mat-form-field class="example-full-width">
-                <mat-label>Password</mat-label>
-                <input type="password" matInput placeholder="Password" ngModel name="password">
-                <mat-icon matSuffix>vpn_key</mat-icon>
-              </mat-form-field>
-              <mat-form-field class="example-full-width">
-                <mat-label>Phone Number</mat-label>
-                <input type="tell" matInput placeholder="phone no." ngModel name="phoneNo">
-                <mat-icon matSuffix>phone</mat-icon>
-              </mat-form-field>
-            
-              <mat-checkbox ngModel name="isOwner"></mat-checkbox>
-              <fieldset ngModelGroup="restDetails" *ngIf="registerForm.value.isOwner">
+            <mat-form-field class="example-full-width">
+              <mat-label>Email</mat-label>
+              <input
+                type="email"
+                matInput
+                placeholder="Email"
+                name="email"
+                ngModel
+                required
+                email
+              />
+              <mat-icon matSuffix>email</mat-icon>
+            </mat-form-field>
 
-                <div mat-dialog-content class="mat-typography">
-                  <div mat-card-content>
-                    <mat-form-field appearance="fill">
+            <mat-form-field class="example-full-width">
+              <mat-label>Password</mat-label>
+              <input
+                type="password"
+                matInput
+                placeholder="Password"
+                ngModel
+                name="password"
+                required
+                minlength="6"
+              />
+              <mat-icon matSuffix>vpn_key</mat-icon>
+            </mat-form-field>
+            <mat-form-field class="example-full-width">
+              <mat-label>Phone Number</mat-label>
+              <input
+                type="call"
+                matInput
+                placeholder="phone no."
+                ngModel
+                name="phoneNo"
+                required
+                minlength="10"
+              />
+              <mat-icon matSuffix>phone</mat-icon>
+            </mat-form-field>
+
+            <mat-checkbox ngModel name="isOwner"></mat-checkbox>
+            <fieldset
+              ngModelGroup="restDetails"
+              *ngIf="registerForm.value.isOwner"
+            >
+              <div mat-dialog-content class="mat-typography">
+                <div mat-card-content>
+                  <mat-form-field appearance="fill">
                     <mat-label>GST NO.</mat-label>
-                    <input matInput ngModel name="gstNo">
-                    </mat-form-field>
-                 </div>
-                
-                
-                 <div mat-card-content>
+                    <input matInput ngModel name="gstNo" required />
+                  </mat-form-field>
+                </div>
+
+                <div mat-card-content>
                   <mat-form-field appearance="fill">
                     <mat-label>restaurant Name</mat-label>
-                    <input matInput ngModel name="restaurantName">
+                    <input matInput ngModel name="restaurantName" required />
                   </mat-form-field>
-                  </div>
-                
-                
-                
-                <div mat-card-content >
+                </div>
+
+                <div mat-card-content>
                   <mat-form-field appearance="fill">
                     <mat-label>Location</mat-label>
-                    <input matInput ngModel name="location">
+                    <input matInput ngModel name="location" required />
                   </mat-form-field>
                 </div>
-                
-                 <div mat-card-content>
+
+                <div mat-card-content>
                   <mat-form-field appearance="fill">
                     <mat-label>No of Table Capacity</mat-label>
-                    <input matInput ngModel name="tableCapacity">
+                    <input matInput ngModel name="tableCapacity" />
                   </mat-form-field>
-                  </div>
-                
-                
-                 <div mat-card-content>
+                </div>
+
+                <div mat-card-content>
                   <mat-form-field appearance="fill">
                     <mat-label>Charge Par Table </mat-label>
-                    <input matInput ngModel name="tableCharge">
+                    <input matInput ngModel name="tableCharge" />
                   </mat-form-field>
-                  </div>
-                
-                  <div mat-card-content>
+                </div>
+
+                <div mat-card-content>
                   <mat-form-field appearance="fill">
                     <mat-label>Cusine Add</mat-label>
-                    <input matInput ngModel name="cusine">
+                    <input matInput ngModel name="cusine" />
                   </mat-form-field>
-                  </div>
-                
-                
+                </div>
+
                 <div mat-card-content>
                   <mat-form-field appearance="fill">
-                  <mat-label>Menu Add</mat-label>
-                  <input matInput ngModel name="menu">
+                    <mat-label>Menu Add</mat-label>
+                    <input matInput ngModel name="menu" />
                   </mat-form-field>
-                  </div>
-                <div mat-card-content>
-                  <section class="example-section">
-                <mat-checkbox class="example-margin" name="private" ngModel>Private</mat-checkbox>
-                </section>
                 </div>
                 <div mat-card-content>
                   <section class="example-section">
-                <mat-checkbox class="example-margin" name="pureVeg" ngModel>Pure Veg </mat-checkbox>
-                </section>
+                    <mat-checkbox class="example-margin" name="private" ngModel
+                      >Private</mat-checkbox
+                    >
+                  </section>
                 </div>
+                <div mat-card-content>
+                  <section class="example-section">
+                    <mat-checkbox class="example-margin" name="pureVeg" ngModel
+                      >Pure Veg
+                    </mat-checkbox>
+                  </section>
                 </div>
-              </fieldset>
-              <button mat-button type="submit" color="primary" >Submit Register</button> 
-            </form>
-            
-          </mat-tab>
-        </mat-tab-group>
-  
-      </mat-card-content>
-  
-    </mat-card>
-  </div>
+              </div>
+            </fieldset>
+            <button
+              mat-button
+              type="submit"
+              color="primary"
+              [disabled]="!registerForm.valid"
+            >
+              Register
+            </button>
+          </form>
+        </mat-tab>
+      </mat-tab-group>
+    </mat-card-content>
+  </mat-card>
+</div>

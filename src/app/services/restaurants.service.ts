@@ -1,6 +1,5 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable, OnInit } from '@angular/core';
-import { Filters } from './filter.model';
 import { Restaurant } from './restaurant.model';
 import { Subject } from 'rxjs';
 
@@ -9,8 +8,10 @@ import { Subject } from 'rxjs';
 })
 export class RestaurantService implements OnInit {
   restaurants: Restaurant[] = [];
+  cuisines: string[] = [];
 
   restaurantList = new Subject<Restaurant[]>();
+  cuisineList = new Subject<string[]>();
 
   selectedRestaurant = new Subject<Restaurant>();
 
@@ -19,10 +20,14 @@ export class RestaurantService implements OnInit {
   ngOnInit(): void {}
 
   getRestaurants() {
+    const url = 'http://localhost:8080/api/restaurant/all';
     this.http
-      .get<{httpStatusCode:number;responseMessage:string;restaurants:Restaurant[]}>('localhost:8080/api/restaurant/all')
+      .get<{
+        httpStatusCode: number;
+        responseMessage: string;
+        restaurants: Restaurant[];
+      }>(url)
       .subscribe((resData) => {
-        console.log(resData.httpStatusCode)
         resData.restaurants.map((restaurant) => {
           this.restaurants.push(restaurant);
         });
@@ -30,6 +35,42 @@ export class RestaurantService implements OnInit {
       });
   }
 
+  getRestaurantsById(id: number) {
+    this.http
+      .get<{
+        httpStatusCode: number;
+        responseMessage: string;
+        restaurants: Restaurant[];
+      }>('http://localhost:8080/api/restaurant/' + id)
+      .subscribe((resData) => {
+        this.selectedRestaurant.next(resData.restaurants[0]);
+      });
+  }
+
+  getCuisines() {
+    this.http
+      .get<{
+        httpStatusCode: number;
+        responseMessage: string;
+        cuisines: {
+          cuisineId: number;
+          cuisineName: string;
+          restaurants: any;
+        }[];
+      }>('http://localhost:8080/api/cuisines/')
+      .subscribe((resData) => {
+        resData.cuisines.map((cuisine) => {
+          this.cuisines.push(cuisine.cuisineName);
+        });
+        this.cuisineList.next(this.cuisines.slice());
+      });
+  }
+
+  getPhotos(restaurantId: number) {
+    const url = 'http://localhost:8080/api/photos/restaurant/' + restaurantId;
+
+    this.http.get(url).subscribe(() => {});
+  }
   // selectRestaurant(id: number) {
   //   const filteredRestaurant = this.restaurants.filter((restuarant) => {
   //     return restuarant.id === id;
@@ -37,7 +78,7 @@ export class RestaurantService implements OnInit {
   //   this.selectedRestaurant.next(filteredRestaurant[0]);
   // }
 
-  // applyFilters(filters: Filters) {
+  // applyFilters(filters) {
   //   const filteredRestaurants = this.restaurants.filter((restaurant) => {
   //     return (
   //       (filters.rating > 0
@@ -48,9 +89,6 @@ export class RestaurantService implements OnInit {
   //         : true) &&
   //       (filters.pure_veg == true
   //         ? restaurant.filters.pure_veg == filters.pure_veg
-  //         : true) &&
-  //       (filters.wifi == true
-  //         ? restaurant.filters.wifi == filters.wifi
   //         : true) &&
   //       (filters.cuisine.southIndian == true
   //         ? restaurant.filters.cuisine.southIndian ==

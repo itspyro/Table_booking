@@ -22,7 +22,6 @@ import { LocationComponent } from './location/location.component';
 import { MaterialModule } from './material/material.module';
 import { AuthComponent } from './auth/auth.component';
 import { ScrollingModule } from '@angular/cdk/scrolling';
-import { DailogComponent } from './auth/dailog/dailog.component';
 import { RestownerprofileComponent } from './restownerprofile/restownerprofile.component';
 import { UpdatableinfoComponent } from './restownerprofile/updatableinfo/updatableinfo.component';
 import { RestOverviewComponent } from './restprofile/rest-overview/rest-overview.component';
@@ -43,7 +42,6 @@ import { RestOverviewComponent } from './restprofile/rest-overview/rest-overview
     OrdersComponent,
     LocationComponent,
     AuthComponent,
-    DailogComponent,
     RestownerprofileComponent,
     UpdatableinfoComponent,
     RestOverviewComponent,
@@ -57,7 +55,7 @@ import { RestOverviewComponent } from './restprofile/rest-overview/rest-overview
     FormsModule,
     FlexLayoutModule,
     ScrollingModule,
-    MaterialModule
+    MaterialModule,
   ],
   providers: [],
   bootstrap: [AppComponent],

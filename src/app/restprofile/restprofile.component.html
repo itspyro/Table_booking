@@ -1,18 +1,14 @@
 <div class="rest_profile">
     <div class="gallery container-fluid">
-        <div class="row row1">
-          <div class="col-sm-8 photo"></div>
-          <div class="col-sm-4 photo">
-              <div class="row row2">
-                <div class="col-sm-6 photo"></div>
-                <div class="col-sm-6 photo"></div>
-              </div>
-              <div class="row row2">
-                <div class="col-sm-6 photo"></div>
-                <div class="col-sm-6 photo"></div>
-              </div>
+      <div class="row row1">
+        <div class="col-sm-8 photo"></div>
+        <div class="col-sm-4 photo">
+          <div class="row row2">
+            <div class="col-sm-6 photo"></div>
+            <div class="col-sm-6 photo"></div>
           </div>
         </div>
+      </div>
     </div>
 
     <div class="detail">
@@ -39,41 +35,46 @@
           </mat-menu>
         </div>
       </div>
-
       <div class="right">
-        <div class="rating_block"><div><p>Dining Rating : </p></div><div class="rating"><p>{{details.rating}}</p><mat-icon>star_rate</mat-icon></div></div>
+        <div class="rating_block">
+          <div><p>Dining Rating :</p></div>
+          <div class="rating">
+            <p>{{ this.details.rating }}</p>
+            <mat-icon>star_rate</mat-icon>
+          </div>
+        </div>
         <div class="buttons">
-          <button mat-raised-button style="background-color:rgb(88,111,64);color: whitesmoke;">Book Now <mat-icon>restaurant_menu</mat-icon></button>
-          <button mat-raised-button>Add Review <mat-icon>post_add</mat-icon></button>
-          <button mat-raised-button>Directions <mat-icon>directions</mat-icon></button>
+          <button mat-raised-button style="background-color: rgb(88, 111, 64); color: whitesmoke">
+            Book Now <mat-icon>restaurant_menu</mat-icon>
+          </button>
+          <button mat-raised-button>
+            Add Review <mat-icon>post_add</mat-icon>
+          </button>
+          <button mat-raised-button>
+            Directions <mat-icon>directions</mat-icon>
+          </button>
         </div>
       </div>
-      
     </div>
-
 
     <div class="view_bar">
-      <nav mat-tab-nav-bar dynamicHeight  mat-align-tabs="center" [tabPanel]="tabPanel">
-            <a mat-tab-link (click)="activeLink = 'Overview'" [active]="activeLink == 'Overview'"> 
-                <mat-icon>description</mat-icon>Overview
-            </a>
-            <a mat-tab-link (click)="activeLink = 'Reviews'" [active]="activeLink == 'Reviews'">
-                <mat-icon>post_add</mat-icon>Reviews
-            </a>
-            <a mat-tab-link (click)="activeLink = 'Menu'" [active]="activeLink == 'Menu'"> 
-                <mat-icon>restaurant_menu</mat-icon>Menu
-            </a>
-            <a mat-tab-link (click)="activeLink = 'Photos'" [active]="activeLink == 'Photos'"> 
-                <mat-icon>collections</mat-icon>Photos
-            </a>
-        </nav>
-        <mat-tab-nav-panel #tabPanel>
-          <app-reviews *ngIf="activeLink == 'Reviews'"></app-reviews>
-          <app-menu *ngIf="activeLink == 'Menu'"></app-menu>
-        </mat-tab-nav-panel>
-        
+      <nav mat-tab-nav-bar dynamicHeight mat-align-tabs="center" [tabPanel]="tabPanel">
+        <a mat-tab-link (click)="activeLink = 'Overview'" [active]="activeLink == 'Overview'">
+          <mat-icon>description</mat-icon>Overview
+        </a>
+        <a mat-tab-link (click)="activeLink = 'Reviews'" [active]="activeLink == 'Reviews'">
+          <mat-icon>post_add</mat-icon>Reviews
+        </a>
+        <a mat-tab-link (click)="activeLink = 'Menu'" [active]="activeLink == 'Menu'">
+          <mat-icon>restaurant_menu</mat-icon>Menu
+        </a>
+        <a mat-tab-link (click)="activeLink = 'Photos'" [active]="activeLink == 'Photos'">
+          <mat-icon>collections</mat-icon>Photos
+        </a>
+      </nav>
+      <mat-tab-nav-panel #tabPanel>
+        <app-reviews *ngIf="activeLink == 'Reviews'"></app-reviews>
+        <app-menu *ngIf="activeLink == 'Menu'"></app-menu>
+      </mat-tab-nav-panel>
     </div>
-
 </div>
-
-    

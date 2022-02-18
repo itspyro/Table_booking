@@ -1,26 +1,20 @@
 <mat-card class="filterCard">
-    <form #filter="ngForm" (ngSubmit)='onSubmit(filter.value)'>
-      <input type="checkbox" name="pure_veg" ngModel >Pure Veg<br><br>
-      <input type="text" name="rating" ngModel size="5"> Rating<br><br>
-      <h1>Cuisine</h1>      
-      <ul >
-          <!-- <form #cuisine="ngForm"> -->
-        <fieldset ngModelGroup="cuisine">
-          <input type="checkbox" name="southIndian" ngModel > South Indian<br><br>
-          <input type="checkbox" name="punjabi" ngModel > Punjabi<br><br>
-          <input type="checkbox" name="bengali" ngModel > Bengali<br><br>
-          <input type="checkbox" name="gujarati" ngModel > Gujarati<br><br>
-          <input type="checkbox" name="chinese" ngModel > Chinese<br><br>
-        </fieldset>
-          <!-- </form> -->
-        </ul>
-      <input type="checkbox" name="private" ngModel > Private<br><br>
-      <input type="date" name="date" ngModel > Date<br><br>
-      <input type="time" name="time" ngModel > Time<br><br>
-  
-  
-      <button type="submit"> submit</button>
-  
-    </form>
-  </mat-card>
-  
+  <form #filter="ngForm" (ngSubmit)="onSubmit(filter.value)">
+    Rating<br>
+    <input type="range" min="0" max="5" name="rating" ngModel size="5" /> <br /><br />
+    <h1>Cuisine</h1>
+    <ul>
+      <fieldset ngModelGroup="cuisine">
+        <div *ngFor="let cuisine of cuisines">
+          <input type="checkbox" [name]="cuisine.replace(' ','')" ngModel />
+          {{ cuisine }}
+          <br /><br />
+        </div>
+      </fieldset>
+    </ul>
+    <input type="checkbox" name="pure_veg" ngModel />Pure Veg<br /><br />
+    <input type="checkbox" name="private" ngModel /> Private<br /><br />
+
+    <button class="btn btn-primary" type="submit">submit</button>
+  </form>
+</mat-card>
