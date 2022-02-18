@@ -1,22 +1,30 @@
 <div class="container">
   <div fxLayout="row wrap" fxLayoutGap="16px grid">
     <div
-      fxFlex="25%"
+      fxFlex="33%"
       fxFlex.xs="100%"
-      fxFlex.sm="33%"
+      fxFlex.sm="50%"
       *ngFor="let restaurant of restaurants"
     >
-      <mat-card (click)="onNavigateProfile(restaurant.restaurantId)">
+      <mat-card fxFlex (click)="onNavigateProfile(restaurant.restaurantId)">
+        <img class="restaurant-image"
+          mat-card-image
+          src="https://cdn.pixabay.com/photo/2016/04/20/00/41/mcdonalds-1340199_1280.jpg"
+          alt="restauarant image"
+        />
         <mat-card-header>
           <mat-card-title>{{ restaurant.restaurantName }}</mat-card-title>
         </mat-card-header>
-        <!-- <img class="restaurant-image"
-          mat-card-image
-          src="{{ restaurant.imgUrl }}"
-          alt="restauarant image"
-        /> -->
         <mat-card-content>
-          <p>{{ restaurant.description }}</p>
+          <p>{{ restaurant.address }}</p>
+          <mat-card-subtitle class="rating-container">
+            <star-rating
+              class="rating"
+              [starType]="'svg'"
+              [rating]="2"
+              [readOnly]="true"
+            ></star-rating>
+          </mat-card-subtitle>
         </mat-card-content>
       </mat-card>
     </div>
