@@ -76,7 +76,7 @@ $md-mcgpalette0: (
 // );
 
 $mytheme-primary: mat.define-palette($md-mcgpalette0, 500,300,600 );
-$mytheme-accent: mat.define-palette(mat.$green-palette, A200, A100, A400);
+$mytheme-accent: mat.define-palette(mat.$green-palette, 700, A100, A400);
 
 // The "warn" palette is optional and defaults to red if not specified.
 $mytheme-warn: mat.define-palette(mat.$red-palette);
