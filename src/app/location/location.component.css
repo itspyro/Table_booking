@@ -1,31 +1,30 @@
-.headline{
-    font-size: 3vw;
-    color: rgb(240,80,6);
-}
-.under{
-    height: 2vw;
-    background-color: rgb(240,80,6);
-    width: 40%;
-}
 .location{
-    height: 14vw;
-    background-color: rgb(83,111,64);
     display: flex;
     justify-content: center;
     align-items: center;
+    margin: 4%;
 }
-.inner{
-    display: flex;
-    height: 30%;
+.detect{
+    width: 70%;
     background-color: white;
+    border: 0.1vw solid rgb(88, 111, 64);
 }
-.inner button{
+mat-form-field.mat-form-field {
+    width: 100%;
+}
+::ng-deep.mat-form-field-wrapper{
+    color: white;
+}
+.location button{
     padding: 2%;
 }
 .detect{
     display: flex;
+    width: 100%;
 }
-#compass{
-    width: 20%;
-    cursor: pointer;
+button{
+    width: 30%;
+    margin: 1%;
+    background-color: rgb(88, 111, 64);
+    color: white;
 }

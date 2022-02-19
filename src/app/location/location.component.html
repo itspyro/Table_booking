@@ -1,17 +1,13 @@
-<div class="location">
-    <div class="inner">
+<div class="location" [ngStyle]="{width:size}">
         <div class="detect">
-            <mat-icon>explore</mat-icon>
-            <mat-form-field appearance="fill">
+            <!-- <mat-icon>explore</mat-icon> -->
+            <mat-form-field appearance="fill" color="accent">
                 <mat-label>Select City</mat-label>
                 <mat-select>
-                  <mat-option value="option">Delhi</mat-option>
-                  <mat-option value="option">Mumbai</mat-option>
-                  <mat-option value="option">Dehradun</mat-option>
-                  <mat-option value="option">Shimla</mat-option>
+                  <mat-option *ngFor="let city of cities" value="{{city}}">{{city}}</mat-option>
                 </mat-select>
-              </mat-form-field>
+                <mat-hint align="end">{{hint}}</mat-hint>
+            </mat-form-field>
         </div>
         <button type="submit" (click)="onSubmit()">Search</button>
-    </div>
 </div>
