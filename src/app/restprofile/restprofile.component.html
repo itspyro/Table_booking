@@ -7,6 +7,10 @@
             <div class="col-sm-6 photo"></div>
             <div class="col-sm-6 photo"></div>
           </div>
+          <div class="row row2">
+            <div class="col-sm-6 photo"></div>
+            <div class="col-sm-6 photo"></div>
+          </div>
         </div>
       </div>
     </div>
@@ -24,13 +28,7 @@
           </button>
           <mat-menu #menu="matMenu">
             <table>
-              <tr><td class="day">Monday</td><td>{{details.opening_hours.start}}</td><td>-</td><td>{{details.opening_hours.end}}</td></tr>
-              <tr><td class="day">Tuesday</td><td>{{details.opening_hours.start}}</td><td>-</td><td>{{details.opening_hours.end}}</td></tr>
-              <tr><td class="day">Wednesday</td><td>{{details.opening_hours.start}}</td><td>-</td><td>{{details.opening_hours.end}}</td></tr>
-              <tr><td class="day">Thursday</td><td>{{details.opening_hours.start}}</td><td>-</td><td>{{details.opening_hours.end}}</td></tr>
-              <tr><td class="day">Friday</td><td>{{details.opening_hours.start}}</td><td>-</td><td>{{details.opening_hours.end}}</td></tr>
-              <tr><td class="day">Saturday</td><td>{{details.opening_hours.start}}</td><td>-</td><td>{{details.opening_hours.end}}</td></tr>
-              <tr><td class="day">Sunday</td><td>{{details.opening_hours.start}}</td><td>-</td><td>{{details.opening_hours.end}}</td></tr>
+              <tr *ngFor="let day of week_days"><td class="day">{{day}}</td><td>{{details.opening_hours.start}}</td><td class="dash">-</td><td>{{details.opening_hours.end}}</td></tr>
             </table>
           </mat-menu>
         </div>
@@ -73,6 +71,7 @@
         </a>
       </nav>
       <mat-tab-nav-panel #tabPanel>
+        <app-rest-overview *ngIf="activeLink == 'Overview'" [cuisines]="this.details.cuisines" [description]="this.details.description" [contact]="this.details.contact" [address]="this.details.address"></app-rest-overview>
         <app-reviews *ngIf="activeLink == 'Reviews'"></app-reviews>
         <app-menu *ngIf="activeLink == 'Menu'"></app-menu>
       </mat-tab-nav-panel>

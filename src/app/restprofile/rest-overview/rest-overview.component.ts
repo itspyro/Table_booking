@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
+import { Cuisines } from 'app/services/cuisine.model';
 
 @Component({
   selector: 'app-rest-overview',
@@ -12,6 +13,10 @@ export class RestOverviewComponent implements OnInit {
   ngOnInit(): void {
   }
 
-  
+  @Input() cuisines:Cuisines[]=[];
+
+  @Input() description:string="";
+  @Input() contact:string="";
+  @Input() address:string="";
 
 }

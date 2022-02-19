@@ -12,9 +12,11 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatDialogModule } from '@angular/material/dialog';
+import {MatChipsModule} from '@angular/material/chips';
 
 const MaterialComponents =[
     MatMenuModule,
+    MatChipsModule,
     MatIconModule,
     MatFormFieldModule,
     MatSelectModule,
