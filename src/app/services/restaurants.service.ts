@@ -1,18 +1,19 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable, OnInit } from '@angular/core';
 import { Restaurant } from './restaurant.model';
-import { Subject } from 'rxjs';
+import { filter, Subject } from 'rxjs';
+import { Cuisine } from './cuisine.model';
+import { Filter } from './filter.model';
 
 @Injectable({
   providedIn: 'root',
 })
 export class RestaurantService implements OnInit {
   restaurants: Restaurant[] = [];
-  cuisines: string[] = [];
+  cuisines: Cuisine[] = [];
 
   restaurantList = new Subject<Restaurant[]>();
-  cuisineList = new Subject<string[]>();
-
+  cuisineList = new Subject<Cuisine[]>();
   selectedRestaurant = new Subject<Restaurant>();
 
   constructor(private http: HttpClient) {}
@@ -28,9 +29,7 @@ export class RestaurantService implements OnInit {
         restaurants: Restaurant[];
       }>(url)
       .subscribe((resData) => {
-        resData.restaurants.map((restaurant) => {
-          this.restaurants.push(restaurant);
-        });
+        this.restaurants = resData.restaurants;
         this.restaurantList.next(this.restaurants.slice());
       });
   }
@@ -59,9 +58,7 @@ export class RestaurantService implements OnInit {
         }[];
       }>('http://localhost:8080/api/cuisines/')
       .subscribe((resData) => {
-        resData.cuisines.map((cuisine) => {
-          this.cuisines.push(cuisine.cuisineName);
-        });
+        this.cuisines = resData.cuisines;
         this.cuisineList.next(this.cuisines.slice());
       });
   }
@@ -71,44 +68,48 @@ export class RestaurantService implements OnInit {
 
     this.http.get(url).subscribe(() => {});
   }
-  // selectRestaurant(id: number) {
-  //   const filteredRestaurant = this.restaurants.filter((restuarant) => {
-  //     return restuarant.id === id;
-  //   });
-  //   this.selectedRestaurant.next(filteredRestaurant[0]);
-  // }
 
-  // applyFilters(filters) {
-  //   const filteredRestaurants = this.restaurants.filter((restaurant) => {
-  //     return (
-  //       (filters.rating > 0
-  //         ? restaurant.filters.rating >= filters.rating
-  //         : true) &&
-  //       (filters.isPrivate == true
-  //         ? restaurant.filters.isPrivate == filters.isPrivate
-  //         : true) &&
-  //       (filters.pure_veg == true
-  //         ? restaurant.filters.pure_veg == filters.pure_veg
-  //         : true) &&
-  //       (filters.cuisine.southIndian == true
-  //         ? restaurant.filters.cuisine.southIndian ==
-  //           filters.cuisine.southIndian
-  //         : true) &&
-  //       (filters.cuisine.punjabi == true
-  //         ? restaurant.filters.cuisine.punjabi == filters.cuisine.punjabi
-  //         : true) &&
-  //       (filters.cuisine.bengali == true
-  //         ? restaurant.filters.cuisine.bengali == filters.cuisine.bengali
-  //         : true) &&
-  //       (filters.cuisine.gujarati == true
-  //         ? restaurant.filters.cuisine.gujarati == filters.cuisine.gujarati
-  //         : true) &&
-  //       (filters.cuisine.chinese == true
-  //         ? restaurant.filters.cuisine.chinese == filters.cuisine.chinese
-  //         : true)
-  //     );
-  //   });
+  applyFilters(filters: Filter) {
+    const filteredRestaurants = this.restaurants.filter((restaurant) => {
+      const restaurantCuisines: string[] = [];
+      restaurant.cuisines.map((cuisine) => {
+        restaurantCuisines.push(cuisine.cuisineName);
+      });
+      return (
+        (filters.rating > 0 ? restaurant.rating >= filters.rating : true) &&
+        (filters.pure_veg === true
+          ? !restaurant.nonVeg === filters.pure_veg
+          : true) &&
+        (filters.cuisine.Bengali === true
+          ? restaurantCuisines.includes('Bengali')
+          : true) &&
+        (filters.cuisine.SouthIndian === true
+          ? restaurantCuisines.includes('South Indian')
+          : true) &&
+        (filters.cuisine.Chinese === true
+          ? restaurantCuisines.includes('Chinese')
+          : true) &&
+        (filters.cuisine.Gujarati === true
+          ? restaurantCuisines.includes('Gujarati')
+          : true) &&
+        (filters.cuisine.Italian === true
+          ? restaurantCuisines.includes('Italian')
+          : true) &&
+        (filters.cuisine.Marathi === true
+          ? restaurantCuisines.includes('Marathi')
+          : true) &&
+        (filters.cuisine.Mediterranean === true
+          ? restaurantCuisines.includes('Mediterranean')
+          : true) &&
+        (filters.cuisine.PunjabiRasoi === true
+          ? restaurantCuisines.includes('Punjabi Rasoi')
+          : true) &&
+        (filters.cuisine.SouthIndian === true
+          ? restaurantCuisines.includes('South Indian')
+          : true)
+      );
+    });
 
-  //   this.restaurantList.next(filteredRestaurants);
-  // }
+    this.restaurantList.next(filteredRestaurants);
+  }
 }

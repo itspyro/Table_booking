@@ -9,13 +9,24 @@ import { RestaurantService } from 'app/services/restaurants.service';
   styleUrls: ['./restprofile.component.css'],
 })
 export class RestprofileComponent implements OnInit {
+  id: number = 0;
+  restaurant?: Restaurant;
+  isLoading: boolean = true;
+
+  week_days = [
+    'Sunday',
+    'Monday',
+    'Tuesday',
+    'Wednesday',
+    'Thursday',
+    'Friday',
+    'Saturday',
+  ];
+  today_day = 'Mon';
+  activeLink = 'Overview';
 
   
-  week_days=["Sunday","Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"]
-  today_day="Mon";
   address_props={};
-  
-  id:number=1;
 
   details:Restaurant={
     "restaurantId":1,
@@ -25,11 +36,9 @@ export class RestprofileComponent implements OnInit {
     "contact":"908439320",
     "nonVeg":true,
     "description":"blah blah",
-    "cuisines":["South Indian","Gujrati","Bengali","Marathi","Italian","Punjabi Rasoi","Mediterranean"],
-    "opening_hours":{
-      "start":"10:30 am",
-      "end":"10 pm"
-    },
+    "cuisines":[{cuisineId:1,cuisineName:"South Indian"},{cuisineId:2,cuisineName:"Gujrati"},{cuisineId:3,cuisineName:"Bengali"},{cuisineId:4,cuisineName:"Marathi"},{cuisineId:5,cuisineName:"Italian"},{cuisineId:6,cuisineName:"Punjabi"},{cuisineId:7,cuisineName:"Spanish"}],
+    "openingTime":"10:30 am",
+    "closingTime":"10 pm",
     "rating":5
   };
 
@@ -39,11 +48,14 @@ export class RestprofileComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    // this.id = +atob(this.route.snapshot.params['id']);
-    // this.restaurantService.getRestaurantsById(this.id);
-    // this.restaurantService.selectedRestaurant.subscribe((restaurant) => {
-    //   this.details = restaurant;
-    // });
+    this.restaurantService.getRestaurantsById(
+      +atob(this.route.snapshot.params['id'])
+    );
+    this.restaurantService.selectedRestaurant.subscribe((restaurant) => {
+      this.restaurant = restaurant;
+      this.isLoading = !this.restaurant;
+      console.log(this.isLoading);
+    });
     this.address_props=this.breakAddress(this.details.address);
   }
 
@@ -62,16 +74,13 @@ export class RestprofileComponent implements OnInit {
       temp_address["landmark"]="";
     return temp_address;
   }
-  
-
-  activeLink = 'Overview';
 
   isOpen(){
     var datetime=this.getTodayDay();
     // var temp1=datetime[3]["start"].split(' ');
     // var temp2=datetime[3]["end"].split(' ');
-    var temp1=this.details.opening_hours.start.split(' ');
-    var temp2=this.details.opening_hours.end.split(' ');
+    var temp1=this.details.openingTime.split(' ');
+    var temp2=this.details.closingTime.split(' ');
     var ampm1=temp1[1];
     var ampm2=temp2[1];
 

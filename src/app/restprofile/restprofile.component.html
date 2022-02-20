@@ -1,79 +1,122 @@
-<div class="rest_profile">
-    <div class="gallery container-fluid">
-      <div class="row row1">
-        <div class="col-sm-8 photo"></div>
-        <div class="col-sm-4 photo">
-          <div class="row row2">
-            <div class="col-sm-6 photo"></div>
-            <div class="col-sm-6 photo"></div>
-          </div>
-          <div class="row row2">
-            <div class="col-sm-6 photo"></div>
-            <div class="col-sm-6 photo"></div>
-          </div>
-        </div>
-      </div>
-    </div>
+<div class="container" *ngIf="isLoading">
+  <mat-spinner></mat-spinner>
+</div>
 
-    <div class="detail">
-      <div class="left">
-        <div class="name">
-          {{details.restaurantName}}
+<div class="rest_profile" *ngIf="!isLoading">
+  <div class="gallery container-fluid">
+    <div class="row row1">
+      <div class="col-sm-8 photo"></div>
+      <div class="col-sm-4 photo">
+        <div class="row row2">
+          <div class="col-sm-6 photo"></div>
+          <div class="col-sm-6 photo"></div>
         </div>
-        <p class="location">{{address_props["street"]+", "+address_props["city"]}}</p>
-        <div class="open">
-          <span [style.color]="isOpen()?'green':'red'">{{(isOpen()?"Open : ":"Closed : ")}}</span>{{details.opening_hours.start+"-"+details.opening_hours.end+" (Today)"}}
-          <button mat-icon-button [matMenuTriggerFor]="menu" matTooltip="Check Opening Hours" aria-label="opening hours info">
-            <mat-icon>info</mat-icon>
-          </button>
-          <mat-menu #menu="matMenu">
-            <table>
-              <tr *ngFor="let day of week_days"><td class="day">{{day}}</td><td>{{details.opening_hours.start}}</td><td class="dash">-</td><td>{{details.opening_hours.end}}</td></tr>
-            </table>
-          </mat-menu>
-        </div>
-      </div>
-      <div class="right">
-        <div class="rating_block">
-          <div><p>Dining Rating :</p></div>
-          <div class="rating">
-            <p>{{ this.details.rating }}</p>
-            <mat-icon>star_rate</mat-icon>
-          </div>
-        </div>
-        <div class="buttons">
-          <button mat-raised-button style="background-color: rgb(88, 111, 64); color: whitesmoke">
-            Book Now <mat-icon>restaurant_menu</mat-icon>
-          </button>
-          <button mat-raised-button>
-            Add Review <mat-icon>post_add</mat-icon>
-          </button>
-          <button mat-raised-button>
-            Directions <mat-icon>directions</mat-icon>
-          </button>
+        <div class="row row2">
+          <div class="col-sm-6 photo"></div>
+          <div class="col-sm-6 photo"></div>
         </div>
       </div>
     </div>
+  </div>
 
-    <div class="view_bar">
-      <nav mat-tab-nav-bar dynamicHeight mat-align-tabs="center" [tabPanel]="tabPanel">
-        <a mat-tab-link (click)="activeLink = 'Overview'" [active]="activeLink == 'Overview'">
-          <mat-icon>description</mat-icon>Overview
-        </a>
-        <a mat-tab-link (click)="activeLink = 'Reviews'" [active]="activeLink == 'Reviews'">
-          <mat-icon>post_add</mat-icon>Reviews
-        </a>
-        <a mat-tab-link (click)="activeLink = 'Menu'" [active]="activeLink == 'Menu'">
-          <mat-icon>restaurant_menu</mat-icon>Menu
-        </a>
-        <a mat-tab-link (click)="activeLink = 'Photos'" [active]="activeLink == 'Photos'">
-          <mat-icon>collections</mat-icon>Photos
-        </a>
-      </nav>
-      <mat-tab-nav-panel #tabPanel>
-        <app-rest-overview *ngIf="activeLink == 'Overview'" [cuisines]="this.details.cuisines" [description]="this.details.description" [contact]="this.details.contact" [address]="this.details.address"></app-rest-overview>
-        <app-reviews *ngIf="activeLink == 'Reviews'"></app-reviews>
-        <app-menu *ngIf="activeLink == 'Menu'"></app-menu>
-      </mat-tab-nav-panel>
+  <div class="detail">
+    <div class="left">
+      <div class="name">
+        {{ restaurant?.restaurantName }}
+      </div>
+      <p class="location">{{ restaurant?.address }}</p>
+      <div class="open">
+        <span [style.color]="isOpen() ? 'green' : 'red'">{{
+          isOpen() ? "Open : " : "Closed : "
+        }}</span
+        >{{
+          restaurant?.openingTime + "-" + restaurant?.closingTime + " (Today)"
+        }}
+        <button
+          mat-icon-button
+          [matMenuTriggerFor]="menu"
+          matTooltip="Check Opening Hours"
+          aria-label="opening hours info"
+        >
+          <mat-icon>info</mat-icon>
+        </button>
+        <mat-menu #menu="matMenu">
+          <table>
+            <tr *ngFor="let day of week_days">
+              <td class="day">{{ day }}</td>
+              <td>{{ restaurant?.openingTime }}</td>
+              <td>-</td>
+              <td>{{ restaurant?.closingTime }}</td>
+            </tr>
+          </table>
+        </mat-menu>
+      </div>
     </div>
+    <div class="right">
+      <div class="rating_block">
+        <div><p>Dining Rating :</p></div>
+        <div class="rating">
+          <p>{{ restaurant?.rating }}</p>
+          <mat-icon>star_rate</mat-icon>
+        </div>
+      </div>
+      <div class="buttons">
+        <button
+          mat-raised-button
+          style="background-color: rgb(88, 111, 64); color: whitesmoke"
+        >
+          Book Now <mat-icon>restaurant_menu</mat-icon>
+        </button>
+        <button mat-raised-button>
+          Add Review <mat-icon>post_add</mat-icon>
+        </button>
+        <button mat-raised-button>
+          Directions <mat-icon>directions</mat-icon>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <div class="view_bar">
+    <nav
+      mat-tab-nav-bar
+      dynamicHeight
+      mat-align-tabs="center"
+      [tabPanel]="tabPanel"
+    >
+      <a
+        mat-tab-link
+        (click)="activeLink = 'Overview'"
+        [active]="activeLink == 'Overview'"
+      >
+        <mat-icon>description</mat-icon>Overview
+      </a>
+      <a
+        mat-tab-link
+        (click)="activeLink = 'Reviews'"
+        [active]="activeLink == 'Reviews'"
+      >
+        <mat-icon>post_add</mat-icon>Reviews
+      </a>
+      <a
+        mat-tab-link
+        (click)="activeLink = 'Menu'"
+        [active]="activeLink == 'Menu'"
+      >
+        <mat-icon>restaurant_menu</mat-icon>Menu
+      </a>
+      <a
+        mat-tab-link
+        (click)="activeLink = 'Photos'"
+        [active]="activeLink == 'Photos'"
+      >
+        <mat-icon>collections</mat-icon>Photos
+      </a>
+    </nav>
+    <mat-tab-nav-panel #tabPanel>
+      <app-rest-overview *ngIf="activeLink == 'Overview'" [cuisines]="this.details.cuisines" [description]="this.details.description" [contact]="this.details.contact" [address]="this.details.address"></app-rest-overview>
+      <app-reviews *ngIf="activeLink == 'Reviews'"></app-reviews>
+      <app-menu *ngIf="activeLink == 'Menu'"></app-menu>
+    </mat-tab-nav-panel>
+  </div>
 </div>

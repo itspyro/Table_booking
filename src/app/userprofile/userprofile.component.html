@@ -1,0 +1,58 @@
+<div class="center-content">
+    <mat-card class="example-card">
+      <mat-card-header>
+        <mat-card-title>User Profile</mat-card-title>
+        <mat-card-subtitle>Restaurant Hotel</mat-card-subtitle>
+      </mat-card-header>
+     <div class="profile-image">
+    <img
+      width="150"
+      height="150"
+      class="margin-top mat-elevation-z1"
+     [src]='urllink'
+    /></div>
+      
+      
+      
+      <button mat-raised-button type="submit" color="primary" (change)="selectFiles($event)" >
+        <mat-icon>edit</mat-icon>
+        </button>
+        
+      <mat-card-content>
+        <mat-tab-group>
+                <mat-tab label="User Profile">
+            <mat-form-field class="example-full-width">
+              <mat-label>First Name</mat-label>
+
+              <input type="text" matInput placeholder="text" value="email" ngModel="First Name ">
+              <mat-icon matSuffix>man</mat-icon>
+            </mat-form-field>
+  
+            <mat-form-field class="example-full-width">
+              <mat-label>Last Name</mat-label>
+              <input type="text" matInput placeholder="text" ngModel="Last Name">
+              <mat-icon matSuffix>man</mat-icon>
+            </mat-form-field>
+            <mat-form-field class="example-full-width">
+                <mat-label>Email</mat-label>
+                <input type="email" matInput placeholder="Email" ngModel="Email">
+                <mat-icon matSuffix>email</mat-icon>
+              </mat-form-field>
+
+            <mat-form-field class="example-full-width">
+                <mat-label>Phone</mat-label>
+                <input type="Phone" matInput placeholder="phone" ngModel="phone">
+                <mat-icon matSuffix>phone</mat-icon>
+              </mat-form-field>
+
+              <button mat-raised-button type="submit" color="primary" >Update Profile</button>
+              <button mat-button color="primary" >Save Submit </button> 
+           
+          </mat-tab>
+          
+           </mat-tab-group>
+           </mat-card-content>
+  
+    </mat-card>
+  </div>
+  

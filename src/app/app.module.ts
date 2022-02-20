@@ -25,6 +25,7 @@ import { ScrollingModule } from '@angular/cdk/scrolling';
 import { RestownerprofileComponent } from './restownerprofile/restownerprofile.component';
 import { UpdatableinfoComponent } from './restownerprofile/updatableinfo/updatableinfo.component';
 import { RestOverviewComponent } from './restprofile/rest-overview/rest-overview.component';
+import { UserprofileComponent } from './userprofile/userprofile.component';
 
 @NgModule({
   declarations: [
@@ -45,6 +46,7 @@ import { RestOverviewComponent } from './restprofile/rest-overview/rest-overview
     RestownerprofileComponent,
     UpdatableinfoComponent,
     RestOverviewComponent,
+    UserprofileComponent,
   ],
   imports: [
     BrowserModule,

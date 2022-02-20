@@ -1,25 +1,37 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { Restaurant } from 'app/services/restaurant.model';
 import { RestaurantService } from 'app/services/restaurants.service';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-restaurant-card',
   templateUrl: './restaurant-card.component.html',
   styleUrls: ['./restaurant-card.component.css'],
 })
-export class RestaurantCardComponent implements OnInit {
+export class RestaurantCardComponent implements OnInit, OnDestroy {
   restaurants: Restaurant[] = [];
+  subscription?: Subscription;
   constructor(
     private restaurantService: RestaurantService,
     private router: Router
   ) {}
+  // ngOnDestroy(): void {
+  //   throw new Error('Method not implemented.');
+  // }
 
   ngOnInit(): void {
     this.restaurantService.getRestaurants();
-    this.restaurantService.restaurantList.subscribe((restaurants) => {
-      this.restaurants = restaurants;
-    });
+    this.subscription = this.restaurantService.restaurantList.subscribe(
+      (restaurants) => {
+        this.restaurants = restaurants;
+      }
+    );
+  }
+
+  ngOnDestroy(): void {
+    this.restaurants;
+    this.subscription?.unsubscribe();
   }
 
   onNavigateProfile(id: number) {
