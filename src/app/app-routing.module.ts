@@ -15,8 +15,8 @@ const routes: Routes = [
   { path: 'auth', component: AuthComponent },
   { path: 'restownerprofile', component: RestownerprofileComponent },
   { path: 'rest_profile/:id', component: RestprofileComponent },
+  { path: 'userprofile', component: UserprofileComponent },
   { path: '**', redirectTo: '' },
-  {path: 'userprofile',component:UserprofileComponent}
 ];
 
 @NgModule({
