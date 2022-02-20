@@ -6,6 +6,7 @@ import { HomeComponent } from './components/home.component';
 import { OrdersComponent } from './orders/orders.component';
 import { RestownerprofileComponent } from './restownerprofile/restownerprofile.component';
 import { RestprofileComponent } from './restprofile/restprofile.component';
+import { UserprofileComponent } from './userprofile/userprofile.component';
 
 const routes: Routes = [
   { path: '', component: AboutComponent },
@@ -15,6 +16,7 @@ const routes: Routes = [
   { path: 'restownerprofile', component: RestownerprofileComponent },
   { path: 'rest_profile/:id', component: RestprofileComponent },
   { path: '**', redirectTo: '' },
+  {path: 'userprofile',component:UserprofileComponent}
 ];
 
 @NgModule({
