@@ -16,6 +16,9 @@ export class RestaurantCardComponent implements OnInit, OnDestroy {
     private restaurantService: RestaurantService,
     private router: Router
   ) {}
+  // ngOnDestroy(): void {
+  //   throw new Error('Method not implemented.');
+  // }
 
   ngOnInit(): void {
     this.restaurantService.getRestaurants();

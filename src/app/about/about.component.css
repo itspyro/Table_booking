@@ -16,13 +16,16 @@
     justify-content: center;
     background-color:rgba(0,0,0,0.5);
     padding: 2%;
-    font-size: 2.6vw;
     /* height: 30%;
     width: 50%;
     border-radius: 50%; */
     height: 100%;
     width: 100%;
     color: whitesmoke;
+    flex-direction: column;
+}
+.main_head p{
+    font-size: 2.6vw;
 }
 .about{
     height: 45vw;

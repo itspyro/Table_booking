@@ -5,6 +5,7 @@
     flex-direction: column;
     justify-content: center;
     align-items: center;
+    height: auto;
 }
 .gallery{
     height: 30vw;
@@ -103,12 +104,24 @@
 }
 table{
     width: 100%;
+    padding: 2%;
 }
 td{
-    padding: 1%;
+    padding: 2%;
+    text-align: center;
+    width: 10vw;
+}
+.dash{
+    padding: 0%;
+    width: 2vw;
 }
 tr{
     margin: 1%;
+    color: rgb(88, 111, 64);
+}
+tr:nth-child(even){
+    background-color: rgb(222, 235, 210);
+    color: black;
 }
 .view_bar{
     width: 100%;
@@ -126,3 +139,9 @@ tr{
 .tab{
     color: rgb(88, 111, 64);
 }
+::ng-deep.mat-menu-panel {
+    max-width: none !important;
+    width: 20vw;
+    border: 0.1vw solid rgb(88, 111, 64);
+    box-shadow: 0.1vw 0.1vw 0.5vw rgb(88, 111, 64) ;
+  }

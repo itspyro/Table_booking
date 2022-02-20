@@ -11,14 +11,23 @@
     background-color: rgba(255,255,255,0.6);
     border-bottom: 0.1vw solid rgb(83,111,64);
     z-index: 20;
+    border-bottom: 0.1vw solid rgb(83,111,64);
     /* position: relative; */
+}
+.left{
+    height: 100%;
+    width: 45%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+app-location{
+    height: 100%;
 }
 .logo{
     /* display: inline-block; */
     height: 100%;
     margin: 0%;
-}
-.logo{
     background: url('/assets/images/Project_logo.png');
     width: 22vw;
     background-size:cover;
@@ -61,6 +70,7 @@
     border: 0.1vw solid rgb(83,111,64);
     height: 50%;
     width: 10vw;
+    font-size: 1vw;
 }
 .login button:hover{
     background-color: rgb(83,111,64);

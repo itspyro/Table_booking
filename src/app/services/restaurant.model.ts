@@ -1,3 +1,5 @@
+import { Recipe } from './recipe.model';
+import { Review } from './review.model';
 import { Cuisine } from './cuisine.model';
 
 export interface Restaurant {

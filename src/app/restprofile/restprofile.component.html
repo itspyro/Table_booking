@@ -52,8 +52,6 @@
         </mat-menu>
       </div>
     </div>
-    .start
-
     <div class="right">
       <div class="rating_block">
         <div><p>Dining Rating :</p></div>
@@ -116,6 +114,7 @@
       </a>
     </nav>
     <mat-tab-nav-panel #tabPanel>
+      <app-rest-overview *ngIf="activeLink == 'Overview'" [cuisines]="this.details.cuisines" [description]="this.details.description" [contact]="this.details.contact" [address]="this.details.address"></app-rest-overview>
       <app-reviews *ngIf="activeLink == 'Reviews'"></app-reviews>
       <app-menu *ngIf="activeLink == 'Menu'"></app-menu>
     </mat-tab-nav-panel>

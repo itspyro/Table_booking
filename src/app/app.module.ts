@@ -24,6 +24,7 @@ import { AuthComponent } from './auth/auth.component';
 import { ScrollingModule } from '@angular/cdk/scrolling';
 import { RestownerprofileComponent } from './restownerprofile/restownerprofile.component';
 import { UpdatableinfoComponent } from './restownerprofile/updatableinfo/updatableinfo.component';
+import { RestOverviewComponent } from './restprofile/rest-overview/rest-overview.component';
 import { UserprofileComponent } from './userprofile/userprofile.component';
 
 @NgModule({
@@ -44,6 +45,7 @@ import { UserprofileComponent } from './userprofile/userprofile.component';
     AuthComponent,
     RestownerprofileComponent,
     UpdatableinfoComponent,
+    RestOverviewComponent,
     UserprofileComponent,
   ],
   imports: [
