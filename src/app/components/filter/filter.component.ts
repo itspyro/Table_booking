@@ -1,5 +1,6 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Cuisine } from 'app/services/cuisine.model';
+import { Filter } from 'app/services/filter.model';
 import { RestaurantService } from 'app/services/restaurants.service';
 import { Subscription } from 'rxjs';
 
@@ -27,7 +28,7 @@ export class FilterComponent implements OnInit, OnDestroy {
     this.subscription?.unsubscribe();
   }
 
-  onSubmit(filters) {
-    console.log(filters);
+  onSubmit(filters: Filter) {
+    this.restaurantService.applyFilters(filters);
   }
 }

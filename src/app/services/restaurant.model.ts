@@ -1,5 +1,4 @@
-import { Recipe } from './recipe.model';
-import { Review } from './review.model';
+import { Cuisine } from './cuisine.model';
 
 export interface Restaurant {
   restaurantId: number;
@@ -10,9 +9,7 @@ export interface Restaurant {
   nonVeg: boolean;
   description: string;
   rating: number;
-  opening_hours: {
-    start: string;
-    end: string;
-  };
-  cuisines: any;
+  openingTime: string;
+  closingTime: string;
+  cuisines: Cuisine[];
 }

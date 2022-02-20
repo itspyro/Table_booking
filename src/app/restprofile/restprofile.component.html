@@ -29,7 +29,9 @@
         <span [style.color]="isOpen() ? 'green' : 'red'">{{
           isOpen() ? "Open : " : "Closed : "
         }}</span
-        >{{ getTodayDay()[3].start + "-" + getTodayDay()[3].end + " (Today)" }}
+        >{{
+          restaurant?.openingTime + "-" + restaurant?.closingTime + " (Today)"
+        }}
         <button
           mat-icon-button
           [matMenuTriggerFor]="menu"
@@ -42,9 +44,9 @@
           <table>
             <tr *ngFor="let day of week_days">
               <td class="day">{{ day }}</td>
-              <td>{{ restaurant?.opening_hours?.start }}</td>
+              <td>{{ restaurant?.openingTime }}</td>
               <td>-</td>
-              <td>{{ restaurant?.opening_hours?.end }}</td>
+              <td>{{ restaurant?.closingTime }}</td>
             </tr>
           </table>
         </mat-menu>

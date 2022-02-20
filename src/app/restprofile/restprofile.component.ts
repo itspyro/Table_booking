@@ -140,11 +140,6 @@ export class RestprofileComponent implements OnInit {
         break;
     }
 
-    return [
-      curr_date.getHours(),
-      curr_date.getMinutes(),
-      this.today_day,
-      this.restaurant?.opening_hours[this.today_day],
-    ];
+    return [curr_date.getHours(), curr_date.getMinutes(), this.today_day];
   }
 }

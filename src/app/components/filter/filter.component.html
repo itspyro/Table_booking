@@ -9,7 +9,7 @@
         <div *ngFor="let cuisine of cuisines">
           <input
             type="checkbox"
-            name="{{ cuisine.cuisineName.replace(' ', '') }}"
+            [name]="cuisine.cuisineName.replace(' ', '')"
             ngModel
           />
           {{ cuisine.cuisineName }}
