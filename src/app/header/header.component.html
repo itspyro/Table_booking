@@ -1,7 +1,7 @@
 <div class="header">
   <div class="left">
     <div class="logo" (click)="onNavigateHome()"></div>
-    <app-location [size]="'20vw'" [hint]="'Change city'" ></app-location>
+    <app-location [size]="'20vw'" [hint]="'Change city'" *ngIf="showLocation()" ></app-location>
   </div>
   <div class="right">
     <div class="profile" *ngIf="userLoggedIn; else notLoggedIn">
