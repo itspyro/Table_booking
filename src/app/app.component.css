@@ -16,11 +16,6 @@
 .home{
   height: auto;
 }
-
-.mat-button{
-  margin-top: 10px;
-width: 100%;
-color: white;
-height: 40px;
-background-color: green;
+.mat-icon{
+color: black;
 }
