@@ -25,21 +25,28 @@ export class RestprofileComponent implements OnInit {
   today_day = 'Mon';
   activeLink = 'Overview';
 
-  
-  address_props={};
+  address_props = {};
 
-  details:Restaurant={
-    "restaurantId":1,
-    "restaurantName":"Tamasha",
-    "address":"242, Cannaught Place, near Flag, New Delhi, 251001",
-    "gstIn":"d3h92",
-    "contact":"908439320",
-    "nonVeg":true,
-    "description":"blah blah",
-    "cuisines":[{cuisineId:1,cuisineName:"South Indian"},{cuisineId:2,cuisineName:"Gujrati"},{cuisineId:3,cuisineName:"Bengali"},{cuisineId:4,cuisineName:"Marathi"},{cuisineId:5,cuisineName:"Italian"},{cuisineId:6,cuisineName:"Punjabi"},{cuisineId:7,cuisineName:"Spanish"}],
-    "openingTime":"10:30 am",
-    "closingTime":"10 pm",
-    "rating":5
+  details: Restaurant = {
+    restaurantId: 1,
+    restaurantName: 'Tamasha',
+    address: '242, Cannaught Place, near Flag, New Delhi, 251001',
+    gstIn: 'd3h92',
+    contact: '908439320',
+    nonVeg: true,
+    description: 'blah blah',
+    cuisines: [
+      { cuisineId: 1, cuisineName: 'South Indian' },
+      { cuisineId: 2, cuisineName: 'Gujrati' },
+      { cuisineId: 3, cuisineName: 'Bengali' },
+      { cuisineId: 4, cuisineName: 'Marathi' },
+      { cuisineId: 5, cuisineName: 'Italian' },
+      { cuisineId: 6, cuisineName: 'Punjabi' },
+      { cuisineId: 7, cuisineName: 'Spanish' },
+    ],
+    openingTime: '10:30 am',
+    closingTime: '10 pm',
+    rating: 5,
   };
 
   constructor(
@@ -54,38 +61,34 @@ export class RestprofileComponent implements OnInit {
     this.restaurantService.selectedRestaurant.subscribe((restaurant) => {
       this.restaurant = restaurant;
       this.isLoading = !this.restaurant;
-      console.log(this.isLoading);
     });
-    this.address_props=this.breakAddress(this.details.address);
+    this.address_props = this.breakAddress(this.details.address);
   }
 
-
-  breakAddress(address : string){
-    var temp=address.split(',');
-    var temp_address={};
-    var len=temp.length;
-    temp_address["building_no"]=temp[0].trim();
-    temp_address["street"]=temp[1].trim();
-    temp_address["city"]=temp[len-2].trim();
-    temp_address["pin_code"]=temp[len-1].trim();
-    if(len==5)
-      temp_address["landmark"]=temp[0].trim();
-    else
-      temp_address["landmark"]="";
+  breakAddress(address: string) {
+    var temp = address.split(',');
+    var temp_address = {};
+    var len = temp.length;
+    temp_address['building_no'] = temp[0].trim();
+    temp_address['street'] = temp[1].trim();
+    temp_address['city'] = temp[len - 2].trim();
+    temp_address['pin_code'] = temp[len - 1].trim();
+    if (len == 5) temp_address['landmark'] = temp[0].trim();
+    else temp_address['landmark'] = '';
     return temp_address;
   }
 
-  isOpen(){
-    var datetime=this.getTodayDay();
+  isOpen() {
+    var datetime = this.getTodayDay();
     // var temp1=datetime[3]["start"].split(' ');
     // var temp2=datetime[3]["end"].split(' ');
-    var temp1=this.details.openingTime.split(' ');
-    var temp2=this.details.closingTime.split(' ');
-    var ampm1=temp1[1];
-    var ampm2=temp2[1];
+    var temp1 = this.details.openingTime.split(' ');
+    var temp2 = this.details.closingTime.split(' ');
+    var ampm1 = temp1[1];
+    var ampm2 = temp2[1];
 
-    var open_start_hr=parseInt((temp1[0].split(':'))[0]);
-    var open_start_min=parseInt((temp1[0].split(':'))[1]);
+    var open_start_hr = parseInt(temp1[0].split(':')[0]);
+    var open_start_min = parseInt(temp1[0].split(':')[1]);
 
     var open_end_hr = parseInt(temp2[0].split(':')[0]);
     var open_end_min = parseInt(temp2[0].split(':')[1]);
@@ -145,7 +148,6 @@ export class RestprofileComponent implements OnInit {
         break;
     }
 
-    return [curr_date.getHours(),curr_date.getMinutes(),this.today_day];
-
+    return [curr_date.getHours(), curr_date.getMinutes(), this.today_day];
   }
 }
