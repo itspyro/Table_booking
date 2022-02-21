@@ -19,8 +19,9 @@ export class RestownerprofileComponent implements OnInit {
     'gstNo':'1234123412',
     'pureVeg':true,
     'timeSlot':'8pm to 10pm'
-
   }
+
+  change : string[] = [];
   constructor() { }
 
   ngOnInit(): void {
@@ -29,6 +30,11 @@ export class RestownerprofileComponent implements OnInit {
   onModify(){
     this.isModify=true
     //this.dailog.open(UpdatableinfoComponent);
+  }
+
+  onSubmit(){
+    this.isModify=false
+    console.log(this.change)
   }
 
 }
