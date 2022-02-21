@@ -39,4 +39,6 @@ mat-card-content{
 label{
     width: 30%;
 }
-
+button{
+    margin-left: auto;
+}
