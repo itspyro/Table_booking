@@ -19,7 +19,7 @@
                 required
                 email
               />
-              <mat-icon  matSuffix>email</mat-icon>
+              <mat-icon matSuffix>email</mat-icon>
             </mat-form-field>
 
             <mat-form-field class="example-full-width">
@@ -33,11 +33,14 @@
                 required
                 minlength="6"
               />
-              <mat-icon  matSuffix>vpn_key</mat-icon>
+              <mat-icon matSuffix>vpn_key</mat-icon>
             </mat-form-field>
-            <button  mat-button
-            type="submit"
-            color="primary" [disabled]="!loginForm.valid">
+            <button
+              mat-button
+              type="submit"
+              color="primary"
+              [disabled]="!loginForm.valid"
+            >
               Login
             </button>
           </form>
@@ -138,15 +141,15 @@
 
                 <div mat-card-content>
                   <mat-form-field appearance="fill">
-                    <mat-label>Charge Par Table </mat-label>
+                    <mat-label>Charge Per Table </mat-label>
                     <input matInput ngModel name="tableCharge" />
                   </mat-form-field>
                 </div>
 
                 <div mat-card-content>
                   <mat-form-field appearance="fill">
-                    <mat-label>Cusine Add</mat-label>
-                    <input matInput ngModel name="cusine" />
+                    <mat-label>Cusines</mat-label>
+                    <input matInput ngModel name="cusines" />
                   </mat-form-field>
                 </div>
 

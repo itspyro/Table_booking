@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
+import { Cuisine } from 'app/services/cuisine.model';
+import { RestaurantService } from 'app/services/restaurants.service';
 import { DailogComponent } from './dailog/dailog.component';
 
 @Component({
@@ -8,19 +10,25 @@ import { DailogComponent } from './dailog/dailog.component';
   styleUrls: ['./auth.component.css'],
 })
 export class AuthComponent implements DailogComponent {
-  constructor(private readonly dialog: MatDialog) {}
-  ngOnInit(): void {}
+  cuisines: string[] = [];
 
-  openDialog() {
-    console.error('Openning!');
-    this.dialog.open(DailogComponent);
-    console.error('Openning!');
+  constructor(private restaurantService: RestaurantService) {}
+  ngOnInit(): void {
+    this.restaurantService.getCuisines();
+    this.restaurantService.cuisineList.subscribe((cuisines: Cuisine[]) => {
+      cuisines.map((cuisine) => {
+        if (this.cuisines.includes(cuisine.cuisineName)) {
+          return;
+        }
+        this.cuisines.push(cuisine.cuisineName);
+      });
+    });
   }
 
-  onLoginButton(loginInfo){
-    console.log(loginInfo)
+  onLoginButton(loginInfo) {
+    console.log(loginInfo);
   }
-  onSubmitButton(registerationInfo){
-    console.log(registerationInfo)
+  onSubmitButton(registerationInfo) {
+    console.log(registerationInfo);
   }
 }
