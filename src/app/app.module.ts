@@ -1,4 +1,4 @@
-import { NgModule } from '@angular/core';
+import { NgModule, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -26,6 +26,11 @@ import { RestownerprofileComponent } from './restownerprofile/restownerprofile.c
 import { UpdatableinfoComponent } from './restownerprofile/updatableinfo/updatableinfo.component';
 import { RestOverviewComponent } from './restprofile/rest-overview/rest-overview.component';
 import { UserprofileComponent } from './userprofile/userprofile.component';
+//import {MatAutocompleteSelectedEvent} from '@angular/material/autocomplete';
+import {MatChipsModule} from '@angular/material/chips';
+import {MatAutocompleteModule} from '@angular/material/autocomplete';
+
+
 
 @NgModule({
   declarations: [
@@ -47,6 +52,10 @@ import { UserprofileComponent } from './userprofile/userprofile.component';
     UpdatableinfoComponent,
     RestOverviewComponent,
     UserprofileComponent,
+  
+  
+
+   
   ],
   imports: [
     BrowserModule,
@@ -58,8 +67,13 @@ import { UserprofileComponent } from './userprofile/userprofile.component';
     FlexLayoutModule,
     ScrollingModule,
     MaterialModule,
+    MatChipsModule,
+    MatAutocompleteModule
+    
   ],
+
   providers: [],
   bootstrap: [AppComponent],
+  
 })
 export class AppModule {}
