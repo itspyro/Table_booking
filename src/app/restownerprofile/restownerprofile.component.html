@@ -1,56 +1,70 @@
 <div class="container">
-    <div fxLayout ="col wrap" class="profile-info">
-        <mat-card class="profile-image">
-            <img src="https://content3.jdmagicbox.com/comp/lucknow/s6/0522px522.x522.180816151829.l1s6/catalogue/the-oven-lucknow-mz7zjubm4y.jpg">
+    <div class="user-profile">
+        <mat-card >
+            <mat-card-header>
+                <mat-card-title>User profile</mat-card-title>
+            </mat-card-header>
+            <mat-card-content>
+                <div class="infomation">
+                    <div class="left-info">  
+                        <div >
+                            <p>User Name:</p>  
+                            <p>Email</p>
+                            <p>Phone No.</p>  
+                        </div>
+                        <div class="fixed">
+                            <p>username</p>
+                            <p>useraname@egmail.com</p>
+                            <p>12341234123</p>
+                        </div>
+                    </div> 
+                </div>
+                <mat-checkbox [(ngModel)]="isOwner">Manage Restaurant</mat-checkbox>
+            </mat-card-content>
         </mat-card>
-        <div Fxlayout="row wrap">
-            <mat-card class="personal-info">
+    </div>
+
+    <div class="owner-profile" *ngIf="isOwner">
+        <div class="rest-info">
+            <mat-card>
                 <mat-card-header>
-                    <mat-card-title>Personal Infomation</mat-card-title>
-                    <button (click)="openModifyDialog()" *ngIf="!isModify">Modify</button>
-                    <button (click)="isModify=false" *ngIf="isModify">Submit</button>
+                    <mat-card-title>Restaurant Information</mat-card-title>
+                    <button mat-raised-button color="primary" (click)="onModify()" *ngIf="!isModify" ngModel="isModify">Modify</button>
+                    <button mat-raised-button color="primary" (click)="onSubmit()" *ngIf="isModify">Submit</button>
                 </mat-card-header>
-                <mat-card-content>
-                    <div class="infomation">
-                        <div class="left-info">
-                            <div>
-                                <p>Restaurant Name: </p>
-                                <p>Owner Name: </p>
-                                <p>Location: </p>
-                                <p>No of Table: </p>
-                                <p>Charge per Table: </p>
-                                <p>Time Slot: </p>
-                            </div>
-                            <div class="fixed">
-                                <p>{{restowner.name}}</p>
-                                <p>Owner Name: </p>
-                                <p>Location: </p>
-                                <p>No of Table: </p>
-                                <p>Charge per Table: </p>
-                                <p>Time Slot: </p>
-                            </div>
-                        </div>
-                        <div class="right-info">
-                            <div>
-                                <p >GST No.:</p>
-                                <p >Email: </p>
-                                <p >Phone : </p>
-                                <p>Pure Veg:  </p>
-                                <p>AC:  </p>
-                            </div>
-                            <div class="fixed">
-                                <p >123456789123</p>
-                                <p >Email: </p>
-                                <p >Phone : </p>
-                                <p>Pure Veg:  </p>
-                                <p>AC:  </p>
-                            </div>
-                        </div>
+                <img src="https://content3.jdmagicbox.com/comp/lucknow/s6/0522px522.x522.180816151829.l1s6/catalogue/the-oven-lucknow-mz7zjubm4y.jpg">
+                <mat-card-content>  
+                    <div class="block">
+                        <label class="left">Restaurant Name: </label>
+                        <input type="text" class="right" [disabled]="!isModify" value={{restowner.restName}}>
+                    </div>
+                    <div class="block">
+                        <label class="left">Location</label>
+                        <input type="text" class="right" [(ngModel)]="restowner.location"    [disabled]="!isModify" value={{restowner.location}}>
+                    </div>
+                    <div class="block">
+                        <label class="left">No of Table</label>
+                        <input type="text" class="right"  [disabled]="!isModify" value={{restowner.noOfTable}}>
+                    </div>
+                    <div class="block">
+                        <label class="left">Price per Table</label>
+                        <input type="text" class="right"  [disabled]="!isModify" value={{restowner.pricePerTable}}>
+                    </div>
+                    <div class="block">
+                        <label class="left">GST No.</label>
+                        <input type="text" class="right"  disabled value={{restowner.gstNo}}>
+                    </div>
+                    <div class="block">
+                        <label class="left">Pure Veg</label>
+                        <input type="checkbox" class="right"  [disabled]="!isModify" value={{restowner.pureVeg}}>
+                    </div>
+                    <div class="block">
+                        <label class="left">Time Slot</label>
+                        <input type="text" class="right"  [disabled]="!isModify" value={{restowner.timeSlot}}>
                     </div>
                 </mat-card-content>
             </mat-card>
         </div>
-    </div>
     <mat-card class="Cuisine"> 
         <mat-card-header>
             <mat-card-title>
@@ -81,4 +95,5 @@
             </mat-card-content>
         </mat-card-header>
     </mat-card>
+</div>
 </div>
