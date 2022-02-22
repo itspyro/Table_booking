@@ -1,33 +1,44 @@
 <div class="overview container-fluid">
-    <div class="row">
-        <div class="col-sm-7 left ">
-            <div class="cuisines">
-                <p>Cuisines</p>
-                <mat-chip-list aria-label="Cuisines" class="chips">
-                    <mat-chip class="chip" *ngFor="let cuisine of cuisines">{{cuisine.cuisineName}}</mat-chip>
-                </mat-chip-list>
-            </div>
-            <div class="text">A Note :</div>
-            <div class="outer">
-                <mat-icon class="icon1">format_quote</mat-icon>
-                <div class="description">
-                    <p>{{description}}</p>
-                </div>
-                <mat-icon class="icon2">format_quote</mat-icon>
-            </div>
-            
+  <div class="row">
+    <div class="col-sm-7 left">
+      <div class="cuisines">
+        <p>Cuisines</p>
+        <mat-chip-list aria-label="Cuisines" class="chips">
+          <mat-chip class="chip" *ngFor="let cuisine of cuisines">{{
+            cuisine.cuisineName
+          }}</mat-chip>
+        </mat-chip-list>
+      </div>
+      <div class="text">A Note :</div>
+      <div class="outer">
+        <mat-icon class="icon1">format_quote</mat-icon>
+        <div class="description">
+          <p>{{ description }}</p>
         </div>
-        <div class="col-sm-5">
-            <mat-card class="contact">
-                <div class="text2">Contact :</div>
-                <div>
-                  <p class="text3">{{contact}}</p>
-                </div>
-                <div class="text2">Address :</div>
-                <div>
-                    <p class="text3">{{address}}</p>
-                </div>
-            </mat-card>  
-        </div>
+        <mat-icon class="icon2">format_quote</mat-icon>
+      </div>
     </div>
+    <div class="col-sm-5">
+      <mat-card class="contact">
+        <div class="text2">Contact :</div>
+        <div>
+          <p class="text3">{{ contact }}</p>
+        </div>
+        <div class="text2">Address :</div>
+        <div>
+          <p class="text3">
+            {{
+              address?.addressLine1 +
+                ", " +
+                address?.addressLine2 +
+                ", " +
+                address?.city +
+                ", " +
+                address?.pincode
+            }}
+          </p>
+        </div>
+      </mat-card>
+    </div>
+  </div>
 </div>

@@ -24,7 +24,7 @@
       <div class="name">
         {{ restaurant?.restaurantName }}
       </div>
-      <p class="location">{{ restaurant?.address }}</p>
+      <p class="location">{{ restaurant?.address?.city }}</p>
       <div class="open">
         <span [style.color]="isOpen() ? 'green' : 'red'">{{
           isOpen() ? "Open : " : "Closed : "
@@ -114,7 +114,13 @@
       </a>
     </nav>
     <mat-tab-nav-panel #tabPanel>
-      <app-rest-overview *ngIf="activeLink == 'Overview'" [cuisines]="this.details.cuisines" [description]="this.details.description" [contact]="this.details.contact" [address]="this.details.address"></app-rest-overview>
+      <app-rest-overview
+        *ngIf="activeLink == 'Overview'"
+        [cuisines]="this.restaurant.cuisines"
+        [description]="this.restaurant.description"
+        [contact]="this.restaurant.contact"
+        [address]="this.restaurant.address"
+      ></app-rest-overview>
       <app-reviews *ngIf="activeLink == 'Reviews'"></app-reviews>
       <app-menu *ngIf="activeLink == 'Menu'"></app-menu>
     </mat-tab-nav-panel>

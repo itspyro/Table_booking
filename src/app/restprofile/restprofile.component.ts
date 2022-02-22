@@ -10,7 +10,6 @@ import { RestaurantService } from 'app/services/restaurants.service';
 })
 export class RestprofileComponent implements OnInit {
   id: number = 0;
-  restaurant?: Restaurant;
   isLoading: boolean = true;
 
   week_days = [
@@ -27,10 +26,15 @@ export class RestprofileComponent implements OnInit {
 
   address_props = {};
 
-  details: Restaurant = {
+  restaurant: Restaurant = {
     restaurantId: 1,
     restaurantName: 'Tamasha',
-    address: '242, Cannaught Place, near Flag, New Delhi, 251001',
+    address: {
+      addressLine1: '242,  near Flag,',
+      addressLine2: 'Cannaught Place,',
+      city: 'New Delhi,',
+      pincode: '251001',
+    },
     gstIn: 'd3h92',
     contact: '908439320',
     nonVeg: true,
@@ -62,7 +66,7 @@ export class RestprofileComponent implements OnInit {
       this.restaurant = restaurant;
       this.isLoading = !this.restaurant;
     });
-    this.address_props = this.breakAddress(this.details.address);
+    // this.address_props = this.breakAddress(this.details.address);
   }
 
   breakAddress(address: string) {
@@ -82,8 +86,8 @@ export class RestprofileComponent implements OnInit {
     var datetime = this.getTodayDay();
     // var temp1=datetime[3]["start"].split(' ');
     // var temp2=datetime[3]["end"].split(' ');
-    var temp1 = this.details.openingTime.split(' ');
-    var temp2 = this.details.closingTime.split(' ');
+    var temp1 = this.restaurant.openingTime.split(' ');
+    var temp2 = this.restaurant.closingTime.split(' ');
     var ampm1 = temp1[1];
     var ampm2 = temp2[1];
 
