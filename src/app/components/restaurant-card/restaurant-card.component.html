@@ -7,7 +7,8 @@
       *ngFor="let restaurant of restaurants"
     >
       <mat-card fxFlex (click)="onNavigateProfile(restaurant.restaurantId)">
-        <img class="restaurant-image"
+        <img
+          class="restaurant-image"
           mat-card-image
           src="https://cdn.pixabay.com/photo/2016/04/20/00/41/mcdonalds-1340199_1280.jpg"
           alt="restauarant image"
@@ -16,12 +17,12 @@
           <mat-card-title>{{ restaurant.restaurantName }}</mat-card-title>
         </mat-card-header>
         <mat-card-content>
-          <p>{{ restaurant.address }}</p>
+          <p>{{ restaurant.address.city }}</p>
           <mat-card-subtitle class="rating-container">
             <star-rating
               class="rating"
               [starType]="'svg'"
-              [rating]="2"
+              [rating]="restaurant.rating"
               [readOnly]="true"
             ></star-rating>
           </mat-card-subtitle>
