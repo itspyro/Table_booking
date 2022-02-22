@@ -20,8 +20,8 @@ export class AuthComponent {
   separatorKeysCodes: number[] = [ENTER, COMMA];
   fruitCtrl = new FormControl();
   filteredFruits: Observable<string[]>;
-  fruits: string[] = ['Lemon'];
-  allFruits: string[] = ['Apple', 'Lemon', 'Lime', 'Orange', 'Strawberry'];
+  fruits: string[] = ['Asian'];
+  allFruits: string[] = ['Asian', 'Bakery', 'Punjabi', 'Beverages', 'Chinese Continental','Desserts','Drinks','Fast Food','French','Gujarati','Italian','Juices','Lucknowi','Marathi','Mediterranean','Mexican'];
   
   @ViewChild('fruitInput')
   fruitInput!: ElementRef<HTMLInputElement>;

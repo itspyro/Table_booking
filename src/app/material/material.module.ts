@@ -13,26 +13,28 @@ import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
-import {MatChipsModule} from '@angular/material/chips';
+import { MatChipsModule } from '@angular/material/chips';
+import { MatAutocompleteModule } from '@angular/material/autocomplete';
 
-const MaterialComponents =[
-    MatMenuModule,
-    MatChipsModule,
-    MatIconModule,
-    MatFormFieldModule,
-    MatSelectModule,
-    MatTooltipModule,
-    MatButtonModule,
-    MatDividerModule,
-    MatCardModule,
-    MatTabsModule,
-    MatCheckboxModule,
-    MatInputModule,
-    MatIconModule,
-    MatSnackBarModule,
-    MatTabsModule,
-    MatDialogModule,
-    MatProgressSpinnerModule
+const MaterialComponents = [
+  MatMenuModule,
+  MatChipsModule,
+  MatIconModule,
+  MatFormFieldModule,
+  MatSelectModule,
+  MatTooltipModule,
+  MatButtonModule,
+  MatDividerModule,
+  MatCardModule,
+  MatTabsModule,
+  MatCheckboxModule,
+  MatInputModule,
+  MatIconModule,
+  MatSnackBarModule,
+  MatTabsModule,
+  MatDialogModule,
+  MatProgressSpinnerModule,
+  MatAutocompleteModule,
 ];
 
 @NgModule({

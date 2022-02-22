@@ -23,7 +23,6 @@ import { MaterialModule } from './material/material.module';
 import { AuthComponent } from './auth/auth.component';
 import { ScrollingModule } from '@angular/cdk/scrolling';
 import { RestownerprofileComponent } from './restownerprofile/restownerprofile.component';
-import { UpdatableinfoComponent } from './restownerprofile/updatableinfo/updatableinfo.component';
 import { RestOverviewComponent } from './restprofile/rest-overview/rest-overview.component';
 import { UserprofileComponent } from './userprofile/userprofile.component';
 //import {MatAutocompleteSelectedEvent} from '@angular/material/autocomplete';
@@ -49,7 +48,6 @@ import {MatAutocompleteModule} from '@angular/material/autocomplete';
     LocationComponent,
     AuthComponent,
     RestownerprofileComponent,
-    UpdatableinfoComponent,
     RestOverviewComponent,
     UserprofileComponent,
   

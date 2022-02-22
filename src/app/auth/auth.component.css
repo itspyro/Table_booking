@@ -1,6 +1,6 @@
 .example-card {
   max-width: 400px;
-  background-color: #f5ff6f6e;
+  background-color: #00ff8f;
 }
 
 .example-header-image {
@@ -44,13 +44,13 @@ mat-checkbox {
   width: 100%;
   color: white;
   height: 40px;
-  background-color: green;
+  background-color: #00ff8f;;
 }
 
 .example-card {
 
   max-width: 400px;
-  background-color: #f5ff6f6e;
+  background-color: #eaf5567e;
 }
 
 .example-header-image {

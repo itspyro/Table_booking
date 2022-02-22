@@ -1,9 +1,10 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable, OnInit } from '@angular/core';
 import { Restaurant } from './restaurant.model';
-import { filter, Subject } from 'rxjs';
+import { Subject } from 'rxjs';
 import { Cuisine } from './cuisine.model';
 import { Filter } from './filter.model';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Injectable({
   providedIn: 'root',
@@ -16,7 +17,7 @@ export class RestaurantService implements OnInit {
   cuisineList = new Subject<Cuisine[]>();
   selectedRestaurant = new Subject<Restaurant>();
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient, private _snackbar: MatSnackBar) {}
 
   ngOnInit(): void {}
 
@@ -28,10 +29,16 @@ export class RestaurantService implements OnInit {
         responseMessage: string;
         restaurants: Restaurant[];
       }>(url)
-      .subscribe((resData) => {
-        this.restaurants = resData.restaurants;
-        this.restaurantList.next(this.restaurants.slice());
-      });
+      .subscribe(
+        (resData) => {
+          this.restaurants = resData.restaurants;
+          this.restaurantList.next(this.restaurants.slice());
+        },
+        (error) => {
+          const errorMessage = 'Something Went Wrong!';
+          this.openSnackBar(errorMessage);
+        }
+      );
   }
 
   getRestaurantsById(id: number) {
@@ -57,10 +64,26 @@ export class RestaurantService implements OnInit {
           restaurants: any;
         }[];
       }>('http://localhost:8080/api/cuisines/')
-      .subscribe((resData) => {
-        this.cuisines = resData.cuisines;
-        this.cuisineList.next(this.cuisines.slice());
-      });
+      .subscribe(
+        (resData) => {
+          this.cuisines = resData.cuisines;
+          this.cuisineList.next(this.cuisines.slice());
+        },
+        (error) => {
+          let errorMessage: string;
+          switch (error.error.httpStatusCode) {
+            case 404:
+              errorMessage = 'Not Found!';
+              break;
+            case 500:
+              errorMessage = 'Internal Server Error!';
+              break;
+            default:
+              errorMessage = 'Something Went Wrong!';
+          }
+          this.openSnackBar(errorMessage);
+        }
+      );
   }
 
   getPhotos(restaurantId: number) {
@@ -111,5 +134,9 @@ export class RestaurantService implements OnInit {
     });
 
     this.restaurantList.next(filteredRestaurants);
+  }
+
+  openSnackBar(message: string) {
+    this._snackbar.open(message, 'Okay');
   }
 }
