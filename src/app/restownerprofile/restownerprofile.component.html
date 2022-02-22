@@ -4,16 +4,25 @@
             <mat-card-header>
                 <mat-card-title>User profile</mat-card-title>
             </mat-card-header>
+            <div class="profile-image">
+                <img
+                width="150"
+                height="150"
+                class="margin-top mat-elevation-z1"
+                src="https://i.stack.imgur.com/YQu5k.png"
+                /></div>
             <mat-card-content>
                 <div class="infomation">
                     <div class="left-info">  
                         <div >
-                            <p>User Name:</p>  
+                            <p>First Name:</p>  
+                            <p>Last Name:</p> 
                             <p>Email</p>
                             <p>Phone No.</p>  
                         </div>
                         <div class="fixed">
-                            <p>username</p>
+                            <p>firstname</p>
+                            <p>lastname:</p> 
                             <p>useraname@egmail.com</p>
                             <p>12341234123</p>
                         </div>
@@ -29,7 +38,7 @@
             <mat-card>
                 <mat-card-header>
                     <mat-card-title>Restaurant Information</mat-card-title>
-                    <button mat-raised-button color="primary" (click)="onModify()" *ngIf="!isModify" ngModel="isModify">Modify</button>
+                    <button mat-raised-button color="primary" (click)="onModify()" *ngIf="!isModify">Modify</button>
                     <button mat-raised-button color="primary" (click)="onSubmit()" *ngIf="isModify">Submit</button>
                 </mat-card-header>
                 <img src="https://content3.jdmagicbox.com/comp/lucknow/s6/0522px522.x522.180816151829.l1s6/catalogue/the-oven-lucknow-mz7zjubm4y.jpg">
@@ -40,7 +49,7 @@
                     </div>
                     <div class="block">
                         <label class="left">Location</label>
-                        <input type="text" class="right" [(ngModel)]="restowner.location"    [disabled]="!isModify" value={{restowner.location}}>
+                        <input type="text" class="right" [(ngModel)]="restowner.location" [disabled]="!isModify" value={{restowner.location}}>
                     </div>
                     <div class="block">
                         <label class="left">No of Table</label>
