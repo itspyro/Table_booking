@@ -29,16 +29,16 @@ export class RestaurantService implements OnInit {
         responseMessage: string;
         restaurants: Restaurant[];
       }>(url)
-      .subscribe(
-        (resData) => {
+      .subscribe({
+        next: (resData) => {
           this.restaurants = resData.restaurants;
           this.restaurantList.next(this.restaurants.slice());
         },
-        (error) => {
+        error: (error) => {
           const errorMessage = 'Something Went Wrong!';
           this.openSnackBar(errorMessage);
-        }
-      );
+        },
+      });
   }
 
   getRestaurantsById(id: number) {
@@ -64,12 +64,12 @@ export class RestaurantService implements OnInit {
           restaurants: any;
         }[];
       }>('http://localhost:8080/api/cuisines/')
-      .subscribe(
-        (resData) => {
+      .subscribe({
+        next: (resData) => {
           this.cuisines = resData.cuisines;
           this.cuisineList.next(this.cuisines.slice());
         },
-        (error) => {
+        error: (error) => {
           let errorMessage: string;
           switch (error.error.httpStatusCode) {
             case 404:
@@ -82,8 +82,8 @@ export class RestaurantService implements OnInit {
               errorMessage = 'Something Went Wrong!';
           }
           this.openSnackBar(errorMessage);
-        }
-      );
+        },
+      });
   }
 
   getPhotos(restaurantId: number) {
