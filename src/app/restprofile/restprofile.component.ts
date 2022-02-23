@@ -1,7 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
+import { Menu } from 'app/services/menu.model';
 import { Restaurant } from 'app/services/restaurant.model';
 import { RestaurantService } from 'app/services/restaurants.service';
+import { Review } from 'app/services/review.model';
 
 @Component({
   selector: 'app-restprofile',
@@ -11,6 +13,8 @@ import { RestaurantService } from 'app/services/restaurants.service';
 export class RestprofileComponent implements OnInit {
   id: number = 0;
   isLoading: boolean = true;
+  menuItems?: Menu[];
+  reviews?: Review[];
 
   week_days = [
     'Sunday',
@@ -64,9 +68,16 @@ export class RestprofileComponent implements OnInit {
     );
     this.restaurantService.selectedRestaurant.subscribe((restaurant) => {
       this.restaurant = restaurant;
+      this.restaurantService.getRecipeByRestId(this.restaurant.restaurantId);
+      this.restaurantService.getReviewsByRestId(this.restaurant.restaurantId);
       this.isLoading = !this.restaurant;
     });
-    // this.address_props = this.breakAddress(this.details.address);
+    this.restaurantService.selectedRestaurantMenu.subscribe((menuItems) => {
+      this.menuItems = menuItems;
+    });
+    this.restaurantService.selectedRestaurantReviews.subscribe((reviews) => {
+      this.reviews = reviews;
+    });
   }
 
   breakAddress(address: string) {

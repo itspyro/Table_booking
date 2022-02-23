@@ -5,6 +5,8 @@ import { Subject } from 'rxjs';
 import { Cuisine } from './cuisine.model';
 import { Filter } from './filter.model';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { Menu } from './menu.model';
+import { Review } from './review.model';
 
 @Injectable({
   providedIn: 'root',
@@ -12,10 +14,14 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 export class RestaurantService implements OnInit {
   restaurants: Restaurant[] = [];
   cuisines: Cuisine[] = [];
+  menu: Menu[] = [];
+  reviews: Review[] = [];
 
   restaurantList = new Subject<Restaurant[]>();
   cuisineList = new Subject<Cuisine[]>();
   selectedRestaurant = new Subject<Restaurant>();
+  selectedRestaurantMenu = new Subject<Menu[]>();
+  selectedRestaurantReviews = new Subject<Review[]>();
 
   constructor(private http: HttpClient, private _snackbar: MatSnackBar) {}
 
@@ -90,6 +96,36 @@ export class RestaurantService implements OnInit {
     const url = 'http://localhost:8080/api/photos/restaurant/' + restaurantId;
 
     this.http.get(url).subscribe(() => {});
+  }
+
+  getRecipeByRestId(restaurantId: number) {
+    const url = 'http://localhost:8080/api/recipe/restaurant/' + restaurantId;
+
+    this.http
+      .get<{
+        httpStatusCode: number;
+        responseMessage: string;
+        recipes: Menu[];
+      }>(url)
+      .subscribe((resData) => {
+        this.menu = resData.recipes;
+        this.selectedRestaurantMenu.next(this.menu.slice());
+      });
+  }
+
+  getReviewsByRestId(restaurantId: number) {
+    const url = 'http://localhost:8080/api/review/restaurant/' + restaurantId;
+
+    this.http
+      .get<{
+        httpStatusCode: number;
+        responseMessage: string;
+        reviews: Review[];
+      }>(url)
+      .subscribe((resData) => {
+        this.reviews = resData.reviews;
+        this.selectedRestaurantReviews.next(this.reviews.slice());
+      });
   }
 
   applyFilters(filters: Filter) {
