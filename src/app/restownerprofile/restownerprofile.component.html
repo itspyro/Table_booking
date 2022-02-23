@@ -21,10 +21,10 @@
                             <p>Phone No.</p>  
                         </div>
                         <div class="fixed">
-                            <p>firstname</p>
-                            <p>lastname:</p> 
-                            <p>useraname@egmail.com</p>
-                            <p>12341234123</p>
+                            <p>{{user.userFirstName}}</p>
+                            <p>{{user.userLastName}}</p> 
+                            <p>{{user.userEmail}}</p>
+                            <p>{{user.userPhoneNumber}}</p>
                         </div>
                     </div> 
                 </div>
@@ -33,7 +33,7 @@
         </mat-card>
     </div>
 
-    <div class="owner-profile" *ngIf="isOwner">
+    <div class="owner-profile" *ngIf="!checkIsOwner()"> <!-- please remove ! -->
         <div class="rest-info">
             <mat-card>
                 <mat-card-header>
@@ -45,42 +45,62 @@
                 <mat-card-content>  
                     <div class="block">
                         <label class="left">Restaurant Name: </label>
-                        <input type="text" class="right" [disabled]="!isModify" value={{restowner.restName}}>
+                        <input type="text" class="right" [disabled]="!isModify" value={{restaurant.restaurantName}}>
                     </div>
-                    <div class="block">
-                        <label class="left">Location</label>
-                        <input type="text" class="right" [(ngModel)]="restowner.location" [disabled]="!isModify" value={{restowner.location}}>
+                    <div >
+                        <label class="block">Location</label>
+                        <input type="text" class="block" [disabled]="!isModify" value={{restaurant.address.addressLine1}}>
                     </div>
                     <div class="block">
                         <label class="left">No of Table</label>
-                        <input type="text" class="right"  [disabled]="!isModify" value={{restowner.noOfTable}}>
+                        <input type="text" class="right"  [disabled]="!isModify" value>
                     </div>
                     <div class="block">
                         <label class="left">Price per Table</label>
-                        <input type="text" class="right"  [disabled]="!isModify" value={{restowner.pricePerTable}}>
+                        <input type="text" class="right"  [disabled]="!isModify" value>
                     </div>
                     <div class="block">
                         <label class="left">GST No.</label>
-                        <input type="text" class="right"  disabled value={{restowner.gstNo}}>
+                        <input type="text" class="right"  disabled value={{restaurant.gstIn}}>
                     </div>
                     <div class="block">
                         <label class="left">Pure Veg</label>
-                        <input type="checkbox" class="right"  [disabled]="!isModify" value={{restowner.pureVeg}}>
+                        <input type="checkbox" class="right"  [disabled]="!isModify" checked={{restaurant.nonVeg}}>
                     </div>
                     <div class="block">
                         <label class="left">Time Slot</label>
-                        <input type="text" class="right"  [disabled]="!isModify" value={{restowner.timeSlot}}>
+                        <input type="text" class="right"  [disabled]="!isModify" value={{restaurant.openingTime}}>
+                    </div>
+                    <div class="block">
+                        <label class="left">Description</label>
+                        <input type="text" class="right"  [disabled]="!isModify" value={{restaurant.description}}>
                     </div>
                 </mat-card-content>
             </mat-card>
         </div>
-    <mat-card class="Cuisine"> 
+    <mat-card class="table"> 
         <mat-card-header>
             <mat-card-title>
-                Cuisine
+                Table
             </mat-card-title>
             <mat-card-content>
-
+                <div *ngFor="let bench of benches">
+                        <div class="block">
+                            <label class="left">Table Type</label>
+                            <label class="right">{{bench.benchType}}</label>
+                        </div>
+                        <div class="block">
+                            <label class="left">Table capacity</label>
+                            <label class="right">{{bench.capacity}}</label>
+                        </div>
+                </div>
+                
+                
+                <form #table="ngForm" (ngSubmit)="addTable(table.value)" >
+                    <input type="number" ngModel name="capacity">capacity
+                    <input type="text" ngModel name="type">Bench Type
+                    <button type="submit">Add Table</button>
+                </form>
             </mat-card-content>
         </mat-card-header>
     </mat-card>
