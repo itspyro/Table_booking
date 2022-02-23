@@ -121,8 +121,8 @@
         [contact]="this.restaurant.contact"
         [address]="this.restaurant.address"
       ></app-rest-overview>
-      <app-reviews *ngIf="activeLink == 'Reviews'"></app-reviews>
-      <app-menu *ngIf="activeLink == 'Menu'"></app-menu>
+      <app-reviews *ngIf="activeLink == 'Reviews'" [reviews]="reviews"></app-reviews>
+      <app-menu *ngIf="activeLink == 'Menu'" [menuItems]="menuItems"></app-menu>
     </mat-tab-nav-panel>
   </div>
 </div>
