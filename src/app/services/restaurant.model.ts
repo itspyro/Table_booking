@@ -15,3 +15,4 @@ export interface Restaurant {
   closingTime: string;
   cuisines: Cuisine[];
 }
+  

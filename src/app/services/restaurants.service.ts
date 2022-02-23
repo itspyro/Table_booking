@@ -4,6 +4,7 @@ import { Restaurant } from './restaurant.model';
 import { filter, Subject } from 'rxjs';
 import { Cuisine } from './cuisine.model';
 import { Filter } from './filter.model';
+import { RestProfile } from './rest_profile.model';
 
 @Injectable({
   providedIn: 'root',
@@ -14,7 +15,7 @@ export class RestaurantService implements OnInit {
 
   restaurantList = new Subject<Restaurant[]>();
   cuisineList = new Subject<Cuisine[]>();
-  selectedRestaurant = new Subject<Restaurant>();
+  selectedRestaurant = new Subject<RestProfile>();
 
   constructor(private http: HttpClient) {}
 
@@ -39,7 +40,7 @@ export class RestaurantService implements OnInit {
       .get<{
         httpStatusCode: number;
         responseMessage: string;
-        restaurants: Restaurant[];
+        restaurants: RestProfile[];
       }>('http://localhost:8080/api/restaurant/' + id)
       .subscribe((resData) => {
         this.selectedRestaurant.next(resData.restaurants[0]);

@@ -25,7 +25,7 @@
                 </div>
                 <div class="text2">Address :</div>
                 <div>
-                    <p class="text3">{{address}}</p>
+                    <p class="text3">{{address.buildingNo+", "+address.street+", "+address.area+(address.landmark.length>0?", "+address.landmark+", ":"")+address.city+", "+address.pinCode}}</p>
                 </div>
             </mat-card>  
         </div>

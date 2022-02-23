@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { Restaurant } from 'app/services/restaurant.model';
+import { RestProfile } from 'app/services/rest_profile.model';
 import { RestaurantService } from 'app/services/restaurants.service';
+import { Address } from 'app/services/address.model';
 
 @Component({
   selector: 'app-restprofile',
@@ -10,7 +11,7 @@ import { RestaurantService } from 'app/services/restaurants.service';
 })
 export class RestprofileComponent implements OnInit {
   id: number = 0;
-  restaurant?: Restaurant;
+  restaurant?: RestProfile;
   isLoading: boolean = true;
 
   week_days = [
@@ -25,22 +26,43 @@ export class RestprofileComponent implements OnInit {
   today_day = 'Mon';
   activeLink = 'Overview';
 
-  
-  address_props={};
+  address_props:Address={buildingNo:"",street:"",area:"",landmark:"",city:"",pinCode:""};;
+  ;
 
-  details:Restaurant={
-    "restaurantId":1,
-    "restaurantName":"Tamasha",
-    "address":"242, Cannaught Place, near Flag, New Delhi, 251001",
-    "gstIn":"d3h92",
-    "contact":"908439320",
-    "nonVeg":true,
-    "description":"blah blah",
-    "cuisines":[{cuisineId:1,cuisineName:"South Indian"},{cuisineId:2,cuisineName:"Gujrati"},{cuisineId:3,cuisineName:"Bengali"},{cuisineId:4,cuisineName:"Marathi"},{cuisineId:5,cuisineName:"Italian"},{cuisineId:6,cuisineName:"Punjabi"},{cuisineId:7,cuisineName:"Spanish"}],
-    "openingTime":"10:30 am",
-    "closingTime":"10 pm",
-    "rating":5
-  };
+  details:RestProfile={
+    restaurantId:1,
+    restaurantName:"Tamasha",
+    address:{
+        addressLine1:"242, Cannaught Place",
+        addressLine2:"near flag",
+        city:"New Delhi",
+        pincode:"251001"
+    },
+    gstIn:"d3h92",
+    contact:"908439320",
+    nonVeg:true,
+    description:"blah blah",
+    openingTime:"10:30 am",
+    closingTime:"10 pm",
+    thumbnailPhoto:"",
+    rating:5,
+    cuisines:[],
+    user:{
+      userId:1,
+      userName:"",
+      userFirstName:"Aakriti",
+      userLastName:"Sahrawat",
+      userPhoneNumber:"9292001111",
+      password:"password",
+      userEmail:"Hello@gmail.com",
+      userAddress:"",
+      roleId:2
+    },
+    benches:[],
+    reviews:[],
+    recipeDto:[],
+    photoDto:[]
+}
 
   constructor(
     private restaurantService: RestaurantService,
@@ -54,22 +76,28 @@ export class RestprofileComponent implements OnInit {
     this.restaurantService.selectedRestaurant.subscribe((restaurant) => {
       this.restaurant = restaurant;
       this.isLoading = !this.restaurant;
+      console.log(restaurant);
+      this.address_props=this.breakAddress(this.restaurant.address);
       console.log(this.isLoading);
     });
-    this.address_props=this.breakAddress(this.details.address);
+    
   }
 
 
-  breakAddress(address : string){
-    var temp=address.split(',');
-    var temp_address={};
-    var len=temp.length;
-    temp_address["building_no"]=temp[0].trim();
-    temp_address["street"]=temp[1].trim();
-    temp_address["city"]=temp[len-2].trim();
-    temp_address["pin_code"]=temp[len-1].trim();
-    if(len==5)
-      temp_address["landmark"]=temp[0].trim();
+  breakAddress(address){
+    
+    var temp1=address.addressLine1.split(',');
+    var temp2=address.addressLine2.split(',');
+
+    var temp_address:Address={buildingNo:"",street:"",area:"",landmark:"",city:"",pinCode:""};;
+  
+    temp_address["buildingNo"]=temp1[0].trim();
+    temp_address["street"]=temp1[1].trim();
+    temp_address["city"]=address["city"];
+    temp_address["pinCode"]=address["pincode"];
+    temp_address["area"]=temp2[0].trim();
+    if(temp2.length==2)
+      temp_address["landmark"]=temp2[1].trim();
     else
       temp_address["landmark"]="";
     return temp_address;
