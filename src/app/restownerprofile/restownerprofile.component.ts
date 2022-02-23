@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { MatDialog } from '@angular/material/dialog';
 import { User } from 'app/services/user.model';
 import { Restaurant } from 'app/services/restaurant.model';
 
@@ -15,7 +14,7 @@ export class RestownerprofileComponent implements OnInit {
   isModify : boolean = false;
   isOwner: boolean = false;
 
-  user=new User;
+  user!:User;
   restaurant !: Restaurant;
   table=new Table;
   benches!:Table[];
@@ -33,7 +32,6 @@ export class RestownerprofileComponent implements OnInit {
       this.userservice.getAllBenches(this.restaurant.restaurantId)
       this.userservice.benchList.subscribe((data)=>{
         this.benches = data;
-        console.log(this.benches)
       })
     })
     })    
