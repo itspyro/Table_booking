@@ -1,10 +1,13 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable, OnInit } from '@angular/core';
 import { Restaurant } from './restaurant.model';
-import { filter, Subject } from 'rxjs';
+import { Subject } from 'rxjs';
 import { Cuisine } from './cuisine.model';
 import { Filter } from './filter.model';
 import { RestProfile } from './rest_profile.model';
+import { MatSnackBar } from '@angular/material/snack-bar';
+import { Menu } from './menu.model';
+import { Review } from './review.model';
 
 @Injectable({
   providedIn: 'root',
@@ -12,12 +15,16 @@ import { RestProfile } from './rest_profile.model';
 export class RestaurantService implements OnInit {
   restaurants: Restaurant[] = [];
   cuisines: Cuisine[] = [];
+  menu: Menu[] = [];
+  reviews: Review[] = [];
 
   restaurantList = new Subject<Restaurant[]>();
   cuisineList = new Subject<Cuisine[]>();
   selectedRestaurant = new Subject<RestProfile>();
+  selectedRestaurantMenu = new Subject<Menu[]>();
+  selectedRestaurantReviews = new Subject<Review[]>();
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient, private _snackbar: MatSnackBar) {}
 
   ngOnInit(): void {}
 
@@ -29,9 +36,15 @@ export class RestaurantService implements OnInit {
         responseMessage: string;
         restaurants: Restaurant[];
       }>(url)
-      .subscribe((resData) => {
-        this.restaurants = resData.restaurants;
-        this.restaurantList.next(this.restaurants.slice());
+      .subscribe({
+        next: (resData) => {
+          this.restaurants = resData.restaurants;
+          this.restaurantList.next(this.restaurants.slice());
+        },
+        error: (error) => {
+          const errorMessage = 'Something Went Wrong!';
+          this.openSnackBar(errorMessage);
+        },
       });
   }
 
@@ -40,10 +53,10 @@ export class RestaurantService implements OnInit {
       .get<{
         httpStatusCode: number;
         responseMessage: string;
-        restaurants: RestProfile[];
+        restaurant: RestProfile;
       }>('http://localhost:8080/api/restaurant/' + id)
       .subscribe((resData) => {
-        this.selectedRestaurant.next(resData.restaurants[0]);
+        this.selectedRestaurant.next(resData.restaurant);
       });
   }
 
@@ -58,9 +71,25 @@ export class RestaurantService implements OnInit {
           restaurants: any;
         }[];
       }>('http://localhost:8080/api/cuisines/')
-      .subscribe((resData) => {
-        this.cuisines = resData.cuisines;
-        this.cuisineList.next(this.cuisines.slice());
+      .subscribe({
+        next: (resData) => {
+          this.cuisines = resData.cuisines;
+          this.cuisineList.next(this.cuisines.slice());
+        },
+        error: (error) => {
+          let errorMessage: string;
+          switch (error.error.httpStatusCode) {
+            case 404:
+              errorMessage = 'Not Found!';
+              break;
+            case 500:
+              errorMessage = 'Internal Server Error!';
+              break;
+            default:
+              errorMessage = 'Something Went Wrong!';
+          }
+          this.openSnackBar(errorMessage);
+        },
       });
   }
 
@@ -68,6 +97,36 @@ export class RestaurantService implements OnInit {
     const url = 'http://localhost:8080/api/photos/restaurant/' + restaurantId;
 
     this.http.get(url).subscribe(() => {});
+  }
+
+  getRecipeByRestId(restaurantId: number) {
+    const url = 'http://localhost:8080/api/recipe/restaurant/' + restaurantId;
+
+    this.http
+      .get<{
+        httpStatusCode: number;
+        responseMessage: string;
+        recipes: Menu[];
+      }>(url)
+      .subscribe((resData) => {
+        this.menu = resData.recipes;
+        this.selectedRestaurantMenu.next(this.menu.slice());
+      });
+  }
+
+  getReviewsByRestId(restaurantId: number) {
+    const url = 'http://localhost:8080/api/review/restaurant/' + restaurantId;
+
+    this.http
+      .get<{
+        httpStatusCode: number;
+        responseMessage: string;
+        reviews: Review[];
+      }>(url)
+      .subscribe((resData) => {
+        this.reviews = resData.reviews;
+        this.selectedRestaurantReviews.next(this.reviews.slice());
+      });
   }
 
   applyFilters(filters: Filter) {
@@ -112,5 +171,9 @@ export class RestaurantService implements OnInit {
     });
 
     this.restaurantList.next(filteredRestaurants);
+  }
+
+  openSnackBar(message: string) {
+    this._snackbar.open(message, 'Okay');
   }
 }

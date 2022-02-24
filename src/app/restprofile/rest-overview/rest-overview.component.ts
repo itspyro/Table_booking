@@ -5,19 +5,17 @@ import { Cuisine } from 'app/services/cuisine.model';
 @Component({
   selector: 'app-rest-overview',
   templateUrl: './rest-overview.component.html',
-  styleUrls: ['./rest-overview.component.css']
+  styleUrls: ['./rest-overview.component.css'],
 })
 export class RestOverviewComponent implements OnInit {
+  constructor() {}
 
-  constructor() { }
-
-  ngOnInit(): void {
-  }
+  ngOnInit(): void {}
 
   @Input() cuisines:Cuisine[]=[];
 
   @Input() description:string="";
   @Input() contact:string="";
-  @Input() address:Address={buildingNo:"",street:"",area:"",landmark:"",city:"",pinCode:""};
+  @Input() address;
 
 }

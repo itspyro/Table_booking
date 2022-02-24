@@ -1,27 +1,44 @@
 mat-card{
     margin: 10px;
 }
+.profile-image{
+    margin: auto;
+}
 img{
     height: 200px;
     width: auto;
+    justify-content: center;
     display: flex;
     border-radius: 10px;
 }
 mat-card-header{
     margin: 10px;
 }
-.infomation{
-    display: grid;
-    grid-template-columns: auto auto ;
-    grid-gap: 40px;
+
+button{
+    display: flex;
+    justify-content: flex-end;
 }
-.infomation .right-info{
+.left-info{
     display: grid;
     grid-template-columns: auto auto ;
     grid-gap: 10px;
 }
-.infomation .left-info{
-    display: grid;
-    grid-template-columns: auto auto ;
-    grid-gap: 10px;
+.user-profile,.rest-info{
+    margin: auto;
+    width: 70%;
+    padding: 10px;
+    
+}
+mat-card-content{
+    padding: 10px;
+}
+.block{
+    font-size: large;
+}
+label{
+    width: 30%;
+}
+button{
+    margin-left: auto;
 }

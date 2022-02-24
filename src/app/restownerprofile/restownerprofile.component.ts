@@ -1,7 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import { MatDialog } from '@angular/material/dialog';
-import { DailogComponent } from 'app/auth/dailog/dailog.component';
-import { UpdatableinfoComponent } from './updatableinfo/updatableinfo.component';
+import { User } from 'app/services/user.model';
+import { Restaurant } from 'app/services/restaurant.model';
+
+import { UserprofileService } from 'app/services/userprofile.service';
+import { Table } from 'app/services/table.model';
 
 @Component({
   selector: 'app-restownerprofile',
@@ -10,18 +12,53 @@ import { UpdatableinfoComponent } from './updatableinfo/updatableinfo.component'
 })
 export class RestownerprofileComponent implements OnInit {
   isModify : boolean = false;
+  isOwner: boolean = false;
 
-  restowner = {
-    'restName':'Tamasha',
-    'name':'vismay Vinodbhai tandel vismay tandel vismay tandel '
-  }
-  constructor(private dailog:MatDialog) { }
+  user!:User;
+  restaurant !: Restaurant;
+  table=new Table;
+  benches!:Table[];
+
+  change : string[] = [];
+  constructor(private userservice:UserprofileService) { }
 
   ngOnInit(): void {
+    this.userservice.getUser();
+    this.userservice.userProfile.subscribe((data)=>{
+      this.user = data;
+      this.userservice.getRestaurantByUser(this.user.userId);
+      this.userservice.restaurantProfile.subscribe((data)=>{
+      this.restaurant = data;
+      this.userservice.getAllBenches(this.restaurant.restaurantId)
+      this.userservice.benchList.subscribe((data)=>{
+        this.benches = data;
+      })
+    })
+    })    
+    
   }
 
-  openModifyDialog(){
-    this.dailog.open(UpdatableinfoComponent);
+  onModify(){
+    this.isModify=true
   }
 
+  onSubmit(){
+    this.isModify=false
+    console.log(this.change)
+  }
+
+  checkIsOwner(){
+    if(this.user.roleId==1 && this.isOwner==true){
+      return true
+    }else{
+      return false
+    }
+  }
+
+  addTable(data:any){
+    this.table.benchType = data.type;
+    this.table.capacity = data.capacity;
+    this.table.restaurantId = this.restaurant.restaurantId;
+    this.userservice.addBench(this.table)
+  }
 }
