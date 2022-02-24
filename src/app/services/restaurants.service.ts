@@ -8,6 +8,7 @@ import { RestProfile } from './rest_profile.model';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Menu } from './menu.model';
 import { Review } from './review.model';
+import { environment } from '../../environments/environment';
 
 @Injectable({
   providedIn: 'root',
@@ -24,26 +25,21 @@ export class RestaurantService implements OnInit {
   selectedRestaurantMenu = new Subject<Menu[]>();
   selectedRestaurantReviews = new Subject<Review[]>();
 
-  constructor(private http: HttpClient, private _snackbar: MatSnackBar) {}
+  constructor(private http: HttpClient) {}
 
   ngOnInit(): void {}
 
   getRestaurants() {
-    const url = 'http://localhost:8080/api/restaurant/all';
     this.http
       .get<{
         httpStatusCode: number;
         responseMessage: string;
         restaurants: Restaurant[];
-      }>(url)
+      }>(environment.backendUrl + environment.restaurantAllEndpoint)
       .subscribe({
         next: (resData) => {
           this.restaurants = resData.restaurants;
           this.restaurantList.next(this.restaurants.slice());
-        },
-        error: (error) => {
-          const errorMessage = 'Something Went Wrong!';
-          this.openSnackBar(errorMessage);
         },
       });
   }
@@ -53,8 +49,8 @@ export class RestaurantService implements OnInit {
       .get<{
         httpStatusCode: number;
         responseMessage: string;
-        restaurant: RestProfile;
-      }>('http://localhost:8080/api/restaurant/' + id)
+        restaurants: Restaurant[];
+      }>(environment.backendUrl + environment.restaurantIdEndpoint + id + '/')
       .subscribe((resData) => {
         this.selectedRestaurant.next(resData.restaurant);
       });
@@ -70,44 +66,28 @@ export class RestaurantService implements OnInit {
           cuisineName: string;
           restaurants: any;
         }[];
-      }>('http://localhost:8080/api/cuisines/')
+      }>(environment.backendUrl + environment.cuisineAllEndpoint)
       .subscribe({
         next: (resData) => {
           this.cuisines = resData.cuisines;
           this.cuisineList.next(this.cuisines.slice());
         },
-        error: (error) => {
-          let errorMessage: string;
-          switch (error.error.httpStatusCode) {
-            case 404:
-              errorMessage = 'Not Found!';
-              break;
-            case 500:
-              errorMessage = 'Internal Server Error!';
-              break;
-            default:
-              errorMessage = 'Something Went Wrong!';
-          }
-          this.openSnackBar(errorMessage);
-        },
       });
   }
 
-  getPhotos(restaurantId: number) {
-    const url = 'http://localhost:8080/api/photos/restaurant/' + restaurantId;
+  // getPhotos(restaurantId: number) {
+  //   const url = 'http://localhost:8080/api/photos/restaurant/' + restaurantId;
 
-    this.http.get(url).subscribe(() => {});
-  }
+  //   this.http.get(url).subscribe(() => {});
+  // }
 
   getRecipeByRestId(restaurantId: number) {
-    const url = 'http://localhost:8080/api/recipe/restaurant/' + restaurantId;
-
     this.http
       .get<{
         httpStatusCode: number;
         responseMessage: string;
         recipes: Menu[];
-      }>(url)
+      }>(environment.backendUrl + environment.recipesIdEndpoint + restaurantId)
       .subscribe((resData) => {
         this.menu = resData.recipes;
         this.selectedRestaurantMenu.next(this.menu.slice());
@@ -115,14 +95,12 @@ export class RestaurantService implements OnInit {
   }
 
   getReviewsByRestId(restaurantId: number) {
-    const url = 'http://localhost:8080/api/review/restaurant/' + restaurantId;
-
     this.http
       .get<{
         httpStatusCode: number;
         responseMessage: string;
         reviews: Review[];
-      }>(url)
+      }>(environment.backendUrl + environment.reviewIdEndpoint + restaurantId)
       .subscribe((resData) => {
         this.reviews = resData.reviews;
         this.selectedRestaurantReviews.next(this.reviews.slice());
@@ -171,9 +149,5 @@ export class RestaurantService implements OnInit {
     });
 
     this.restaurantList.next(filteredRestaurants);
-  }
-
-  openSnackBar(message: string) {
-    this._snackbar.open(message, 'Okay');
   }
 }
