@@ -49,7 +49,7 @@ export class RestaurantService implements OnInit {
       .get<{
         httpStatusCode: number;
         responseMessage: string;
-        restaurants: Restaurant[];
+        restaurant: RestProfile;
       }>(environment.backendUrl + environment.restaurantIdEndpoint + id + '/')
       .subscribe((resData) => {
         this.selectedRestaurant.next(resData.restaurant);
