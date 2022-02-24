@@ -1,9 +1,13 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { Menu } from 'app/services/menu.model';
-import { Restaurant } from 'app/services/restaurant.model';
+import {MatDialog, MatDialogRef, MAT_DIALOG_DATA} from '@angular/material/dialog';
+
 import { RestaurantService } from 'app/services/restaurants.service';
+import { RestProfile } from 'app/services/rest_profile.model';
+import { Address } from 'app/services/address.model';
+import { Menu } from 'app/services/menu.model';
 import { Review } from 'app/services/review.model';
+import { BookingPageComponent } from './booking-page/booking-page.component';
 
 @Component({
   selector: 'app-restprofile',
@@ -12,6 +16,7 @@ import { Review } from 'app/services/review.model';
 })
 export class RestprofileComponent implements OnInit {
   id: number = 0;
+  restaurant?:RestProfile;
   isLoading: boolean = true;
   menuItems?: Menu[];
   reviews?: Review[];
@@ -28,38 +33,44 @@ export class RestprofileComponent implements OnInit {
   today_day = 'Mon';
   activeLink = 'Overview';
 
-  address_props = {};
-
-  restaurant: Restaurant = {
-    restaurantId: 1,
-    restaurantName: 'Tamasha',
-    address: {
-      addressLine1: '242,  near Flag,',
-      addressLine2: 'Cannaught Place,',
-      city: 'New Delhi,',
-      pincode: '251001',
+  address_props?:Address;
+  
+  details:RestProfile={
+    restaurantId:1,
+    restaurantName:"Tamasha",
+    address:{
+        addressLine1:"242, Cannaught Place",
+        addressLine2:"near flag",
+        city:"New Delhi",
+        pincode:"251001"
     },
-    gstIn: 'd3h92',
-    contact: '908439320',
-    nonVeg: true,
-    description: 'blah blah',
-    cuisines: [
-      { cuisineId: 1, cuisineName: 'South Indian' },
-      { cuisineId: 2, cuisineName: 'Gujrati' },
-      { cuisineId: 3, cuisineName: 'Bengali' },
-      { cuisineId: 4, cuisineName: 'Marathi' },
-      { cuisineId: 5, cuisineName: 'Italian' },
-      { cuisineId: 6, cuisineName: 'Punjabi' },
-      { cuisineId: 7, cuisineName: 'Spanish' },
-    ],
-    openingTime: '10:30 am',
-    closingTime: '10 pm',
-    rating: 5,
-  };
+    gstIn:"d3h92",
+    contact:"908439320",
+    nonVeg:true,
+    description:"blah blah",
+    openingTime:"10:30 am",
+    closingTime:"10 pm",
+    thumbnailPhoto:"",
+    rating:5,
+    cuisines:[],
+    user:{
+      userId:1,
+      userFirstName:"Aakriti",
+      userLastName:"Sahrawat",
+      userPhoneNumber:"9292001111",
+      userEmail:"Hello@gmail.com",
+      roleId:2
+    },
+    benches:[],
+    reviews:[],
+    recipeDto:[],
+    photoDto:[]
+}
 
   constructor(
     private restaurantService: RestaurantService,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    public dialog: MatDialog
   ) {}
 
   ngOnInit(): void {
@@ -68,71 +79,59 @@ export class RestprofileComponent implements OnInit {
     );
     this.restaurantService.selectedRestaurant.subscribe((restaurant) => {
       this.restaurant = restaurant;
-      this.restaurantService.getRecipeByRestId(this.restaurant.restaurantId);
-      this.restaurantService.getReviewsByRestId(this.restaurant.restaurantId);
       this.isLoading = !this.restaurant;
+      //console.log(restaurant);
+      //this.address_props=this.breakAddress(this.restaurant.address);
+      //console.log(this.address_props);
+      //console.log(this.isLoading);
     });
-    this.restaurantService.selectedRestaurantMenu.subscribe((menuItems) => {
-      this.menuItems = menuItems;
-    });
-    this.restaurantService.selectedRestaurantReviews.subscribe((reviews) => {
-      this.reviews = reviews;
-    });
-  }
-
-  breakAddress(address: string) {
-    var temp = address.split(',');
-    var temp_address = {};
-    var len = temp.length;
-    temp_address['building_no'] = temp[0].trim();
-    temp_address['street'] = temp[1].trim();
-    temp_address['city'] = temp[len - 2].trim();
-    temp_address['pin_code'] = temp[len - 1].trim();
-    if (len == 5) temp_address['landmark'] = temp[0].trim();
-    else temp_address['landmark'] = '';
-    return temp_address;
+    
   }
 
   isOpen() {
     var datetime = this.getTodayDay();
     // var temp1=datetime[3]["start"].split(' ');
     // var temp2=datetime[3]["end"].split(' ');
-    var temp1 = this.restaurant.openingTime.split(' ');
-    var temp2 = this.restaurant.closingTime.split(' ');
-    var ampm1 = temp1[1];
-    var ampm2 = temp2[1];
-
-    var open_start_hr = parseInt(temp1[0].split(':')[0]);
-    var open_start_min = parseInt(temp1[0].split(':')[1]);
-
-    var open_end_hr = parseInt(temp2[0].split(':')[0]);
-    var open_end_min = parseInt(temp2[0].split(':')[1]);
-
-    if (ampm1 == 'pm') {
-      open_start_hr += 12;
+    if(this.restaurant){
+      var temp1 = this.restaurant.openingTime.split(' ');
+      var temp2 = this.restaurant.closingTime.split(' ');
+      var ampm1 = temp1[1];
+      var ampm2 = temp2[1];
+  
+      var open_start_hr = parseInt(temp1[0].split(':')[0]);
+      var open_start_min = parseInt(temp1[0].split(':')[1]);
+  
+      var open_end_hr = parseInt(temp2[0].split(':')[0]);
+      var open_end_min = parseInt(temp2[0].split(':')[1]);
+  
+      if (ampm1 == 'pm') {
+        open_start_hr += 12;
+      }
+      if (ampm2 == 'pm') {
+        open_end_hr += 12;
+      }
+  
+      var curr_hr = datetime[0];
+      var curr_min = datetime[1];
+  
+      // console.log(datetime);
+      // console.log(temp1,temp2);
+      // console.log(open_start_hr,open_start_min);
+      // console.log(open_end_hr,open_end_min);
+      // console.log(curr_hr,curr_min);
+  
+      if (curr_hr > open_start_hr && curr_hr < open_end_hr) {
+        return true;
+      } else if (curr_hr == open_start_hr) {
+        return curr_min >= open_start_min;
+      } else if (curr_hr == open_end_hr) {
+        return curr_min < open_end_min;
+      } else {
+        return false;
+      }
     }
-    if (ampm2 == 'pm') {
-      open_end_hr += 12;
-    }
-
-    var curr_hr = datetime[0];
-    var curr_min = datetime[1];
-
-    // console.log(datetime);
-    // console.log(temp1,temp2);
-    // console.log(open_start_hr,open_start_min);
-    // console.log(open_end_hr,open_end_min);
-    // console.log(curr_hr,curr_min);
-
-    if (curr_hr > open_start_hr && curr_hr < open_end_hr) {
-      return true;
-    } else if (curr_hr == open_start_hr) {
-      return curr_min >= open_start_min;
-    } else if (curr_hr == open_end_hr) {
-      return curr_min < open_end_min;
-    } else {
-      return false;
-    }
+    else return false;
+    
   }
 
   getTodayDay() {
@@ -165,4 +164,43 @@ export class RestprofileComponent implements OnInit {
 
     return [curr_date.getHours(), curr_date.getMinutes(), this.today_day];
   }
+
+  openDialog(): void {
+    const dialogRef = this.dialog.open(BookingPageComponent, {
+      width: '250px',
+      data: {benches:[],},
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      console.log('The dialog was closed');
+      //this.animal = result;
+    });
+  }
+
+
 }
+
+
+
+
+//breakAddress(address){
+  //     if(address){
+  //       var temp1=address?.addressLine1.split(',');
+  //       var temp2=address?.addressLine2.split(',');
+  
+  //       var temp_address:Address={buildingNo:"",street:"",area:"",landmark:"",city:"",pinCode:""};
+      
+  //       temp_address["buildingNo"]=temp1[0].trim();
+  //       temp_address["street"]=temp1[1].trim();
+  //       temp_address["city"]=address["city"];
+  //       temp_address["pinCode"]=address["pincode"];
+  //       temp_address["area"]=temp2[0].trim();
+  //       if(temp2.length==2)
+  //         temp_address["landmark"]=temp2[1].trim();
+  //       else
+  //         temp_address["landmark"]="";
+  //       console.log(temp_address);
+  //       return temp_address;
+  //     }
+      
+  //   }

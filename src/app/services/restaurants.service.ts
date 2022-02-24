@@ -4,6 +4,8 @@ import { Restaurant } from './restaurant.model';
 import { Subject } from 'rxjs';
 import { Cuisine } from './cuisine.model';
 import { Filter } from './filter.model';
+import { RestProfile } from './rest_profile.model';
+import { MatSnackBar } from '@angular/material/snack-bar';
 import { Menu } from './menu.model';
 import { Review } from './review.model';
 import { environment } from '../../environments/environment';
@@ -19,7 +21,7 @@ export class RestaurantService implements OnInit {
 
   restaurantList = new Subject<Restaurant[]>();
   cuisineList = new Subject<Cuisine[]>();
-  selectedRestaurant = new Subject<Restaurant>();
+  selectedRestaurant = new Subject<RestProfile>();
   selectedRestaurantMenu = new Subject<Menu[]>();
   selectedRestaurantReviews = new Subject<Review[]>();
 
@@ -50,7 +52,7 @@ export class RestaurantService implements OnInit {
         restaurants: Restaurant[];
       }>(environment.backendUrl + environment.restaurantIdEndpoint + id + '/')
       .subscribe((resData) => {
-        this.selectedRestaurant.next(resData.restaurants[0]);
+        this.selectedRestaurant.next(resData.restaurant);
       });
   }
 

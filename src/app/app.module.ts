@@ -26,8 +26,10 @@ import { RestownerprofileComponent } from './restownerprofile/restownerprofile.c
 import { RestOverviewComponent } from './restprofile/rest-overview/rest-overview.component';
 import { UserprofileComponent } from './userprofile/userprofile.component';
 //import {MatAutocompleteSelectedEvent} from '@angular/material/autocomplete';
-import { MatChipsModule } from '@angular/material/chips';
-import { MatAutocompleteModule } from '@angular/material/autocomplete';
+
+import {MatChipsModule} from '@angular/material/chips';
+import {MatAutocompleteModule} from '@angular/material/autocomplete';
+import { BookingPageComponent } from './restprofile/booking-page/booking-page.component';
 import { ErrorInterceptorService } from './services/error-interceptor.service';
 
 @NgModule({
@@ -49,6 +51,7 @@ import { ErrorInterceptorService } from './services/error-interceptor.service';
     RestownerprofileComponent,
     RestOverviewComponent,
     UserprofileComponent,
+    BookingPageComponent,
   ],
   imports: [
     BrowserModule,
