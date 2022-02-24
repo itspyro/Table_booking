@@ -3,7 +3,6 @@ import {
   HttpEvent,
   HttpHandler,
   HttpRequest,
-  HttpResponse,
 } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { MatSnackBar } from '@angular/material/snack-bar';
@@ -26,17 +25,15 @@ export class ErrorInterceptorService implements HttpInterceptor {
   ): Observable<HttpEvent<any>> {
     return next.handle(req).pipe(
       tap((event: HttpEvent<any>) => {
-        console.log(event);
-        console.log(event.type);
         let errorMessage: string | null;
         if (event.type == 4) {
-          switch (event.status) {
+          switch (event.body.httpStatusCode) {
             case 0:
               errorMessage = 'Connection Problem';
               this.openSnackBar(errorMessage);
               break;
             case 404:
-              errorMessage = 'Resource Not Found!';
+              errorMessage = 'Not Found!';
               this.openSnackBar(errorMessage);
               break;
             case 401:
@@ -48,6 +45,9 @@ export class ErrorInterceptorService implements HttpInterceptor {
               errorMessage = 'Internal Server Error!';
               this.openSnackBar(errorMessage);
               break;
+            case 400:
+              errorMessage = event.body.responseMessage;
+              if (errorMessage) this.openSnackBar(errorMessage);
           }
         }
       })

@@ -10,6 +10,8 @@ export const environment = {
   cuisineAllEndpoint: '/api/cuisines/',
   recipesIdEndpoint: '/api/recipe/restaurant/',
   reviewIdEndpoint: '/api/review/restaurant/',
+  createUserEndpoint: '/api/user/create',
+  loginEndpoint: '/api/user/login',
 };
 
 /*
