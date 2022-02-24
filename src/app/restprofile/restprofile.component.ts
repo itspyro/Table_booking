@@ -6,6 +6,7 @@ import { RestaurantService } from 'app/services/restaurants.service';
 import { RestProfile } from 'app/services/rest_profile.model';
 import { Address } from 'app/services/address.model';
 import { BookingPageComponent } from './booking-page/booking-page.component';
+import { AddReviewComponent } from 'app/reviews/add-review/add-review.component';
 
 @Component({
   selector: 'app-restprofile',
@@ -163,6 +164,10 @@ export class RestprofileComponent implements OnInit {
       console.log('The dialog was closed');
       //this.animal = result;
     });
+  }
+
+  openAddReview(){
+    this.dialog.open(AddReviewComponent)
   }
 }
 
