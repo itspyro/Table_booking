@@ -24,7 +24,11 @@
       <div class="name">
         {{ restaurant?.restaurantName }}
       </div>
-      <p class="location">{{ restaurant?.address?.addressLine2 +", "+restaurant?.address?.city }}</p>
+      <p class="location">
+        {{
+          restaurant?.address?.addressLine2 + ", " + restaurant?.address?.city
+        }}
+      </p>
       <div class="open">
         <span [style.color]="isOpen() ? 'green' : 'red'">{{
           isOpen() ? "Open : " : "Closed : "
@@ -79,24 +83,57 @@
   </div>
 
   <div class="view_bar">
-    <nav mat-tab-nav-bar dynamicHeight mat-align-tabs="center" [tabPanel]="tabPanel">
-      <a mat-tab-link (click)="activeLink = 'Overview'" [active]="activeLink == 'Overview'">
+    <nav
+      mat-tab-nav-bar
+      dynamicHeight
+      mat-align-tabs="center"
+      [tabPanel]="tabPanel"
+    >
+      <a
+        mat-tab-link
+        (click)="activeLink = 'Overview'"
+        [active]="activeLink == 'Overview'"
+      >
         <mat-icon>description</mat-icon>Overview
       </a>
-      <a mat-tab-link (click)="activeLink = 'Reviews'" [active]="activeLink == 'Reviews'">
+      <a
+        mat-tab-link
+        (click)="activeLink = 'Reviews'"
+        [active]="activeLink == 'Reviews'"
+      >
         <mat-icon>post_add</mat-icon>Reviews
       </a>
-      <a mat-tab-link (click)="activeLink = 'Menu'" [active]="activeLink == 'Menu'">
+      <a
+        mat-tab-link
+        (click)="activeLink = 'Menu'"
+        [active]="activeLink == 'Menu'"
+      >
         <mat-icon>restaurant_menu</mat-icon>Menu
       </a>
-      <a mat-tab-link (click)="activeLink = 'Photos'" [active]="activeLink == 'Photos'">
+      <a
+        mat-tab-link
+        (click)="activeLink = 'Photos'"
+        [active]="activeLink == 'Photos'"
+      >
         <mat-icon>collections</mat-icon>Photos
       </a>
     </nav>
     <mat-tab-nav-panel #tabPanel>
-      <app-rest-overview *ngIf="activeLink == 'Overview'" [description]="(restaurant?restaurant.description:'')" [contact]="(restaurant?restaurant.contact:'')" [address]="restaurant?.address" [cuisines]="restaurant?restaurant.cuisines:[]"></app-rest-overview>
-      <app-reviews *ngIf="activeLink == 'Reviews'"></app-reviews>
-      <app-menu *ngIf="activeLink == 'Menu'"></app-menu>
+      <app-rest-overview
+        *ngIf="activeLink == 'Overview'"
+        [description]="restaurant ? restaurant.description : ''"
+        [contact]="restaurant ? restaurant.contact : ''"
+        [address]="restaurant?.address"
+        [cuisines]="restaurant ? restaurant.cuisines : []"
+      ></app-rest-overview>
+      <app-reviews
+        *ngIf="activeLink == 'Reviews'"
+        [reviews]="restaurant?.reviews"
+      ></app-reviews>
+      <app-menu
+        *ngIf="activeLink == 'Menu'"
+        [menuItems]="restaurant?.recipeDto"
+      ></app-menu>
     </mat-tab-nav-panel>
   </div>
 </div>

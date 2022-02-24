@@ -122,8 +122,7 @@ export class AuthComponent {
     const user: User = {
       roleName: registerationInfo.isOwner ? 'Owner' : 'User',
       userEmail: registerationInfo.email,
-      userFirstName: registerationInfo.FirstName,
-      userLastName: registerationInfo.LastName,
+      userName: registerationInfo.FirstName,
       userPhoneNumber: registerationInfo.phoneNumber,
     };
     this.authService.createUser({

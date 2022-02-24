@@ -5,10 +5,9 @@ import { Subject } from 'rxjs';
 import { Cuisine } from './cuisine.model';
 import { Filter } from './filter.model';
 import { RestProfile } from './rest_profile.model';
-import { MatSnackBar } from '@angular/material/snack-bar';
-import { Menu } from './menu.model';
 import { Review } from './review.model';
 import { environment } from '../../environments/environment';
+import { Recipe } from './recipe.model';
 
 @Injectable({
   providedIn: 'root',
@@ -16,13 +15,13 @@ import { environment } from '../../environments/environment';
 export class RestaurantService implements OnInit {
   restaurants: Restaurant[] = [];
   cuisines: Cuisine[] = [];
-  menu: Menu[] = [];
+  menu: Recipe[] = [];
   reviews: Review[] = [];
 
   restaurantList = new Subject<Restaurant[]>();
   cuisineList = new Subject<Cuisine[]>();
   selectedRestaurant = new Subject<RestProfile>();
-  selectedRestaurantMenu = new Subject<Menu[]>();
+  selectedRestaurantMenu = new Subject<Recipe[]>();
   selectedRestaurantReviews = new Subject<Review[]>();
 
   constructor(private http: HttpClient) {}
@@ -75,18 +74,12 @@ export class RestaurantService implements OnInit {
       });
   }
 
-  // getPhotos(restaurantId: number) {
-  //   const url = 'http://localhost:8080/api/photos/restaurant/' + restaurantId;
-
-  //   this.http.get(url).subscribe(() => {});
-  // }
-
   getRecipeByRestId(restaurantId: number) {
     this.http
       .get<{
         httpStatusCode: number;
         responseMessage: string;
-        recipes: Menu[];
+        recipes: Recipe[];
       }>(environment.backendUrl + environment.recipesIdEndpoint + restaurantId)
       .subscribe((resData) => {
         this.menu = resData.recipes;

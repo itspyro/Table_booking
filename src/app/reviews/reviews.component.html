@@ -10,7 +10,7 @@
       ></div>
       <mat-card-header class="review-card-header-text">
         <mat-card-title class="review-title">
-          {{ review.user.userFirstName }}</mat-card-title
+          {{ review.user?.userName }}</mat-card-title
         >
         <mat-card-subtitle class="rating-container">
           <star-rating
@@ -23,7 +23,7 @@
       </mat-card-header>
       <mat-card-content class="review-content">
         <p>
-          {{ review.review }}
+          {{ review?.review }}
         </p>
       </mat-card-content>
     </mat-card>

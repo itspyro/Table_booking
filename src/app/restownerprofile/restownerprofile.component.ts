@@ -19,8 +19,7 @@ export class RestownerprofileComponent implements OnInit {
   user: User = {
     roleName: 'User',
     userId: 0,
-    userFirstName: '',
-    userLastName: '',
+    userName: '',
     userPhoneNumber: '',
     userEmail: '',
   };

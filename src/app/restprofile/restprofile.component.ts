@@ -1,16 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import {
-  MatDialog,
-  MatDialogRef,
-  MAT_DIALOG_DATA,
-} from '@angular/material/dialog';
+import { MatDialog } from '@angular/material/dialog';
 
 import { RestaurantService } from 'app/services/restaurants.service';
 import { RestProfile } from 'app/services/rest_profile.model';
 import { Address } from 'app/services/address.model';
-import { Menu } from 'app/services/menu.model';
-import { Review } from 'app/services/review.model';
 import { BookingPageComponent } from './booking-page/booking-page.component';
 
 @Component({
@@ -22,8 +16,6 @@ export class RestprofileComponent implements OnInit {
   id: number = 0;
   restaurant?: RestProfile;
   isLoading: boolean = true;
-  menuItems?: Menu[];
-  reviews?: Review[];
 
   week_days = [
     'Sunday',
@@ -59,8 +51,7 @@ export class RestprofileComponent implements OnInit {
     cuisines: [],
     user: {
       userId: 1,
-      userFirstName: 'Aakriti',
-      userLastName: 'Sahrawat',
+      userName: 'Aakriti',
       userPhoneNumber: '9292001111',
       userEmail: 'Hello@gmail.com',
       roleName: 'User',
@@ -84,10 +75,6 @@ export class RestprofileComponent implements OnInit {
     this.restaurantService.selectedRestaurant.subscribe((restaurant) => {
       this.restaurant = restaurant;
       this.isLoading = !this.restaurant;
-      //console.log(restaurant);
-      //this.address_props=this.breakAddress(this.restaurant.address);
-      //console.log(this.address_props);
-      //console.log(this.isLoading);
     });
   }
 
