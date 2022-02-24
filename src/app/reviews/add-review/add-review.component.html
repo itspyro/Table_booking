@@ -1,0 +1,12 @@
+<h1 mat-dialog-title>Add Review</h1>
+<form #reviewForm="ngForm" (ngSubmit)="onSubmitReview(reviewForm.value)">
+<div>
+    <div class="block">
+        Rating <input ngModel name="rating" type="range" min="0" max="5"><br>
+    </div>
+    <div class="block">
+        Review <textarea ngModel name="review" ></textarea>
+    </div>
+</div>
+<button type="submit" mat-raised-button matDialogClose color="primary">Submit</button>
+</form>

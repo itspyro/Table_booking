@@ -31,6 +31,7 @@ import {MatChipsModule} from '@angular/material/chips';
 import {MatAutocompleteModule} from '@angular/material/autocomplete';
 import { BookingPageComponent } from './restprofile/booking-page/booking-page.component';
 import { ErrorInterceptorService } from './services/error-interceptor.service';
+import { AddReviewComponent } from './reviews/add-review/add-review.component';
 
 @NgModule({
   declarations: [
@@ -52,6 +53,7 @@ import { ErrorInterceptorService } from './services/error-interceptor.service';
     RestOverviewComponent,
     UserprofileComponent,
     BookingPageComponent,
+    AddReviewComponent,
   ],
   imports: [
     BrowserModule,
