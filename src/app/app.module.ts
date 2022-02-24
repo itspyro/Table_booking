@@ -50,14 +50,11 @@ import { ErrorInterceptorService } from './services/error-interceptor.service';
     RestownerprofileComponent,
     RestOverviewComponent,
     UserprofileComponent,
-<<<<<<< HEAD
     BookingPageComponent,
   
   
 
    
-=======
->>>>>>> dd4dafa2e00a1034c9cc1f9bc0ce130726a6bad4
   ],
   imports: [
     BrowserModule,
