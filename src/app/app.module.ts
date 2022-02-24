@@ -32,6 +32,7 @@ import {MatAutocompleteModule} from '@angular/material/autocomplete';
 import { ErrorInterceptorService } from './services/error-interceptor.service';
 import { ReactiveFormsModule } from '@angular/forms';
 //import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { AddReviewComponent } from './reviews/add-review/add-review.component';
 
 @NgModule({
   declarations: [
@@ -51,7 +52,8 @@ import { ReactiveFormsModule } from '@angular/forms';
     AuthComponent,
     RestownerprofileComponent,
     RestOverviewComponent,
-    UserprofileComponent
+    UserprofileComponent,
+    AddReviewComponent,
   ],
   imports: [
     BrowserModule,

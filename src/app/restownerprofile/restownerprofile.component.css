@@ -15,7 +15,7 @@ mat-card-header{
     margin: 10px;
 }
 
-button{
+.button{
     display: flex;
     justify-content: flex-end;
 }
@@ -44,4 +44,8 @@ button{
 }
 mat-form-field{
     margin-left: 20px;
+}
+
+.bench-delete{
+    float: inline-end;
 }

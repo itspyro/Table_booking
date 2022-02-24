@@ -17,12 +17,11 @@ export class RestownerprofileComponent implements OnInit {
   isOwner: boolean = false;
 
   user: User = {
-    roleId: 0,
+    roleName: '',
     userId: 0,
-    userFirstName: '',
-    userLastName: '',
     userPhoneNumber: '',
-    userEmail: ''
+    userEmail: '',
+    userName: ''
   };
   restaurant: Restaurant = {
     restaurantId: 0,
@@ -44,7 +43,6 @@ export class RestownerprofileComponent implements OnInit {
   };
   table = new Table;
   benches!: Table[];
-  displayedColumns: string[] = ['Bench Type', 'Capacity']
   benchType: string[] = ['private', 'general']
   selectedBenchType: string = '';
 
@@ -56,14 +54,19 @@ export class RestownerprofileComponent implements OnInit {
     this.userservice.userProfile.subscribe((data) => {
 
       this.user = data;
-      if (this.user.roleId == 1) {
+      if (this.user.roleName == "owner") {
         this.userservice.getRestaurantByUser(this.user.userId);
         this.userservice.restaurantProfile.subscribe((data) => {
 
           this.restaurant = data;
           this.userservice.getAllBenches(this.restaurant.restaurantId)
           this.userservice.benchList.subscribe((data) => {
-            this.benches = data;
+            this.benches = data
+            // data.forEach((element,index)=>{
+            //   if(element.benchType!=this.benches[0].benchType){
+            //     this.benches.push(element)
+            //   }
+            // })
 
             this.benches.forEach(element => {
               this.benchType.forEach((ele, index) => {
@@ -86,7 +89,7 @@ export class RestownerprofileComponent implements OnInit {
   }
 
   checkIsOwner() {
-    if (this.user.roleId == 1 && this.isOwnerCheckbox == true) {
+    if (this.user.roleName == "owner" && this.isOwnerCheckbox == true) {
       this.isOwner = true
     } else if (this.isOwnerCheckbox == true) {
       console.log('You are not owner')
@@ -101,16 +104,34 @@ export class RestownerprofileComponent implements OnInit {
     this.table = new Table;
     this.table.benchType = this.selectedBenchType;
     this.table.capacity = data.capacity;
+    this.table.price = data.price;
+    this.table.noOfBench = data.noOfTable;
     this.table.restaurantId = this.restaurant.restaurantId;
-    if (this.table.benchType === undefined || this.table.benchType === "" || this.table.capacity === undefined || this.table.restaurantId === undefined) {
+    if (
+      this.table.benchType === undefined || 
+      this.table.benchType === "" || 
+      this.table.capacity === undefined || 
+      this.table.restaurantId === undefined ||
+      this.table.price === undefined||
+      this.table.noOfBench === undefined) 
+      {
       console.log('Please enter every field')
     } else {
       this.benches.push(this.table);
-      this.benchType.forEach((ele, index) => {
-        if (ele == this.selectedBenchType) this.benchType.splice(index, 1)
+      this.benchType.forEach((element, index) => {
+        if (element == this.selectedBenchType) this.benchType.splice(index, 1)
       })
       this.userservice.addBench(this.table)
     }
     this.selectedBenchType = ""
+  }
+
+  onDeleteButton(data:any){
+    this.benches.forEach((element,index)=>{
+      if(element.benchId === data.benchId){
+        this.benches.splice(index,1)
+      }
+    })
+    this.userservice.deleteBench(data.benchId)
   }
 }
