@@ -1,5 +1,6 @@
 import { HttpClient, HttpStatusCode } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { environment } from 'environments/environment';
 import { Subject } from 'rxjs';
 import { Restaurant } from './restaurant.model';
 import { Table } from './table.model';
@@ -17,11 +18,13 @@ export class UserprofileService {
   constructor(private http: HttpClient) {}
 
   getUser() {
-    const url = 'http://localhost:8080/api/user/find/1';
+    const USER_ID = 1;
     this.http
-      .get<{ httpStatusCode: number; responseMessage: string; users: User }>(
-        url
-      )
+      .get<{
+        httpStatusCode: number;
+        responseMessage: string;
+        users: User;
+      }>(environment.backendUrl + environment.userIdEndpoint + USER_ID)
       .subscribe((data) => {
         console.log(data);
         this.userProfile.next(data.users[0]);
@@ -29,34 +32,32 @@ export class UserprofileService {
   }
 
   getRestaurantByUser(userId: number) {
-    const url = 'http://localhost:8080/api/user/restaurant/' + userId;
     this.http
       .get<{
         httpStatusCode: number;
         responseMessage: string;
-        restaurants: Restaurant;
-      }>(url)
+        restaurants: Restaurant[];
+      }>(environment.backendUrl + environment.userRestaurantEndpoint + userId)
       .subscribe((data) => {
         this.restaurantProfile.next(data.restaurants[0]);
       });
   }
 
   addBench(data: any) {
-    console.log(data);
-    const url = 'http://localhost:8080/api/bench/create';
-    this.http.post(url, data).subscribe((data) => {
-      console.log(data);
-    });
+    this.http
+      .post(environment.backendUrl + environment.benchCreateEndpoint, data)
+      .subscribe((data) => {
+        console.log(data);
+      });
   }
 
   getAllBenches(id: number) {
-    const url = 'http://localhost:8080/api/bench/restaurant/' + id;
     this.http
       .get<{
         httpStatusCode: number;
         responseMessage: string;
         benches: Table[];
-      }>(url)
+      }>(environment.backendUrl + environment.benchAllEndpoint + id)
       .subscribe((data) => {
         this.benchs = data.benches;
         this.benchList.next(this.benchs.slice());

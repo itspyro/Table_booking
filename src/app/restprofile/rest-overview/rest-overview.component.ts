@@ -1,4 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
+import { Address } from 'app/services/address.model';
 import { Cuisine } from 'app/services/cuisine.model';
 
 @Component({
@@ -11,14 +12,10 @@ export class RestOverviewComponent implements OnInit {
 
   ngOnInit(): void {}
 
-  @Input() cuisines: Cuisine[] = [];
+  @Input() cuisines:Cuisine[]=[];
 
-  @Input() description: string = '';
-  @Input() contact: string = '';
-  @Input() address?: {
-    addressLine1: string;
-    addressLine2: string;
-    city: string;
-    pincode: string;
-  };
+  @Input() description:string="";
+  @Input() contact:string="";
+  @Input() address;
+
 }

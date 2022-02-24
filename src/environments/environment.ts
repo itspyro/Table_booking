@@ -12,6 +12,10 @@ export const environment = {
   reviewIdEndpoint: '/api/review/restaurant/',
   createUserEndpoint: '/api/user/create',
   loginEndpoint: '/api/user/login',
+  userIdEndpoint: '/api/user/find/',
+  userRestaurantEndpoint: '/api/user/restaurant/',
+  benchCreateEndpoint: '/api/bench/create',
+  benchAllEndpoint: '/api/bench/restaurant/',
 };
 
 /*
