@@ -13,7 +13,7 @@ import { RestprofileComponent } from './restprofile/restprofile.component';
 import { HeadingComponent } from './heading/heading.component';
 import { FilterComponent } from './components/filter/filter.component';
 import { RestaurantCardComponent } from './components/restaurant-card/restaurant-card.component';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { FormsModule } from '@angular/forms';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { HomeComponent } from './components/home.component';
@@ -29,8 +29,7 @@ import { UserprofileComponent } from './userprofile/userprofile.component';
 import {MatChipsModule} from '@angular/material/chips';
 import {MatAutocompleteModule} from '@angular/material/autocomplete';
 import { BookingPageComponent } from './restprofile/booking-page/booking-page.component';
-
-
+import { ErrorInterceptorService } from './services/error-interceptor.service';
 
 @NgModule({
   declarations: [
@@ -51,11 +50,14 @@ import { BookingPageComponent } from './restprofile/booking-page/booking-page.co
     RestownerprofileComponent,
     RestOverviewComponent,
     UserprofileComponent,
+<<<<<<< HEAD
     BookingPageComponent,
   
   
 
    
+=======
+>>>>>>> dd4dafa2e00a1034c9cc1f9bc0ce130726a6bad4
   ],
   imports: [
     BrowserModule,
@@ -68,12 +70,16 @@ import { BookingPageComponent } from './restprofile/booking-page/booking-page.co
     ScrollingModule,
     MaterialModule,
     MatChipsModule,
-    MatAutocompleteModule
-    
+    MatAutocompleteModule,
   ],
 
-  providers: [],
+  providers: [
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: ErrorInterceptorService,
+      multi: true,
+    },
+  ],
   bootstrap: [AppComponent],
-  
 })
 export class AppModule {}
