@@ -28,12 +28,12 @@
                         </div>
                     </div> 
                 </div>
-                <mat-checkbox [(ngModel)]="isOwner">Manage Restaurant</mat-checkbox>
+                <mat-checkbox [(ngModel)]="isOwnerCheckbox" (change)="checkIsOwner()">Manage Restaurant</mat-checkbox>
             </mat-card-content>
         </mat-card>
     </div>
 
-    <div class="owner-profile" *ngIf="!checkIsOwner()"> <!-- please remove ! -->
+    <div class="owner-profile" *ngIf="isOwner"> <!-- please remove ! -->
         <div class="rest-info">
             <mat-card>
                 <mat-card-header>
@@ -44,36 +44,28 @@
                 <img src="https://content3.jdmagicbox.com/comp/lucknow/s6/0522px522.x522.180816151829.l1s6/catalogue/the-oven-lucknow-mz7zjubm4y.jpg">
                 <mat-card-content>  
                     <div class="block">
-                        <label class="left">Restaurant Name: </label>
-                        <input type="text" class="right" [disabled]="!isModify" value={{restaurant.restaurantName}}>
+                        <label >Restaurant Name: </label>
+                        <input type="text" [disabled]="!isModify" value={{restaurant.restaurantName}}>
                     </div>
-                    <div >
-                        <label class="block">Location</label>
-                        <input type="text" class="block" [disabled]="!isModify" value={{restaurant.address.addressLine1}}>
-                    </div>
-                    <div class="block">
-                        <label class="left">No of Table</label>
-                        <input type="text" class="right"  [disabled]="!isModify" value>
+                    <div class="block" >
+                        <label >Location</label>
+                        <input type="text"  [disabled]="!isModify" value={{restaurant.address.addressLine1}}>
                     </div>
                     <div class="block">
-                        <label class="left">Price per Table</label>
-                        <input type="text" class="right"  [disabled]="!isModify" value>
+                        <label >GST No.</label>
+                        <input type="text"  disabled value={{restaurant.gstIn}}>
                     </div>
                     <div class="block">
-                        <label class="left">GST No.</label>
-                        <input type="text" class="right"  disabled value={{restaurant.gstIn}}>
+                        <label >Pure Veg</label>
+                        <input type="checkbox" [disabled]="!isModify" checked={{restaurant.nonVeg}}>
                     </div>
                     <div class="block">
-                        <label class="left">Pure Veg</label>
-                        <input type="checkbox" class="right"  [disabled]="!isModify" checked={{restaurant.nonVeg}}>
+                        <label >Time Slot</label>
+                        <input type="text"   [disabled]="!isModify" value={{restaurant.openingTime}}>
                     </div>
                     <div class="block">
-                        <label class="left">Time Slot</label>
-                        <input type="text" class="right"  [disabled]="!isModify" value={{restaurant.openingTime}}>
-                    </div>
-                    <div class="block">
-                        <label class="left">Description</label>
-                        <input type="text" class="right"  [disabled]="!isModify" value={{restaurant.description}}>
+                        <label >Description</label>
+                        <input type="text"  [disabled]="!isModify" value={{restaurant.description}}>
                     </div>
                 </mat-card-content>
             </mat-card>
@@ -84,22 +76,31 @@
                 Table
             </mat-card-title>
             <mat-card-content>
+                <br>
+                <div class="block">
+                    <label >Table Type</label>
+                    <label >Table capacity</label>
+                    <label >Total Table</label>
+                </div>
                 <div *ngFor="let bench of benches">
+                        
                         <div class="block">
-                            <label class="left">Table Type</label>
-                            <label class="right">{{bench.benchType}}</label>
-                        </div>
-                        <div class="block">
-                            <label class="left">Table capacity</label>
-                            <label class="right">{{bench.capacity}}</label>
+                            <label >{{bench.benchType}}</label>
+                            <label >{{bench.capacity+" Person"}}</label>
                         </div>
                 </div>
-                
-                
+            
                 <form #table="ngForm" (ngSubmit)="addTable(table.value)" >
-                    <input type="number" ngModel name="capacity">capacity
-                    <input type="text" ngModel name="type">Bench Type
-                    <button type="submit">Add Table</button>
+                    <input type="number" ngModel name="capacity"> Capacity
+                    <mat-form-field appearance="fill">
+                        <mat-label>Bench Type</mat-label>
+                        <mat-select [(ngModel)]="selectedBenchType" name="benchTye">
+                          <mat-option *ngFor="let benchtype of benchType" [value]="benchtype">
+                            {{benchtype}}
+                          </mat-option>
+                        </mat-select>
+                      </mat-form-field>                      
+                    <button mat-raised-button color="primary" type="submit">Add Table</button>
                 </form>
             </mat-card-content>
         </mat-card-header>

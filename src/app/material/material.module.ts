@@ -15,6 +15,9 @@ import { MatDialogModule } from '@angular/material/dialog';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatChipsModule } from '@angular/material/chips';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
+import {MatDatepickerModule} from '@angular/material/datepicker';
+
+import { NgxMaterialTimepickerModule } from "ngx-material-timepicker";
 
 const MaterialComponents = [
   MatMenuModule,
@@ -35,6 +38,8 @@ const MaterialComponents = [
   MatDialogModule,
   MatProgressSpinnerModule,
   MatAutocompleteModule,
+  MatDatepickerModule,
+  NgxMaterialTimepickerModule
 ];
 
 @NgModule({

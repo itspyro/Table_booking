@@ -28,8 +28,10 @@ import { UserprofileComponent } from './userprofile/userprofile.component';
 //import {MatAutocompleteSelectedEvent} from '@angular/material/autocomplete';
 import {MatChipsModule} from '@angular/material/chips';
 import {MatAutocompleteModule} from '@angular/material/autocomplete';
-import { BookingPageComponent } from './restprofile/booking-page/booking-page.component';
+//import { BookingPageComponent } from './restprofile/booking-page/booking-page.component';
 import { ErrorInterceptorService } from './services/error-interceptor.service';
+import { ReactiveFormsModule } from '@angular/forms';
+//import { FormControl, FormGroup, Validators } from '@angular/forms';
 
 @NgModule({
   declarations: [
@@ -49,12 +51,7 @@ import { ErrorInterceptorService } from './services/error-interceptor.service';
     AuthComponent,
     RestownerprofileComponent,
     RestOverviewComponent,
-    UserprofileComponent,
-    BookingPageComponent,
-  
-  
-
-   
+    UserprofileComponent
   ],
   imports: [
     BrowserModule,
@@ -63,11 +60,12 @@ import { ErrorInterceptorService } from './services/error-interceptor.service';
     StarRatingModule.forRoot(),
     HttpClientModule,
     FormsModule,
+    ReactiveFormsModule,
     FlexLayoutModule,
     ScrollingModule,
     MaterialModule,
     MatChipsModule,
-    MatAutocompleteModule,
+    MatAutocompleteModule
   ],
 
   providers: [

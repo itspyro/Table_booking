@@ -7,7 +7,7 @@ import { RestProfile } from 'app/services/rest_profile.model';
 import { Address } from 'app/services/address.model';
 import { Menu } from 'app/services/menu.model';
 import { Review } from 'app/services/review.model';
-import { BookingPageComponent } from './booking-page/booking-page.component';
+//import { BookingPageComponent } from './booking-page/booking-page.component';
 
 @Component({
   selector: 'app-restprofile',
@@ -18,8 +18,6 @@ export class RestprofileComponent implements OnInit {
   id: number = 0;
   restaurant?:RestProfile;
   isLoading: boolean = true;
-  menuItems?: Menu[];
-  reviews?: Review[];
 
   week_days = [
     'Sunday',
@@ -90,8 +88,6 @@ export class RestprofileComponent implements OnInit {
 
   isOpen() {
     var datetime = this.getTodayDay();
-    // var temp1=datetime[3]["start"].split(' ');
-    // var temp2=datetime[3]["end"].split(' ');
     if(this.restaurant){
       var temp1 = this.restaurant.openingTime.split(' ');
       var temp2 = this.restaurant.closingTime.split(' ');
@@ -165,17 +161,15 @@ export class RestprofileComponent implements OnInit {
     return [curr_date.getHours(), curr_date.getMinutes(), this.today_day];
   }
 
-  openDialog(): void {
-    const dialogRef = this.dialog.open(BookingPageComponent, {
-      width: '250px',
-      data: {benches:[],},
-    });
+  // openDialog(): void {
+  //   const dialogRef = this.dialog.open(BookingPageComponent, {
+  //     width: '250px'
+  //   });
 
-    dialogRef.afterClosed().subscribe(result => {
-      console.log('The dialog was closed');
-      //this.animal = result;
-    });
-  }
+  //   dialogRef.afterClosed().subscribe(result => {
+  //     console.log('The dialog was closed');
+  //   });
+  // }
 
 
 }
