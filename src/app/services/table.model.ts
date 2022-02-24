@@ -1,5 +1,8 @@
 export class Table{
+    benchId!:number
     benchType!:string;
     capacity!:Number;
-    restaurantId!:number
+    restaurantId!:number;
+    price!:number;
+    noOfBench!:number;
 }

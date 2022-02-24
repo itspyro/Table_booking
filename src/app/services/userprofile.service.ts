@@ -31,7 +31,7 @@ export class UserprofileService {
       });
   }
 
-  getRestaurantByUser(userId: number) {
+  getRestaurantByUser(userId: any) {
     this.http
       .get<{
         httpStatusCode: number;
@@ -62,5 +62,13 @@ export class UserprofileService {
         this.benchs = data.benches;
         this.benchList.next(this.benchs.slice());
       });
+  }
+
+  deleteBench(id:any){
+    this.http.delete(
+      environment.backendUrl+environment.benchDeleteEndpoint+id
+    ).subscribe((response)=>{
+      console.log(response)
+    })
   }
 }
