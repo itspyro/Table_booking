@@ -20,7 +20,8 @@ export const environment = {
   bookingEndpoint:'/api/bookings/create',
   addReviewEndpoint:'/api/review/create',
   updateRestInfoEndpoint:'/api/restaurant/update',
-  updateBenchInfoEndpoint:'/api/bench/update'
+  updateBenchInfoEndpoint:'/api/bench/update',
+  cityEndpoint:'/api/city'
 };
 
 /*
