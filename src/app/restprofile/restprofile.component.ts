@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { MatDialog } from '@angular/material/dialog';
 
 import { RestaurantService } from 'app/services/restaurants.service';
@@ -7,7 +7,6 @@ import { RestProfile } from 'app/services/rest_profile.model';
 import { Address } from 'app/services/address.model';
 //import { Menu } from 'app/services/menu.model';
 import { Review } from 'app/services/review.model';
-//import { BookingPageComponent } from './booking-page/booking-page.component';
 import { AddReviewComponent } from 'app/reviews/add-review/add-review.component';
 
 @Component({
@@ -68,7 +67,8 @@ export class RestprofileComponent implements OnInit {
   constructor(
     private restaurantService: RestaurantService,
     private route: ActivatedRoute,
-    public dialog: MatDialog
+    private router: Router,
+    public dialog: MatDialog,
   ) {}
 
   ngOnInit(): void {
@@ -78,6 +78,7 @@ export class RestprofileComponent implements OnInit {
     this.restaurantService.selectedRestaurant.subscribe((restaurant) => {
       this.restaurant = restaurant;
       this.isLoading = !this.restaurant;
+      this.restaurantService.setTimings(restaurant.openingTime,restaurant.closingTime);
     });
   }
 
@@ -156,20 +157,36 @@ export class RestprofileComponent implements OnInit {
     return [curr_date.getHours(), curr_date.getMinutes(), this.today_day];
   }
 
-  // openDialog(): void {
-  //   const dialogRef = this.dialog.open(BookingPageComponent, {
-  //     width: '250px'
-  //   });
-
-  //   dialogRef.afterClosed().subscribe(result => {
-  //     console.log('The dialog was closed');
-  //   });
-  // }
-
   openAddReview(){
     this.dialog.open(AddReviewComponent)
   }
+
+
+  directToBooking(){
+    if(this.restaurant)
+      this.router.navigate(['/booking', btoa((this.restaurant.restaurantId).toString())]);
+  }
+
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

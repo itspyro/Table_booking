@@ -17,8 +17,6 @@ import { MatChipsModule } from '@angular/material/chips';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import {MatDatepickerModule} from '@angular/material/datepicker';
 
-import { NgxMaterialTimepickerModule } from "ngx-material-timepicker";
-
 const MaterialComponents = [
   MatMenuModule,
   MatChipsModule,
@@ -38,8 +36,7 @@ const MaterialComponents = [
   MatDialogModule,
   MatProgressSpinnerModule,
   MatAutocompleteModule,
-  MatDatepickerModule,
-  NgxMaterialTimepickerModule
+  MatDatepickerModule
 ];
 
 @NgModule({
