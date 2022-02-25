@@ -18,12 +18,12 @@ export class RestaurantService implements OnInit {
   cuisines: Cuisine[] = [];
   menu: Recipe[] = [];
   reviews: Review[] = [];
-  openingTime:string="";
-  closingTime:string="";
+  openingTime: string = '';
+  closingTime: string = '';
 
-  restaurantId!:number;
-  review = new AddReview;
-  
+  restaurantId!: number;
+  review = new AddReview();
+
   restaurantList = new Subject<Restaurant[]>();
   cuisineList = new Subject<Cuisine[]>();
   selectedRestaurant = new Subject<RestProfile>();
@@ -57,18 +57,18 @@ export class RestaurantService implements OnInit {
         restaurant: RestProfile;
       }>(environment.backendUrl + environment.restaurantIdEndpoint + id + '/')
       .subscribe((resData) => {
-        this.restaurantId = resData.restaurant.restaurantId
+        this.restaurantId = resData.restaurant.restaurantId;
         this.selectedRestaurant.next(resData.restaurant);
       });
   }
 
-  setTimings(openingTime:string,closingTime:string){
-    this.closingTime=closingTime;
-    this.openingTime=openingTime;
+  setTimings(openingTime: string, closingTime: string) {
+    this.closingTime = closingTime;
+    this.openingTime = openingTime;
   }
 
-  returnTimings(){
-    return {  openingTime:this.openingTime, closingTime:this.closingTime  };
+  returnTimings() {
+    return { openingTime: this.openingTime, closingTime: this.closingTime };
   }
   getCuisines() {
     this.http
@@ -159,18 +159,18 @@ export class RestaurantService implements OnInit {
     this.restaurantList.next(filteredRestaurants);
   }
 
-  addReview(data:any){
+  addReview(data: any) {
     this.review.review = data.review;
     this.review.rating = data.rating;
     this.review.restaurantId = this.restaurantId;
     this.review.userId = 1;
     const DATE = new Date();
-    this.review.timestamp = DATE.getTime()
-    
-    this.http.post(
-      environment.backendUrl+environment.addReviewEndpoint,this.review
-    ).subscribe((response)=>{
-      console.log(response)
-    })
+    this.review.timestamp = DATE.getTime();
+
+    this.http
+      .post(environment.backendUrl + environment.addReviewEndpoint, this.review)
+      .subscribe((response) => {
+        console.log(response);
+      });
   }
 }
