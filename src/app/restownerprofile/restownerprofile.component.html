@@ -16,8 +16,7 @@
         <div class="infomation">
           <div class="left-info">
             <div>
-              <p>First Name:</p>
-              <p>Last Name:</p>
+              <p>User Name:</p>
               <p>Email</p>
               <p>Phone No.</p>
             </div>
@@ -114,8 +113,9 @@
             <input type="text" disabled value="{{ restaurant.gstIn }}" />
           </div>
           <div class="block">
-            <label>Pure Veg</label>
+            <label>Non-Veg</label>
             <input
+              class="checkbox"
               type="checkbox"
               [disabled]="!isModify"
               [(ngModel)]="restaurant.nonVeg"
@@ -157,17 +157,33 @@
         <mat-card-title> Table </mat-card-title>
         <mat-card-content>
           <br />
-          <div class="block">
+          <div class="block1">
             <label>Table Type</label>
             <label>Table capacity</label>
             <label>Price</label>
           </div>
           <div *ngFor="let bench of benches">
-            <div class="block">
-              <label>{{ bench.benchType }}</label>
-              <label>{{ bench.capacity + " Person" }}</label>
-              <label>{{ bench.price }}</label>
-              <button color="primary" (click)="onDeleteButton(bench)">delete</button>
+            <div class="block1">
+              <label *ngIf="!bench.isModify">{{ bench.benchType }}</label>
+              <mat-form-field *ngIf="bench.isModify" appearance="fill">
+                <mat-label>Bench Type</mat-label>
+                <mat-select [(ngModel)]="bench.benchType" name="benchTye">
+                  <mat-option
+                    *ngFor="let benchtype of benchType"
+                    [value]="benchtype"
+                  >
+                    {{ benchtype }}
+                  </mat-option>
+                </mat-select>
+              </mat-form-field>
+              <label *ngIf="!bench.isModify">{{ bench.capacity + " Person" }}</label>
+              <input *ngIf="bench.isModify" type="number" ngModel name="capacity" [(ngModel)]="bench.capacity"/>
+              <label *ngIf="!bench.isModify">{{ bench.price }}</label>
+              <input *ngIf="bench.isModify" type="number" ngModel name="price" [(ngModel)]="bench.price"/>
+
+              <button *ngIf="!bench.isModify" mat-raised-button color="primary" (click)="onModifyButton(bench)">Modify</button>
+              <button *ngIf="bench.isModify" mat-raised-button color="primary" (click)="onSubmitButton(bench)">Submit</button>
+              <button mat-raised-button color="primary" (click)="onDeleteButton(bench)">Delete</button>
             </div>
           </div>
 

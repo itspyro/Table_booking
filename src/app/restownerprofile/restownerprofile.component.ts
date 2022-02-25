@@ -16,6 +16,7 @@ export class RestownerprofileComponent implements OnInit {
   isModify: boolean = false;
   isOwnerCheckbox: boolean = false;
   isOwner: boolean = false;
+  isBenchModify:boolean = false;
 
   user: User = {
     roleName: '',
@@ -63,12 +64,7 @@ export class RestownerprofileComponent implements OnInit {
           this.restaurant = data;
           this.userservice.getAllBenches(this.restaurant.restaurantId)
           this.userservice.benchList.subscribe((data) => {
-            this.benches = data
-            // data.forEach((element,index)=>{
-            //   if(element.benchType!=this.benches[0].benchType){
-            //     this.benches.push(element)
-            //   }
-            // })
+            this.benches = data;
           })
         })
       }
@@ -134,5 +130,12 @@ export class RestownerprofileComponent implements OnInit {
       }
     })
     this.userservice.deleteBench(data.benchId)
+  }
+  onModifyButton(data:any){
+    data.isModify = true
+  }
+  onSubmitButton(data:any){
+    data.isModify = false;
+    this.userservice.updateBenchDetail(data)
   }
 }
