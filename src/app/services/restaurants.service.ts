@@ -1,4 +1,4 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpStatusCode } from '@angular/common/http';
 import { Injectable, OnInit } from '@angular/core';
 import { Restaurant } from './restaurant.model';
 import { Subject } from 'rxjs';
@@ -20,6 +20,7 @@ export class RestaurantService implements OnInit {
   reviews: Review[] = [];
   openingTime:string="";
   closingTime:string="";
+  cities=[];
 
   restaurantId!:number;
   review = new AddReview;
@@ -29,10 +30,27 @@ export class RestaurantService implements OnInit {
   selectedRestaurant = new Subject<RestProfile>();
   selectedRestaurantMenu = new Subject<Recipe[]>();
   selectedRestaurantReviews = new Subject<Review[]>();
+  citiesList = new Subject<string[]>();
+
 
   constructor(private http: HttpClient) {}
 
   ngOnInit(): void {}
+
+  getAllCities(){
+    this.http
+      .get<{
+        httpStatusCode:number;
+        responseMessage:string;
+        cities:[]
+      }>(environment.backendUrl + environment.cityEndpoint)
+      .subscribe({
+        next: (resData) => {
+          this.cities = resData.cities;
+          this.citiesList.next(this.cities);
+        }
+      });
+  }
 
   getRestaurants() {
     this.http
