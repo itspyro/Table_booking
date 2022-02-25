@@ -1,5 +1,8 @@
-import { Component, Inject, OnInit } from '@angular/core';
-import {MatDialog, MatDialogRef, MAT_DIALOG_DATA} from '@angular/material/dialog';
+import { Component, Input, OnInit } from '@angular/core';
+import { RestaurantService } from 'app/services/restaurants.service';
+import { BookingService } from 'app/services/booking.service';
+import { NgxMaterialTimepickerTheme } from 'ngx-material-timepicker';
+
 
 @Component({
   selector: 'app-booking-page',
@@ -8,17 +11,32 @@ import {MatDialog, MatDialogRef, MAT_DIALOG_DATA} from '@angular/material/dialog
 })
 export class BookingPageComponent implements OnInit {
 
+  openingTime:string="";
+  closingTime:string="";
+
+  constructor(private restService:RestaurantService) { }
+
+  darkTheme: NgxMaterialTimepickerTheme = {
+    container: {
+        bodyBackgroundColor: '#fff',
+        buttonColor: 'rgb(88,111,64)'
+    },
+    dial: {
+        dialBackgroundColor: 'rgb(88,111,64)',
+    },
+    clockFace: {
+        clockFaceBackgroundColor: 'rgb(88,111,64)',
+        clockHandColor: '#9fbd90',
+        clockFaceTimeInactiveColor: '#fff'
+    }
+};
+
+
   ngOnInit(): void {
+    var obj:{openingTime:string,closingTime:string}=this.restService.returnTimings();
+    this.openingTime=obj.openingTime;
+    this.closingTime=obj.closingTime;
   }
-
-  constructor(
-    public dialogRef: MatDialogRef<BookingPageComponent>,
-    @Inject(MAT_DIALOG_DATA) public data: {},
-  ) {}
-
-  onNoClick(): void {
-    this.dialogRef.close();
-  }
-  
+ 
 
 }

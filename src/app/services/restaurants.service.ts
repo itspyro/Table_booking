@@ -18,8 +18,12 @@ export class RestaurantService implements OnInit {
   cuisines: Cuisine[] = [];
   menu: Recipe[] = [];
   reviews: Review[] = [];
+  openingTime:string="";
+  closingTime:string="";
+
   restaurantId!:number;
   review = new AddReview;
+  
   restaurantList = new Subject<Restaurant[]>();
   cuisineList = new Subject<Cuisine[]>();
   selectedRestaurant = new Subject<RestProfile>();
@@ -58,6 +62,14 @@ export class RestaurantService implements OnInit {
       });
   }
 
+  setTimings(openingTime:string,closingTime:string){
+    this.closingTime=closingTime;
+    this.openingTime=openingTime;
+  }
+
+  returnTimings(){
+    return {  openingTime:this.openingTime, closingTime:this.closingTime  };
+  }
   getCuisines() {
     this.http
       .get<{

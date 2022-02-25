@@ -26,12 +26,15 @@ import { RestownerprofileComponent } from './restownerprofile/restownerprofile.c
 import { RestOverviewComponent } from './restprofile/rest-overview/rest-overview.component';
 import { UserprofileComponent } from './userprofile/userprofile.component';
 //import {MatAutocompleteSelectedEvent} from '@angular/material/autocomplete';
-
 import {MatChipsModule} from '@angular/material/chips';
 import {MatAutocompleteModule} from '@angular/material/autocomplete';
-import { BookingPageComponent } from './restprofile/booking-page/booking-page.component';
+import { MatNativeDateModule } from '@angular/material/core';
 import { ErrorInterceptorService } from './services/error-interceptor.service';
+import { ReactiveFormsModule } from '@angular/forms';
+//import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { NgxMaterialTimepickerModule,NgxMaterialTimepickerTheme} from "ngx-material-timepicker";
 import { AddReviewComponent } from './reviews/add-review/add-review.component';
+import { BookingPageComponent } from './restprofile/booking-page/booking-page.component';
 
 @NgModule({
   declarations: [
@@ -52,8 +55,8 @@ import { AddReviewComponent } from './reviews/add-review/add-review.component';
     RestownerprofileComponent,
     RestOverviewComponent,
     UserprofileComponent,
-    BookingPageComponent,
     AddReviewComponent,
+    BookingPageComponent
   ],
   imports: [
     BrowserModule,
@@ -62,11 +65,14 @@ import { AddReviewComponent } from './reviews/add-review/add-review.component';
     StarRatingModule.forRoot(),
     HttpClientModule,
     FormsModule,
+    ReactiveFormsModule,
     FlexLayoutModule,
     ScrollingModule,
     MaterialModule,
     MatChipsModule,
     MatAutocompleteModule,
+    NgxMaterialTimepickerModule,
+    MatNativeDateModule
   ],
 
   providers: [
