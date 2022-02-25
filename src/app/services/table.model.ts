@@ -5,4 +5,5 @@ export class Table{
     restaurantId!:number;
     price!:number;
     noOfBench!:number;
+    isModify:boolean = false;
 }
