@@ -1,6 +1,6 @@
 .example-card {
   max-width: 400px;
-  background-color: #00ff8f;
+  background-color: white;
 }
 
 .example-header-image {
@@ -50,7 +50,7 @@ mat-checkbox {
 .example-card {
 
   max-width: 400px;
-  background-color: #eaf5567e;
+  background-color: white;
 }
 
 .example-header-image {
