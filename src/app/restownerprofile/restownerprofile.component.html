@@ -16,8 +16,7 @@
         <div class="infomation">
           <div class="left-info">
             <div>
-              <p>First Name:</p>
-              <p>Last Name:</p>
+              <p>User Name:</p>
               <p>Email</p>
               <p>Phone No.</p>
             </div>
@@ -69,44 +68,86 @@
             <input
               type="text"
               [disabled]="!isModify"
+              [(ngModel)]="restaurant.restaurantName"
               value="{{ restaurant.restaurantName }}"
             />
           </div>
           <div class="block">
-            <label>Location</label>
+            <label>Address Line 1:</label>
+            <textarea
+              type="text"
+              [disabled]="!isModify"
+              [(ngModel)]="restaurant.address.addressLine1"
+              value="{{ restaurant.address.addressLine1 }}"
+            ></textarea>
+          </div>
+          <div class="block">
+            <label>Address Line 2:</label>
+            <textarea
+              type="text"
+              [disabled]="!isModify"
+              [(ngModel)]="restaurant.address.addressLine2"
+              value="{{ restaurant.address.addressLine2 }}"
+            ></textarea>
+          </div>
+          <div class="block">
+            <label>City:</label>
             <input
               type="text"
               [disabled]="!isModify"
-              value="{{ restaurant.address.addressLine1 }}"
+              [(ngModel)]="restaurant.address.city"
+              value="{{ restaurant.address.city }}"
             />
-          </div>
+          </div> 
+          <div class="block">
+            <label>Pincode:</label>
+            <input
+              type="text"
+              [disabled]="!isModify"
+              [(ngModel)]="restaurant.address.pincode"
+              value="{{ restaurant.address.pincode }}"
+            />
+          </div> 
           <div class="block">
             <label>GST No.</label>
             <input type="text" disabled value="{{ restaurant.gstIn }}" />
           </div>
           <div class="block">
-            <label>Pure Veg</label>
+            <label>Non-Veg</label>
             <input
+              class="checkbox"
               type="checkbox"
               [disabled]="!isModify"
+              [(ngModel)]="restaurant.nonVeg"
               checked="{{ restaurant.nonVeg }}"
             />
           </div>
           <div class="block">
-            <label>Time Slot</label>
+            <label>Opening Time:</label>
             <input
               type="text"
               [disabled]="!isModify"
+              [(ngModel)]="restaurant.openingTime"
               value="{{ restaurant.openingTime }}"
             />
           </div>
           <div class="block">
-            <label>Description</label>
+            <label>Closing Time:</label>
             <input
               type="text"
               [disabled]="!isModify"
-              value="{{ restaurant.description }}"
+              [(ngModel)]="restaurant.closingTime"
+              value="{{ restaurant.closingTime }}"
             />
+          </div>
+          <div class="block">
+            <label>Description</label>
+            <textarea
+              type="text"
+              [disabled]="!isModify"
+              [(ngModel)]="restaurant.description"
+              value="{{ restaurant.description }}"
+            ></textarea>
           </div>
         </mat-card-content>
       </mat-card>
@@ -116,21 +157,37 @@
         <mat-card-title> Table </mat-card-title>
         <mat-card-content>
           <br />
-          <div class="block">
+          <div class="block1">
             <label>Table Type</label>
             <label>Table capacity</label>
             <label>Price</label>
           </div>
           <div *ngFor="let bench of benches">
-            <div class="block">
-              <label>{{ bench.benchType }}</label>
-              <label>{{ bench.capacity + " Person" }}</label>
-              <label>{{ bench.price }}</label>
-              <button color="primary" (click)="onDeleteButton(bench)">delete</button>
+            <div class="block1">
+              <label *ngIf="!bench.isModify">{{ bench.benchType }}</label>
+              <mat-form-field *ngIf="bench.isModify" appearance="fill">
+                <mat-label>Bench Type</mat-label>
+                <mat-select [(ngModel)]="bench.benchType" name="benchTye">
+                  <mat-option
+                    *ngFor="let benchtype of benchType"
+                    [value]="benchtype"
+                  >
+                    {{ benchtype }}
+                  </mat-option>
+                </mat-select>
+              </mat-form-field>
+              <label *ngIf="!bench.isModify">{{ bench.capacity + " Person" }}</label>
+              <input *ngIf="bench.isModify" type="number" ngModel name="capacity" [(ngModel)]="bench.capacity"/>
+              <label *ngIf="!bench.isModify">{{ bench.price }}</label>
+              <input *ngIf="bench.isModify" type="number" ngModel name="price" [(ngModel)]="bench.price"/>
+
+              <button *ngIf="!bench.isModify" mat-raised-button color="primary" (click)="onModifyButton(bench)">Modify</button>
+              <button *ngIf="bench.isModify" mat-raised-button color="primary" (click)="onSubmitButton(bench)">Submit</button>
+              <button mat-raised-button color="primary" (click)="onDeleteButton(bench)">Delete</button>
             </div>
           </div>
 
-          <form #table="ngForm" (ngSubmit)="addTable(table.value)">
+          <form #table="ngForm" (ngSubmit)="addTable(table)">
             <input type="number" ngModel name="capacity" /> Capacity
             <mat-form-field appearance="fill">
               <mat-label>Bench Type</mat-label>

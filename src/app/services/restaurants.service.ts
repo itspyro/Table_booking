@@ -6,6 +6,7 @@ import { Cuisine } from './cuisine.model';
 import { Filter } from './filter.model';
 import { RestProfile } from './rest_profile.model';
 import { Review } from './review.model';
+import { AddReview } from './addreview.model';
 import { environment } from '../../environments/environment';
 import { Recipe } from './recipe.model';
 
@@ -20,6 +21,9 @@ export class RestaurantService implements OnInit {
   openingTime:string="";
   closingTime:string="";
 
+  restaurantId!:number;
+  review = new AddReview;
+  
   restaurantList = new Subject<Restaurant[]>();
   cuisineList = new Subject<Cuisine[]>();
   selectedRestaurant = new Subject<RestProfile>();
@@ -53,6 +57,7 @@ export class RestaurantService implements OnInit {
         restaurant: RestProfile;
       }>(environment.backendUrl + environment.restaurantIdEndpoint + id + '/')
       .subscribe((resData) => {
+        this.restaurantId = resData.restaurant.restaurantId
         this.selectedRestaurant.next(resData.restaurant);
       });
   }
@@ -152,5 +157,20 @@ export class RestaurantService implements OnInit {
     });
 
     this.restaurantList.next(filteredRestaurants);
+  }
+
+  addReview(data:any){
+    this.review.review = data.review;
+    this.review.rating = data.rating;
+    this.review.restaurantId = this.restaurantId;
+    this.review.userId = 1;
+    const DATE = new Date();
+    this.review.timestamp = DATE.getTime()
+    
+    this.http.post(
+      environment.backendUrl+environment.addReviewEndpoint,this.review
+    ).subscribe((response)=>{
+      console.log(response)
+    })
   }
 }

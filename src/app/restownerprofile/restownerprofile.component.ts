@@ -5,6 +5,7 @@ import { Restaurant } from 'app/services/restaurant.model';
 import { UserprofileService } from 'app/services/userprofile.service';
 import { Table } from 'app/services/table.model';
 import { A } from '@angular/cdk/keycodes';
+import { NgForm } from '@angular/forms';
 
 @Component({
   selector: 'app-restownerprofile',
@@ -15,6 +16,7 @@ export class RestownerprofileComponent implements OnInit {
   isModify: boolean = false;
   isOwnerCheckbox: boolean = false;
   isOwner: boolean = false;
+  isBenchModify:boolean = false;
 
   user: User = {
     roleName: '',
@@ -39,7 +41,8 @@ export class RestownerprofileComponent implements OnInit {
     rating: 0,
     openingTime: '',
     closingTime: '',
-    cuisines: []
+    cuisines: [],
+    userId:0
   };
   table = new Table;
   benches!: Table[];
@@ -61,18 +64,7 @@ export class RestownerprofileComponent implements OnInit {
           this.restaurant = data;
           this.userservice.getAllBenches(this.restaurant.restaurantId)
           this.userservice.benchList.subscribe((data) => {
-            this.benches = data
-            // data.forEach((element,index)=>{
-            //   if(element.benchType!=this.benches[0].benchType){
-            //     this.benches.push(element)
-            //   }
-            // })
-
-            this.benches.forEach(element => {
-              this.benchType.forEach((ele, index) => {
-                if (ele == element.benchType) this.benchType.splice(index, 1)
-              })
-            })
+            this.benches = data;
           })
         })
       }
@@ -85,7 +77,9 @@ export class RestownerprofileComponent implements OnInit {
 
   onSubmit() {
     this.isModify = false
-    console.log(this.change)
+    this.restaurant.userId = this.user.userId
+    this.userservice.updateRestaurantDetail(this.restaurant)
+    console.log(this.restaurant)
   }
 
   checkIsOwner() {
@@ -100,30 +94,33 @@ export class RestownerprofileComponent implements OnInit {
   }
 
 
-  addTable(data: any) {
+  addTable(data: NgForm) {
     this.table = new Table;
     this.table.benchType = this.selectedBenchType;
-    this.table.capacity = data.capacity;
-    this.table.price = data.price;
-    this.table.noOfBench = data.noOfTable;
+    this.table.capacity = data.value.capacity;
+    this.table.price = data.value.price;
+    this.table.noOfBench = data.value.noOfTable;
     this.table.restaurantId = this.restaurant.restaurantId;
     if (
       this.table.benchType === undefined || 
       this.table.benchType === "" || 
       this.table.capacity === undefined || 
+      this.table.capacity === 0 ||
+      this.table.price === 0||
+      this.table.noOfBench === 0||
       this.table.restaurantId === undefined ||
       this.table.price === undefined||
       this.table.noOfBench === undefined) 
       {
       console.log('Please enter every field')
     } else {
-      this.benches.push(this.table);
-      this.benchType.forEach((element, index) => {
-        if (element == this.selectedBenchType) this.benchType.splice(index, 1)
-      })
+      for(let i=0;i<data.value.noOfTable;i++){
+        this.benches.push(this.table)
+      }
       this.userservice.addBench(this.table)
     }
-    this.selectedBenchType = ""
+    data.reset();
+    this.selectedBenchType = "";
   }
 
   onDeleteButton(data:any){
@@ -133,5 +130,12 @@ export class RestownerprofileComponent implements OnInit {
       }
     })
     this.userservice.deleteBench(data.benchId)
+  }
+  onModifyButton(data:any){
+    data.isModify = true
+  }
+  onSubmitButton(data:any){
+    data.isModify = false;
+    this.userservice.updateBenchDetail(data)
   }
 }

@@ -71,4 +71,20 @@ export class UserprofileService {
       console.log(response)
     })
   }
+
+  updateRestaurantDetail(data:any){
+    this.http.put(
+      environment.backendUrl+environment.updateRestInfoEndpoint,data
+    ).subscribe((res)=>{
+      console.log(res)
+    })
+  }
+
+  updateBenchDetail(data:any){
+    this.http.put(
+      environment.backendUrl+environment.updateBenchInfoEndpoint,data
+    ).subscribe((res)=>{
+      console.log(res)
+    })
+  }
 }
