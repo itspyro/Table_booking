@@ -4,11 +4,13 @@
       <div
         mat-card-avatar
         class="review-profile-image"
-        [ngStyle]="{ 'background-image': 'url(' + review.userimage + ')' }"
+        [ngStyle]="{
+          'background-image': 'url(https://i.stack.imgur.com/YQu5k.png)'
+        }"
       ></div>
       <mat-card-header class="review-card-header-text">
         <mat-card-title class="review-title">
-          {{ review.username }}</mat-card-title
+          {{ review.user?.userName }}</mat-card-title
         >
         <mat-card-subtitle class="rating-container">
           <star-rating
@@ -21,7 +23,7 @@
       </mat-card-header>
       <mat-card-content class="review-content">
         <p>
-          {{ review.review }}
+          {{ review?.review }}
         </p>
       </mat-card-content>
     </mat-card>

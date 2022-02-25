@@ -19,4 +19,6 @@ export interface Restaurant {
   openingTime: string;
   closingTime: string;
   cuisines: Cuisine[];
+  userId?:number;
 }
+  

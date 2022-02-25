@@ -15,7 +15,7 @@ mat-card-header{
     margin: 10px;
 }
 
-button{
+.button{
     display: flex;
     justify-content: flex-end;
 }
@@ -41,4 +41,40 @@ label{
 }
 button{
     margin-left: auto;
+}
+mat-form-field{
+    margin-left: 20px;
+}
+
+.bench-delete{
+    float: inline-end;
+}
+
+input{
+    width: max-content;
+}
+textarea{
+    width: 300px;
+    height: fit-content;
+}
+
+.block1 label{
+    width: 150px;
+    font-size: large;
+}
+.block1 button{
+    margin: 10px;
+}
+.block1 mat-form-field{
+    width: 125px;
+}
+.block1 input{
+    width: 100px;
+    margin: 15px;
+}
+form{
+    margin: auto;
+}
+input:checked{
+    background-color: black;
 }

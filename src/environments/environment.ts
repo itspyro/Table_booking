@@ -3,7 +3,23 @@
 // The list of file replacements can be found in `angular.json`.
 
 export const environment = {
-  production: false
+  production: false,
+  backendUrl: 'http://localhost:8080',
+  restaurantAllEndpoint: '/api/restaurant/all',
+  restaurantIdEndpoint: '/api/restaurant/',
+  cuisineAllEndpoint: '/api/cuisines/',
+  recipesIdEndpoint: '/api/recipe/restaurant/',
+  reviewIdEndpoint: '/api/review/restaurant/',
+  createUserEndpoint: '/api/user/create',
+  loginEndpoint: '/api/user/login',
+  userIdEndpoint: '/api/user/find/',
+  userRestaurantEndpoint: '/api/user/restaurant/',
+  benchCreateEndpoint: '/api/bench/create',
+  benchAllEndpoint: '/api/bench/restaurant/',
+  benchDeleteEndpoint:'/api/bench/delete/',
+  addReviewEndpoint:'/api/review/create',
+  updateRestInfoEndpoint:'/api/restaurant/update',
+  updateBenchInfoEndpoint:'/api/bench/update'
 };
 
 /*

@@ -1,11 +1,16 @@
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
-import {COMMA, ENTER} from '@angular/cdk/keycodes';
+import { COMMA, ENTER } from '@angular/cdk/keycodes';
 import { MatChipInputEvent } from '@angular/material/chips';
 import { MatDialog } from '@angular/material/dialog';
 import { map, Observable, startWith } from 'rxjs';
 import { DailogComponent } from './dailog/dailog.component';
-import {MatAutocomplete, MatAutocompleteSelectedEvent} from '@angular/material/autocomplete';
+import {
+  MatAutocomplete,
+  MatAutocompleteSelectedEvent,
+} from '@angular/material/autocomplete';
 import { FormControl } from '@angular/forms';
+import { User } from '../services/user.model';
+import { AuthService } from 'app/services/auth.service';
 //import {MatChipInputEvent} from '@angular/material/chips';
 
 @Component({
@@ -21,18 +26,39 @@ export class AuthComponent {
   fruitCtrl = new FormControl();
   filteredFruits: Observable<string[]>;
   fruits: string[] = ['Asian'];
-  allFruits: string[] = ['Asian', 'Bakery', 'Punjabi', 'Beverages', 'Chinese Continental','Desserts','Drinks','Fast Food','French','Gujarati','Italian','Juices','Lucknowi','Marathi','Mediterranean','Mexican'];
-  
+  allFruits: string[] = [
+    'Asian',
+    'Bakery',
+    'Punjabi',
+    'Beverages',
+    'Chinese Continental',
+    'Desserts',
+    'Drinks',
+    'Fast Food',
+    'French',
+    'Gujarati',
+    'Italian',
+    'Juices',
+    'Lucknowi',
+    'Marathi',
+    'Mediterranean',
+    'Mexican',
+  ];
+
   @ViewChild('fruitInput')
   fruitInput!: ElementRef<HTMLInputElement>;
   @ViewChild('auto')
   matAutocomplete!: MatAutocomplete;
 
-  constructor(private readonly dialog: MatDialog) 
-   {
+  constructor(
+    private readonly dialog: MatDialog,
+    private authService: AuthService
+  ) {
     this.filteredFruits = this.fruitCtrl.valueChanges.pipe(
       startWith(null),
-      map((fruit: string | null) => (fruit ? this._filter(fruit) : this.allFruits.slice())),
+      map((fruit: string | null) =>
+        fruit ? this._filter(fruit) : this.allFruits.slice()
+      )
     );
   }
 
@@ -60,14 +86,16 @@ export class AuthComponent {
 
   selected(event: MatAutocompleteSelectedEvent): void {
     this.fruits.push(event.option.viewValue);
-    this.fruitInput.nativeElement.value ='';
+    this.fruitInput.nativeElement.value = '';
     this.fruitCtrl.setValue(null);
   }
 
   private _filter(value: string): string[] {
     const filterValue = value.toLowerCase();
 
-    return this.allFruits.filter(fruit => fruit.toLowerCase().includes(filterValue));
+    return this.allFruits.filter((fruit) =>
+      fruit.toLowerCase().includes(filterValue)
+    );
   }
   ngOnInit(): void {}
 
@@ -77,10 +105,29 @@ export class AuthComponent {
     console.error('Openning!');
   }
 
-  onLoginButton(loginInfo){
-    console.log(loginInfo)
+  onLoginButton(loginInfo: { email: 'string'; password: 'string' }) {
+    this.authService.login({
+      userEmail: loginInfo.email,
+      password: loginInfo.password,
+    });
   }
-  onSubmitButton(registerationInfo){
-    console.log(registerationInfo)
+  onSubmitButton(registerationInfo: {
+    FirstName: string;
+    LastName: string;
+    email: string;
+    password: string;
+    phoneNumber: string;
+    isOwner: boolean;
+  }) {
+    const user: User = {
+      roleName: registerationInfo.isOwner ? 'Owner' : 'User',
+      userEmail: registerationInfo.email,
+      userName: registerationInfo.FirstName,
+      userPhoneNumber: registerationInfo.phoneNumber,
+    };
+    this.authService.createUser({
+      ...user,
+      password: registerationInfo.password,
+    });
   }
 }

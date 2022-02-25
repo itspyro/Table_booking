@@ -1,7 +1,8 @@
+import { User } from './user.model';
+
 export interface Review {
-  id: number;
+  reviewId: number;
   review: string;
   rating: number;
-  user_id: string;
-  restaurant_id: string;
+  user: User;
 }

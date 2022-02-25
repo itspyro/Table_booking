@@ -1,108 +1,213 @@
 <div class="container">
-    <div class="user-profile">
-        <mat-card >
-            <mat-card-header>
-                <mat-card-title>User profile</mat-card-title>
-            </mat-card-header>
-            <div class="profile-image">
-                <img
-                width="150"
-                height="150"
-                class="margin-top mat-elevation-z1"
-                src="https://i.stack.imgur.com/YQu5k.png"
-                /></div>
-            <mat-card-content>
-                <div class="infomation">
-                    <div class="left-info">  
-                        <div >
-                            <p>First Name:</p>  
-                            <p>Last Name:</p> 
-                            <p>Email</p>
-                            <p>Phone No.</p>  
-                        </div>
-                        <div class="fixed">
-                            <p>firstname</p>
-                            <p>lastname:</p> 
-                            <p>useraname@egmail.com</p>
-                            <p>12341234123</p>
-                        </div>
-                    </div> 
-                </div>
-                <mat-checkbox [(ngModel)]="isOwner">Manage Restaurant</mat-checkbox>
-            </mat-card-content>
-        </mat-card>
-    </div>
-
-    <div class="owner-profile" *ngIf="isOwner">
-        <div class="rest-info">
-            <mat-card>
-                <mat-card-header>
-                    <mat-card-title>Restaurant Information</mat-card-title>
-                    <button mat-raised-button color="primary" (click)="onModify()" *ngIf="!isModify">Modify</button>
-                    <button mat-raised-button color="primary" (click)="onSubmit()" *ngIf="isModify">Submit</button>
-                </mat-card-header>
-                <img src="https://content3.jdmagicbox.com/comp/lucknow/s6/0522px522.x522.180816151829.l1s6/catalogue/the-oven-lucknow-mz7zjubm4y.jpg">
-                <mat-card-content>  
-                    <div class="block">
-                        <label class="left">Restaurant Name: </label>
-                        <input type="text" class="right" [disabled]="!isModify" value={{restowner.restName}}>
-                    </div>
-                    <div class="block">
-                        <label class="left">Location</label>
-                        <input type="text" class="right" [(ngModel)]="restowner.location" [disabled]="!isModify" value={{restowner.location}}>
-                    </div>
-                    <div class="block">
-                        <label class="left">No of Table</label>
-                        <input type="text" class="right"  [disabled]="!isModify" value={{restowner.noOfTable}}>
-                    </div>
-                    <div class="block">
-                        <label class="left">Price per Table</label>
-                        <input type="text" class="right"  [disabled]="!isModify" value={{restowner.pricePerTable}}>
-                    </div>
-                    <div class="block">
-                        <label class="left">GST No.</label>
-                        <input type="text" class="right"  disabled value={{restowner.gstNo}}>
-                    </div>
-                    <div class="block">
-                        <label class="left">Pure Veg</label>
-                        <input type="checkbox" class="right"  [disabled]="!isModify" value={{restowner.pureVeg}}>
-                    </div>
-                    <div class="block">
-                        <label class="left">Time Slot</label>
-                        <input type="text" class="right"  [disabled]="!isModify" value={{restowner.timeSlot}}>
-                    </div>
-                </mat-card-content>
-            </mat-card>
+  <div class="user-profile">
+    <mat-card>
+      <mat-card-header>
+        <mat-card-title>User profile</mat-card-title>
+      </mat-card-header>
+      <div class="profile-image">
+        <img
+          width="150"
+          height="150"
+          class="margin-top mat-elevation-z1"
+          src="https://i.stack.imgur.com/YQu5k.png"
+        />
+      </div>
+      <mat-card-content>
+        <div class="infomation">
+          <div class="left-info">
+            <div>
+              <p>User Name:</p>
+              <p>Email</p>
+              <p>Phone No.</p>
+            </div>
+            <div class="fixed">
+              <p>{{ user.userName }}</p>
+              <p>{{ user.userEmail }}</p>
+              <p>{{ user.userPhoneNumber }}</p>
+            </div>
+          </div>
         </div>
-    <mat-card class="Cuisine"> 
-        <mat-card-header>
-            <mat-card-title>
-                Cuisine
-            </mat-card-title>
-            <mat-card-content>
-
-            </mat-card-content>
-        </mat-card-header>
+        <mat-checkbox [(ngModel)]="isOwnerCheckbox" (change)="checkIsOwner()"
+          >Manage Restaurant</mat-checkbox
+        >
+      </mat-card-content>
     </mat-card>
-    <mat-card class="Menu"> 
-        <mat-card-header>
-            <mat-card-title>
-                Menu
-            </mat-card-title>
-            <mat-card-content>
+  </div>
 
-            </mat-card-content>
-        </mat-card-header>
-    </mat-card>
-    <mat-card class="review"> 
+  <div class="owner-profile" *ngIf="isOwner">
+    <!-- please remove ! -->
+    <div class="rest-info">
+      <mat-card>
         <mat-card-header>
-            <mat-card-title>
-                Review
-            </mat-card-title>
-            <mat-card-content>
-
-            </mat-card-content>
+          <mat-card-title>Restaurant Information</mat-card-title>
+          <button
+            mat-raised-button
+            color="primary"
+            (click)="onModify()"
+            *ngIf="!isModify"
+            class="button"
+          >
+            Modify
+          </button>
+          <button
+          class="button"
+            mat-raised-button
+            color="primary"
+            (click)="onSubmit()"
+            *ngIf="isModify"
+          >
+            Submit
+          </button>
         </mat-card-header>
+        <img
+          src="https://content3.jdmagicbox.com/comp/lucknow/s6/0522px522.x522.180816151829.l1s6/catalogue/the-oven-lucknow-mz7zjubm4y.jpg"
+        />
+        <mat-card-content>
+          <div class="block">
+            <label>Restaurant Name: </label>
+            <input
+              type="text"
+              [disabled]="!isModify"
+              [(ngModel)]="restaurant.restaurantName"
+              value="{{ restaurant.restaurantName }}"
+            />
+          </div>
+          <div class="block">
+            <label>Address Line 1:</label>
+            <textarea
+              type="text"
+              [disabled]="!isModify"
+              [(ngModel)]="restaurant.address.addressLine1"
+              value="{{ restaurant.address.addressLine1 }}"
+            ></textarea>
+          </div>
+          <div class="block">
+            <label>Address Line 2:</label>
+            <textarea
+              type="text"
+              [disabled]="!isModify"
+              [(ngModel)]="restaurant.address.addressLine2"
+              value="{{ restaurant.address.addressLine2 }}"
+            ></textarea>
+          </div>
+          <div class="block">
+            <label>City:</label>
+            <input
+              type="text"
+              [disabled]="!isModify"
+              [(ngModel)]="restaurant.address.city"
+              value="{{ restaurant.address.city }}"
+            />
+          </div> 
+          <div class="block">
+            <label>Pincode:</label>
+            <input
+              type="text"
+              [disabled]="!isModify"
+              [(ngModel)]="restaurant.address.pincode"
+              value="{{ restaurant.address.pincode }}"
+            />
+          </div> 
+          <div class="block">
+            <label>GST No.</label>
+            <input type="text" disabled value="{{ restaurant.gstIn }}" />
+          </div>
+          <div class="block">
+            <label>Non-Veg</label>
+            <input
+              class="checkbox"
+              type="checkbox"
+              [disabled]="!isModify"
+              [(ngModel)]="restaurant.nonVeg"
+              checked="{{ restaurant.nonVeg }}"
+            />
+          </div>
+          <div class="block">
+            <label>Opening Time:</label>
+            <input
+              type="text"
+              [disabled]="!isModify"
+              [(ngModel)]="restaurant.openingTime"
+              value="{{ restaurant.openingTime }}"
+            />
+          </div>
+          <div class="block">
+            <label>Closing Time:</label>
+            <input
+              type="text"
+              [disabled]="!isModify"
+              [(ngModel)]="restaurant.closingTime"
+              value="{{ restaurant.closingTime }}"
+            />
+          </div>
+          <div class="block">
+            <label>Description</label>
+            <textarea
+              type="text"
+              [disabled]="!isModify"
+              [(ngModel)]="restaurant.description"
+              value="{{ restaurant.description }}"
+            ></textarea>
+          </div>
+        </mat-card-content>
+      </mat-card>
+    </div>
+    <mat-card class="table">
+      <mat-card-header>
+        <mat-card-title> Table </mat-card-title>
+        <mat-card-content>
+          <br />
+          <div class="block1">
+            <label>Table Type</label>
+            <label>Table capacity</label>
+            <label>Price</label>
+          </div>
+          <div *ngFor="let bench of benches">
+            <div class="block1">
+              <label *ngIf="!bench.isModify">{{ bench.benchType }}</label>
+              <mat-form-field *ngIf="bench.isModify" appearance="fill">
+                <mat-label>Bench Type</mat-label>
+                <mat-select [(ngModel)]="bench.benchType" name="benchTye">
+                  <mat-option
+                    *ngFor="let benchtype of benchType"
+                    [value]="benchtype"
+                  >
+                    {{ benchtype }}
+                  </mat-option>
+                </mat-select>
+              </mat-form-field>
+              <label *ngIf="!bench.isModify">{{ bench.capacity + " Person" }}</label>
+              <input *ngIf="bench.isModify" type="number" ngModel name="capacity" [(ngModel)]="bench.capacity"/>
+              <label *ngIf="!bench.isModify">{{ bench.price }}</label>
+              <input *ngIf="bench.isModify" type="number" ngModel name="price" [(ngModel)]="bench.price"/>
+
+              <button *ngIf="!bench.isModify" mat-raised-button color="primary" (click)="onModifyButton(bench)">Modify</button>
+              <button *ngIf="bench.isModify" mat-raised-button color="primary" (click)="onSubmitButton(bench)">Submit</button>
+              <button mat-raised-button color="primary" (click)="onDeleteButton(bench)">Delete</button>
+            </div>
+          </div>
+
+          <form #table="ngForm" (ngSubmit)="addTable(table)">
+            <input type="number" ngModel name="capacity" /> Capacity
+            <mat-form-field appearance="fill">
+              <mat-label>Bench Type</mat-label>
+              <mat-select [(ngModel)]="selectedBenchType" name="benchTye">
+                <mat-option
+                  *ngFor="let benchtype of benchType"
+                  [value]="benchtype"
+                >
+                  {{ benchtype }}
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
+            <input type="number" ngModel name="noOfTable" /> No of Table:
+            <input type="number" ngModel name="price" /> Price
+            <button mat-raised-button color="primary" type="submit">
+              Add Table
+            </button>
+          </form>
+        </mat-card-content>
+      </mat-card-header>
     </mat-card>
-</div>
+  </div>
 </div>
