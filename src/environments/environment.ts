@@ -17,7 +17,8 @@ export const environment = {
   benchCreateEndpoint: '/api/bench/create',
   benchAllEndpoint: '/api/bench/restaurant/',
   benchDeleteEndpoint:'/api/bench/delete/',
-  addReviewEndpoint:'/api/review/create'
+  addReviewEndpoint:'/api/review/create',
+  updateRestInfo:'/api/restaurant/update'
 };
 
 /*

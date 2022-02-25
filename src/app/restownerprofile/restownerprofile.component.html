@@ -69,17 +69,46 @@
             <input
               type="text"
               [disabled]="!isModify"
+              [(ngModel)]="restaurant.restaurantName"
               value="{{ restaurant.restaurantName }}"
             />
           </div>
           <div class="block">
-            <label>Location</label>
+            <label>Address Line 1:</label>
+            <textarea
+              type="text"
+              [disabled]="!isModify"
+              [(ngModel)]="restaurant.address.addressLine1"
+              value="{{ restaurant.address.addressLine1 }}"
+            ></textarea>
+          </div>
+          <div class="block">
+            <label>Address Line 2:</label>
+            <textarea
+              type="text"
+              [disabled]="!isModify"
+              [(ngModel)]="restaurant.address.addressLine2"
+              value="{{ restaurant.address.addressLine2 }}"
+            ></textarea>
+          </div>
+          <div class="block">
+            <label>City:</label>
             <input
               type="text"
               [disabled]="!isModify"
-              value="{{ restaurant.address.addressLine1 }}"
+              [(ngModel)]="restaurant.address.city"
+              value="{{ restaurant.address.city }}"
             />
-          </div>
+          </div> 
+          <div class="block">
+            <label>Pincode:</label>
+            <input
+              type="text"
+              [disabled]="!isModify"
+              [(ngModel)]="restaurant.address.pincode"
+              value="{{ restaurant.address.pincode }}"
+            />
+          </div> 
           <div class="block">
             <label>GST No.</label>
             <input type="text" disabled value="{{ restaurant.gstIn }}" />
@@ -89,24 +118,36 @@
             <input
               type="checkbox"
               [disabled]="!isModify"
+              [(ngModel)]="restaurant.nonVeg"
               checked="{{ restaurant.nonVeg }}"
             />
           </div>
           <div class="block">
-            <label>Time Slot</label>
+            <label>Opening Time:</label>
             <input
               type="text"
               [disabled]="!isModify"
+              [(ngModel)]="restaurant.openingTime"
               value="{{ restaurant.openingTime }}"
             />
           </div>
           <div class="block">
-            <label>Description</label>
+            <label>Closing Time:</label>
             <input
               type="text"
               [disabled]="!isModify"
-              value="{{ restaurant.description }}"
+              [(ngModel)]="restaurant.closingTime"
+              value="{{ restaurant.closingTime }}"
             />
+          </div>
+          <div class="block">
+            <label>Description</label>
+            <textarea
+              type="text"
+              [disabled]="!isModify"
+              [(ngModel)]="restaurant.description"
+              value="{{ restaurant.description }}"
+            ></textarea>
           </div>
         </mat-card-content>
       </mat-card>
@@ -130,7 +171,7 @@
             </div>
           </div>
 
-          <form #table="ngForm" (ngSubmit)="addTable(table.value)">
+          <form #table="ngForm" (ngSubmit)="addTable(table)">
             <input type="number" ngModel name="capacity" /> Capacity
             <mat-form-field appearance="fill">
               <mat-label>Bench Type</mat-label>

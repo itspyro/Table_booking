@@ -71,4 +71,12 @@ export class UserprofileService {
       console.log(response)
     })
   }
+
+  updateRestaurantDetail(data:any){
+    this.http.put(
+      environment.backendUrl+environment.updateRestInfo,data
+    ).subscribe((res)=>{
+      console.log(res)
+    })
+  }
 }

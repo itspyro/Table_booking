@@ -49,3 +49,11 @@ mat-form-field{
 .bench-delete{
     float: inline-end;
 }
+
+input{
+    width: max-content;
+}
+textarea{
+    width: 300px;
+    height: fit-content;
+}
