@@ -159,6 +159,7 @@ export class RestaurantService implements OnInit {
       environment.backendUrl+environment.addReviewEndpoint,this.review
     ).subscribe((response)=>{
       console.log(response)
+      this.getReviewsByRestId(this.restaurantId);
     })
   }
 }
