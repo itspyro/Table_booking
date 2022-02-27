@@ -6,9 +6,9 @@ import {
   HttpRequest,
 } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
+import { Observable, throwError } from 'rxjs';
 import { AuthService } from './auth.service';
-import { take, exhaustMap, tap } from 'rxjs/operators';
+import { take, exhaustMap, tap, catchError } from 'rxjs/operators';
 import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Injectable()
@@ -62,6 +62,12 @@ export class AuthInterceptorService implements HttpInterceptor {
                   if (errorMessage) this.openSnackBar(errorMessage);
               }
             }
+          }),
+          catchError((error: any) => {
+            return throwError(() => {
+              this.openSnackBar('An Error Occurred!');
+              return error;
+            });
           })
         );
       })
