@@ -9,6 +9,7 @@ import { Review } from './review.model';
 import { AddReview } from './addreview.model';
 import { environment } from '../../environments/environment';
 import { Recipe } from './recipe.model';
+import { AuthService } from './auth.service';
 
 @Injectable({
   providedIn: 'root',
@@ -24,6 +25,7 @@ export class RestaurantService implements OnInit {
 
   restaurantId!: number;
   review = new AddReview();
+  userId?: number;
 
   restaurantList = new Subject<Restaurant[]>();
   cuisineList = new Subject<Cuisine[]>();
@@ -32,9 +34,13 @@ export class RestaurantService implements OnInit {
   selectedRestaurantReviews = new Subject<Review[]>();
   citiesList = new Subject<string[]>();
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient, private authService: AuthService) {}
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.authService.user.subscribe((user) => {
+      this.userId = user?.userId;
+    });
+  }
 
   getAllCities() {
     this.http
@@ -184,14 +190,13 @@ export class RestaurantService implements OnInit {
     this.review.review = data.review;
     this.review.rating = data.rating;
     this.review.restaurantId = this.restaurantId;
-    this.review.userId = 1;
+    this.review.userId = data.userId;
     const DATE = new Date();
     this.review.timestamp = DATE.getTime();
 
     this.http
       .post(environment.backendUrl + environment.addReviewEndpoint, this.review)
       .subscribe((response) => {
-        console.log(response);
         this.getReviewsByRestId();
       });
   }

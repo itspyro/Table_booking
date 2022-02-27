@@ -11,6 +11,7 @@ import { RestaurantService } from 'app/services/restaurants.service';
 })
 export class AddReviewComponent implements OnInit {
   isAuthenticated?: boolean;
+  userId?: number;
 
   constructor(
     private _snackBar: MatSnackBar,
@@ -22,6 +23,7 @@ export class AddReviewComponent implements OnInit {
   ngOnInit(): void {
     this.authService.user.subscribe((user) => {
       this.isAuthenticated = !!user;
+      this.userId = user?.userId;
     });
   }
 
@@ -34,7 +36,7 @@ export class AddReviewComponent implements OnInit {
     ) {
       this._snackBar.open('Please enter every field', 'Okay');
     } else if (this.isAuthenticated) {
-      this.restService.addReview(data);
+      this.restService.addReview({ ...data, userId: this.userId });
     } else {
       this.router.navigate(['/auth']);
     }
