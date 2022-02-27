@@ -8,6 +8,7 @@ import { AuthUser } from './auth-user.model';
 @Injectable({ providedIn: 'root' })
 export class AuthService {
   user = new BehaviorSubject<AuthUser | null>(null);
+  private tokenExpirationTimer: any;
 
   constructor(private http: HttpClient, private router: Router) {}
 
@@ -17,12 +18,11 @@ export class AuthService {
         httpStatusCode: number;
         responseMessage: string;
         token: string;
+        userId: number;
       }>(environment.backendUrl + environment.createUserEndpoint, user)
       .pipe(
         tap((resData) => {
-          const user = new AuthUser(resData.token);
-          this.user.next(user);
-          sessionStorage.setItem('userData', JSON.stringify(user));
+          this.handleAuthentication(resData.token, resData.userId);
         })
       );
   }
@@ -33,20 +33,31 @@ export class AuthService {
         httpStatusCode: number;
         responseMessage: string;
         token: string;
+        userId: number;
       }>(environment.backendUrl + environment.loginEndpoint, user)
       .pipe(
         tap((resData) => {
-          const user = new AuthUser(resData.token);
-          this.user.next(user);
-          sessionStorage.setItem('userData', JSON.stringify(user));
+          this.handleAuthentication(resData.token, resData.userId);
         })
       );
+  }
+
+  private handleAuthentication(token: string, userId: number) {
+    const expirationDate = new Date(new Date().getTime() + 900000);
+    const user = new AuthUser(token, userId, expirationDate);
+    this.user.next(user);
+    this.autoLogout(900000);
+    sessionStorage.setItem('userData', JSON.stringify(user));
   }
 
   logout() {
     this.user.next(null);
     this.router.navigate(['/auth']);
     sessionStorage.removeItem('userData');
+    if (this.tokenExpirationTimer) {
+      clearTimeout(this.tokenExpirationTimer);
+    }
+    this.tokenExpirationTimer = null;
   }
 
   autoLogin() {
@@ -55,7 +66,23 @@ export class AuthService {
     if (!data) {
       return;
     }
-    const user = new AuthUser(data._token);
-    this.user.next(user);
+    const user = new AuthUser(
+      data._token,
+      data.userId,
+      new Date(data._tokenExpirationDate)
+    );
+
+    if (user.token) {
+      this.user.next(user);
+      const expirationDuration =
+        new Date(data._tokenExpirationDate).getTime() - new Date().getTime();
+      this.autoLogout(expirationDuration);
+    }
+  }
+
+  autoLogout(expirationDuration: number) {
+    this.tokenExpirationTimer = setTimeout(() => {
+      this.logout();
+    }, expirationDuration);
   }
 }

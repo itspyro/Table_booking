@@ -30,7 +30,7 @@ export class AuthInterceptorService implements HttpInterceptor {
       take(1),
       exhaustMap((user) => {
         let modifiedReq = req.clone();
-        if (!!user) {
+        if (!!user && !!user.token) {
           modifiedReq = req.clone({
             headers: new HttpHeaders({ Token: user.token }),
           });

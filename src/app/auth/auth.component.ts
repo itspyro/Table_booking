@@ -17,6 +17,7 @@ import { User } from '../services/user.model';
 import { AuthService } from 'app/services/auth.service';
 import { Cuisine } from 'app/services/cuisine.model';
 import { RestaurantService } from 'app/services/restaurants.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-auth',
@@ -43,7 +44,8 @@ export class AuthComponent implements OnInit, OnDestroy {
 
   constructor(
     private authService: AuthService,
-    private restaurantService: RestaurantService
+    private restaurantService: RestaurantService,
+    private router: Router
   ) {
     this.filteredCuisines = this.cuisineCtrl.valueChanges.pipe(
       startWith(null),
@@ -76,7 +78,6 @@ export class AuthComponent implements OnInit, OnDestroy {
       this.cuisines.push(cuisine[0]);
     }
 
-    // Clear the input value
     event.chipInput!.clear();
 
     this.cuisineCtrl.setValue(null);
@@ -116,6 +117,9 @@ export class AuthComponent implements OnInit, OnDestroy {
       .subscribe({
         next: (resData) => {
           console.log(resData);
+          if (resData.httpStatusCode == 200) {
+            this.router.navigate(['/profile']);
+          }
           this.isLoading = false;
         },
         error: (error) => {

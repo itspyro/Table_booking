@@ -116,7 +116,6 @@ export class RestownerprofileComponent implements OnInit {
       this.userservice.addBench(this.table);
     }
     data.reset();
-    this.selectedBenchType = '';
   }
 
   onDeleteButton(data: any) {

@@ -7,17 +7,24 @@ import { HomeComponent } from './components/home.component';
 import { OrdersComponent } from './orders/orders.component';
 import { RestownerprofileComponent } from './restownerprofile/restownerprofile.component';
 import { RestprofileComponent } from './restprofile/restprofile.component';
-import { UserprofileComponent } from './userprofile/userprofile.component';
+import { AuthGuard } from './services/auth.guard';
 
 const routes: Routes = [
   { path: '', component: AboutComponent },
   { path: 'restaurants', component: HomeComponent },
-  { path: 'orders', component: OrdersComponent },
+  { path: 'orders', component: OrdersComponent, canActivate: [AuthGuard] },
   { path: 'auth', component: AuthComponent },
-  { path: 'restownerprofile', component: RestownerprofileComponent },
+  {
+    path: 'profile',
+    component: RestownerprofileComponent,
+    canActivate: [AuthGuard],
+  },
   { path: 'rest_profile/:id', component: RestprofileComponent },
-  { path: 'userprofile', component: UserprofileComponent },
-  { path: 'booking/:id', component:BookingPageComponent},
+  {
+    path: 'booking/:id',
+    component: BookingPageComponent,
+    canActivate: [AuthGuard],
+  },
   { path: '**', redirectTo: '' },
 ];
 

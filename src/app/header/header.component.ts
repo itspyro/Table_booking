@@ -36,7 +36,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
   }
 
   onNavigateProfile() {
-    this.router.navigate(['/restownerprofile']);
+    this.router.navigate(['/profile']);
   }
 
   onNavigateOrders() {
