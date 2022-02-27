@@ -9,7 +9,8 @@ export interface Filter {
     Italian: boolean;
     Marathi: boolean;
     Mediterranean: boolean;
-    PunjabiRasoi: boolean;
+    Mexican: boolean;
+    Punjabi: boolean;
     SouthIndian: boolean;
   };
 }

@@ -4,7 +4,7 @@
       <!-- <mat-icon>explore</mat-icon> -->
       <mat-form-field appearance="fill" color="accent">
         <mat-label>Select City</mat-label>
-        <mat-select ngModel name="city">
+        <mat-select ngModel name="city" required>
           <mat-option *ngFor="let city of cities" value="{{ city }}">{{
             city
           }}</mat-option>
@@ -12,6 +12,6 @@
         <mat-hint align="end">{{ hint }}</mat-hint>
       </mat-form-field>
     </div>
-    <button type="submit">Search</button>
+    <button type="submit" [disabled]="!selectCity.valid">Search</button>
   </div>
 </form>

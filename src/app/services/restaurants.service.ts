@@ -147,10 +147,7 @@ export class RestaurantService implements OnInit {
 
   applyFilters(filters: Filter) {
     const filteredRestaurants = this.restaurants.filter((restaurant) => {
-      const restaurantCuisines: string[] = [];
-      restaurant.cuisines.map((cuisine) => {
-        restaurantCuisines.push(cuisine.cuisineName);
-      });
+      const restaurantCuisines: string[] = restaurant.cuisineNames;
       return (
         (filters.rating > 0 ? restaurant.rating >= filters.rating : true) &&
         (filters.pure_veg === true
@@ -177,11 +174,14 @@ export class RestaurantService implements OnInit {
         (filters.cuisine.Mediterranean === true
           ? restaurantCuisines.includes('Mediterranean')
           : true) &&
-        (filters.cuisine.PunjabiRasoi === true
-          ? restaurantCuisines.includes('Punjabi Rasoi')
+        (filters.cuisine.Punjabi === true
+          ? restaurantCuisines.includes('Punjabi')
           : true) &&
         (filters.cuisine.SouthIndian === true
           ? restaurantCuisines.includes('South Indian')
+          : true) &&
+        (filters.cuisine.Mexican === true
+          ? restaurantCuisines.includes('Mexican')
           : true)
       );
     });

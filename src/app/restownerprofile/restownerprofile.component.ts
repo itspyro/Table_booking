@@ -41,7 +41,7 @@ export class RestownerprofileComponent implements OnInit {
     rating: 0,
     openingTime: '',
     closingTime: '',
-    cuisines: [],
+    cuisineNames: [],
   };
   table = new Table();
   benches!: Table[];
