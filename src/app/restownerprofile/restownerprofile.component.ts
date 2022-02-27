@@ -46,8 +46,6 @@ export class RestownerprofileComponent implements OnInit {
   };
   table = new Table;
   benches!: Table[];
-  benchType: string[] = ['private', 'general']
-  selectedBenchType: string = '';
 
   change: string[] = [];
   constructor(private userservice: UserprofileService) { }
@@ -96,11 +94,12 @@ export class RestownerprofileComponent implements OnInit {
 
   addTable(data: NgForm) {
     this.table = new Table;
-    this.table.benchType = this.selectedBenchType;
+    this.table.benchType = data.value.benchType;
     this.table.capacity = data.value.capacity;
     this.table.price = data.value.price;
     this.table.noOfBench = data.value.noOfTable;
     this.table.restaurantId = this.restaurant.restaurantId;
+    console.log(this.table)
     if (
       this.table.benchType === undefined || 
       this.table.benchType === "" || 
@@ -114,9 +113,6 @@ export class RestownerprofileComponent implements OnInit {
       {
       console.log('Please enter every field')
     } else {
-      for(let i=0;i<data.value.noOfTable;i++){
-        this.benches.push(this.table)
-      }
       this.userservice.addBench(this.table)
     }
     data.reset();

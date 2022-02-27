@@ -119,13 +119,13 @@ export class RestaurantService implements OnInit {
       });
   }
 
-  getReviewsByRestId(restaurantId: number) {
+  getReviewsByRestId() {
     this.http
       .get<{
         httpStatusCode: number;
         responseMessage: string;
         reviews: Review[];
-      }>(environment.backendUrl + environment.reviewIdEndpoint + restaurantId)
+      }>(environment.backendUrl + environment.reviewIdEndpoint + this.restaurantId)
       .subscribe((resData) => {
         this.reviews = resData.reviews;
         this.selectedRestaurantReviews.next(this.reviews.slice());
@@ -188,7 +188,7 @@ export class RestaurantService implements OnInit {
       environment.backendUrl+environment.addReviewEndpoint,this.review
     ).subscribe((response)=>{
       console.log(response)
-      this.getReviewsByRestId(this.restaurantId);
+      this.getReviewsByRestId();
     })
   }
 }
