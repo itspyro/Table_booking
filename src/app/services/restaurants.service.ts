@@ -1,4 +1,4 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpStatusCode } from '@angular/common/http';
 import { Injectable, OnInit } from '@angular/core';
 import { Restaurant } from './restaurant.model';
 import { Subject } from 'rxjs';
@@ -18,17 +18,38 @@ export class RestaurantService implements OnInit {
   cuisines: Cuisine[] = [];
   menu: Recipe[] = [];
   reviews: Review[] = [];
-  restaurantId!:number;
-  review = new AddReview;
+  openingTime: string = '';
+  closingTime: string = '';
+  cities = [];
+
+  restaurantId!: number;
+  review = new AddReview();
+
   restaurantList = new Subject<Restaurant[]>();
   cuisineList = new Subject<Cuisine[]>();
   selectedRestaurant = new Subject<RestProfile>();
   selectedRestaurantMenu = new Subject<Recipe[]>();
   selectedRestaurantReviews = new Subject<Review[]>();
+  citiesList = new Subject<string[]>();
 
   constructor(private http: HttpClient) {}
 
   ngOnInit(): void {}
+
+  getAllCities() {
+    this.http
+      .get<{
+        httpStatusCode: number;
+        responseMessage: string;
+        cities: [];
+      }>(environment.backendUrl + environment.cityEndpoint)
+      .subscribe({
+        next: (resData) => {
+          this.cities = resData.cities;
+          this.citiesList.next(this.cities);
+        },
+      });
+  }
 
   getRestaurants() {
     this.http
@@ -53,11 +74,19 @@ export class RestaurantService implements OnInit {
         restaurant: RestProfile;
       }>(environment.backendUrl + environment.restaurantIdEndpoint + id + '/')
       .subscribe((resData) => {
-        this.restaurantId = resData.restaurant.restaurantId
+        this.restaurantId = resData.restaurant.restaurantId;
         this.selectedRestaurant.next(resData.restaurant);
       });
   }
 
+  setTimings(openingTime: string, closingTime: string) {
+    this.closingTime = closingTime;
+    this.openingTime = openingTime;
+  }
+
+  returnTimings() {
+    return { openingTime: this.openingTime, closingTime: this.closingTime };
+  }
   getCuisines() {
     this.http
       .get<{
@@ -147,7 +176,7 @@ export class RestaurantService implements OnInit {
     this.restaurantList.next(filteredRestaurants);
   }
 
-  addReview(data:any){
+  addReview(data: any) {
     this.review.review = data.review;
     this.review.rating = data.rating;
     this.review.restaurantId = this.restaurantId;

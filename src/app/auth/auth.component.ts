@@ -1,4 +1,4 @@
-import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import { Component, ElementRef, ViewChild } from '@angular/core';
 import { COMMA, ENTER } from '@angular/cdk/keycodes';
 import { MatChipInputEvent } from '@angular/material/chips';
 import { MatDialog } from '@angular/material/dialog';
@@ -11,7 +11,6 @@ import {
 import { FormControl } from '@angular/forms';
 import { User } from '../services/user.model';
 import { AuthService } from 'app/services/auth.service';
-//import {MatChipInputEvent} from '@angular/material/chips';
 
 @Component({
   selector: 'app-auth',
@@ -19,6 +18,7 @@ import { AuthService } from 'app/services/auth.service';
   styleUrls: ['./auth.component.css'],
 })
 export class AuthComponent {
+  isLoading: boolean = false;
   visible = true;
   selectable = true;
   removable = true;
@@ -106,11 +106,23 @@ export class AuthComponent {
   }
 
   onLoginButton(loginInfo: { email: 'string'; password: 'string' }) {
-    this.authService.login({
-      userEmail: loginInfo.email,
-      password: loginInfo.password,
-    });
+    this.isLoading = true;
+    this.authService
+      .login({
+        userEmail: loginInfo.email,
+        password: loginInfo.password,
+      })
+      .subscribe({
+        next: (resData) => {
+          console.log(resData);
+          this.isLoading = false;
+        },
+        error: (error) => {
+          this.isLoading = false;
+        },
+      });
   }
+
   onSubmitButton(registerationInfo: {
     FirstName: string;
     LastName: string;
@@ -125,9 +137,19 @@ export class AuthComponent {
       userName: registerationInfo.FirstName,
       userPhoneNumber: registerationInfo.phoneNumber,
     };
-    this.authService.createUser({
-      ...user,
-      password: registerationInfo.password,
-    });
+    this.isLoading = true;
+    this.authService
+      .createUser({
+        ...user,
+        password: registerationInfo.password,
+      })
+      .subscribe({
+        next: (resData) => {
+          this.isLoading = false;
+        },
+        error: (error) => {
+          this.isLoading = false;
+        },
+      });
   }
 }

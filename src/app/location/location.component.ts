@@ -1,5 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { RestaurantService } from 'app/services/restaurants.service';
 
 @Component({
   selector: 'app-location',
@@ -8,14 +9,18 @@ import { Router } from '@angular/router';
 })
 export class LocationComponent implements OnInit {
 
-  cities=["Delhi","Mumbai","Dehradun","Meerut"];
+  cities:string[]=[];
 
   @Input() size:string="60vw";
   @Input() hint:string="Search Restaurants in preferred city.";
 
   ngOnInit(): void {
+    this.resService.getAllCities();
+    this.resService.citiesList.subscribe((data)=>{
+      this.cities=data;
+    })
   }
-  constructor(private router: Router) {}
+  constructor(private router: Router,private resService:RestaurantService) {}
 
   // displayLocation = (latitude, longitude) => {
   //   var request = new XMLHttpRequest();

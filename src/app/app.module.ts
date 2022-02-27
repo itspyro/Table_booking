@@ -1,4 +1,4 @@
-import { NgModule, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
+import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -25,13 +25,14 @@ import { ScrollingModule } from '@angular/cdk/scrolling';
 import { RestownerprofileComponent } from './restownerprofile/restownerprofile.component';
 import { RestOverviewComponent } from './restprofile/rest-overview/rest-overview.component';
 import { UserprofileComponent } from './userprofile/userprofile.component';
-//import {MatAutocompleteSelectedEvent} from '@angular/material/autocomplete';
-
-import {MatChipsModule} from '@angular/material/chips';
-import {MatAutocompleteModule} from '@angular/material/autocomplete';
-import { BookingPageComponent } from './restprofile/booking-page/booking-page.component';
-import { ErrorInterceptorService } from './services/error-interceptor.service';
+import { MatChipsModule } from '@angular/material/chips';
+import { MatAutocompleteModule } from '@angular/material/autocomplete';
+import { MatNativeDateModule } from '@angular/material/core';
+import { ReactiveFormsModule } from '@angular/forms';
+import { NgxMaterialTimepickerModule } from 'ngx-material-timepicker';
 import { AddReviewComponent } from './reviews/add-review/add-review.component';
+import { BookingPageComponent } from './restprofile/booking-page/booking-page.component';
+import { AuthInterceptorService } from './services/auth-interceptor.service';
 
 @NgModule({
   declarations: [
@@ -52,8 +53,8 @@ import { AddReviewComponent } from './reviews/add-review/add-review.component';
     RestownerprofileComponent,
     RestOverviewComponent,
     UserprofileComponent,
-    BookingPageComponent,
     AddReviewComponent,
+    BookingPageComponent,
   ],
   imports: [
     BrowserModule,
@@ -62,17 +63,20 @@ import { AddReviewComponent } from './reviews/add-review/add-review.component';
     StarRatingModule.forRoot(),
     HttpClientModule,
     FormsModule,
+    ReactiveFormsModule,
     FlexLayoutModule,
     ScrollingModule,
     MaterialModule,
     MatChipsModule,
     MatAutocompleteModule,
+    NgxMaterialTimepickerModule,
+    MatNativeDateModule,
   ],
 
   providers: [
     {
       provide: HTTP_INTERCEPTORS,
-      useClass: ErrorInterceptorService,
+      useClass: AuthInterceptorService,
       multi: true,
     },
   ],
