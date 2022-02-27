@@ -182,12 +182,13 @@ export class RestaurantService implements OnInit {
     this.review.restaurantId = this.restaurantId;
     this.review.userId = 1;
     const DATE = new Date();
-    this.review.timestamp = DATE.getTime();
-
-    this.http
-      .post(environment.backendUrl + environment.addReviewEndpoint, this.review)
-      .subscribe((response) => {
-        console.log(response);
-      });
+    this.review.timestamp = DATE.getTime()
+    
+    this.http.post(
+      environment.backendUrl+environment.addReviewEndpoint,this.review
+    ).subscribe((response)=>{
+      console.log(response)
+      this.getReviewsByRestId(this.restaurantId);
+    })
   }
 }

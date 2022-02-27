@@ -46,8 +46,8 @@ export class UserprofileService {
   addBench(data: any) {
     this.http
       .post(environment.backendUrl + environment.benchCreateEndpoint, data)
-      .subscribe((data) => {
-        console.log(data);
+      .subscribe((res) => {
+        this.getAllBenches(data.restaurantId)
       });
   }
 
