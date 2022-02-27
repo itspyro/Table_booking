@@ -56,12 +56,12 @@
             (ngSubmit)="onSubmitButton(registerForm.value)"
           >
             <mat-form-field class="example-full-width">
-              <mat-label>Firstname</mat-label>
+              <mat-label>Username</mat-label>
               <input
                 type="text"
                 matInput
-                placeholder="Firstname"
-                name="Firstname"
+                placeholder="Username"
+                name="Username"
                 ngModel
                 required
                 minlength="3"
@@ -69,7 +69,7 @@
               />
               <mat-icon matSuffix color="primary">man</mat-icon>
             </mat-form-field>
-            <mat-form-field class="example-full-width">
+            <!-- <mat-form-field class="example-full-width">
               <mat-label>Lastname</mat-label>
               <input
                 type="text"
@@ -80,9 +80,9 @@
                 required
                 minlength="3"
                 style="color: black"
-              />
-              <mat-icon matSuffix color="primary">man</mat-icon>
-            </mat-form-field>
+              />  -->
+            <!-- <mat-icon matSuffix color="primary">man</mat-icon>
+            </mat-form-field> -->
 
             <mat-form-field class="example-full-width">
               <mat-label>Email</mat-label>
@@ -127,7 +127,9 @@
               />
               <mat-icon matSuffix color="primary">phone</mat-icon>
             </mat-form-field>
-            <mat-checkbox ngModel name="isOwner"></mat-checkbox>
+            <mat-checkbox ngModel name="isOwner"
+              >Register as Restaurant Owner ?</mat-checkbox
+            >
             <fieldset
               ngModelGroup="restDetails"
               *ngIf="registerForm.value.isOwner"
@@ -223,7 +225,7 @@
 
                 <div mat-card-content>
                   <mat-form-field appearance="fill">
-                    <mat-label>Charge Par Table </mat-label>
+                    <mat-label>Charge Per Table </mat-label>
                     <input
                       matInput
                       ngModel
@@ -235,26 +237,20 @@
 
                 <div mat-card-content>
                   <mat-form-field appearance="fill">
-                    <mat-label>Cusine Add</mat-label>
+                    <mat-label>Add Cuisines</mat-label>
                     <mat-chip-list #chipList>
-                      <input
-                        matInput
-                        ngModel
-                        name="cusine"
-                        style="color: black"
-                      />
                       <mat-chip
-                        *ngFor="let fruit of fruits"
-                        (removed)="remove(fruit)"
+                        *ngFor="let cuisine of cuisines"
+                        (removed)="remove(cuisine)"
                       >
-                        {{ fruit }}
+                        {{ cuisine.cuisineName }}
                         <button matChipRemove>
                           <mat-icon>cancel</mat-icon>
                         </button>
                       </mat-chip>
                       <input
-                        placeholder="New fruit ..."
-                        #fruitInput
+                        placeholder="Select Cuisine ..."
+                        #cuisineInput
                         [matAutocomplete]="auto"
                         [matChipInputFor]="chipList"
                         [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
@@ -266,10 +262,10 @@
                       (optionSelected)="selected($event)"
                     >
                       <mat-option
-                        *ngFor="let fruit of filteredFruits | async"
-                        [value]="fruit"
+                        *ngFor="let cuisine of filteredCuisines | async"
+                        [value]="cuisine"
                       >
-                        {{ fruit }}
+                        {{ cuisine.cuisineName }}
                       </mat-option>
                     </mat-autocomplete>
                   </mat-form-field>

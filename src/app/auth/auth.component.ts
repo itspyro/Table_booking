@@ -1,9 +1,13 @@
-import { Component, ElementRef, ViewChild } from '@angular/core';
+import {
+  Component,
+  ElementRef,
+  OnDestroy,
+  OnInit,
+  ViewChild,
+} from '@angular/core';
 import { COMMA, ENTER } from '@angular/cdk/keycodes';
 import { MatChipInputEvent } from '@angular/material/chips';
-import { MatDialog } from '@angular/material/dialog';
-import { map, Observable, startWith } from 'rxjs';
-import { DailogComponent } from './dailog/dailog.component';
+import { map, Observable, startWith, Subscription } from 'rxjs';
 import {
   MatAutocomplete,
   MatAutocompleteSelectedEvent,
@@ -11,98 +15,95 @@ import {
 import { FormControl } from '@angular/forms';
 import { User } from '../services/user.model';
 import { AuthService } from 'app/services/auth.service';
+import { Cuisine } from 'app/services/cuisine.model';
+import { RestaurantService } from 'app/services/restaurants.service';
 
 @Component({
   selector: 'app-auth',
   templateUrl: './auth.component.html',
   styleUrls: ['./auth.component.css'],
 })
-export class AuthComponent {
+export class AuthComponent implements OnInit, OnDestroy {
   isLoading: boolean = false;
   visible = true;
   selectable = true;
   removable = true;
   separatorKeysCodes: number[] = [ENTER, COMMA];
-  fruitCtrl = new FormControl();
-  filteredFruits: Observable<string[]>;
-  fruits: string[] = ['Asian'];
-  allFruits: string[] = [
-    'Asian',
-    'Bakery',
-    'Punjabi',
-    'Beverages',
-    'Chinese Continental',
-    'Desserts',
-    'Drinks',
-    'Fast Food',
-    'French',
-    'Gujarati',
-    'Italian',
-    'Juices',
-    'Lucknowi',
-    'Marathi',
-    'Mediterranean',
-    'Mexican',
-  ];
+  cuisineCtrl = new FormControl();
+  filteredCuisines: Observable<Cuisine[]>;
+  cuisines: Cuisine[] = [];
+  allCuisines: Cuisine[] = [];
 
-  @ViewChild('fruitInput')
-  fruitInput!: ElementRef<HTMLInputElement>;
+  @ViewChild('cuisineInput')
+  cuisineInput!: ElementRef<HTMLInputElement>;
   @ViewChild('auto')
   matAutocomplete!: MatAutocomplete;
 
+  private subscription?: Subscription;
+
   constructor(
-    private readonly dialog: MatDialog,
-    private authService: AuthService
+    private authService: AuthService,
+    private restaurantService: RestaurantService
   ) {
-    this.filteredFruits = this.fruitCtrl.valueChanges.pipe(
+    this.filteredCuisines = this.cuisineCtrl.valueChanges.pipe(
       startWith(null),
-      map((fruit: string | null) =>
-        fruit ? this._filter(fruit) : this.allFruits.slice()
+      map((cuisine) =>
+        cuisine ? this._filter(cuisine) : this.allCuisines.slice()
       )
     );
+  }
+
+  ngOnInit(): void {
+    this.restaurantService.getCuisines();
+    this.subscription = this.restaurantService.cuisineList.subscribe(
+      (cuisines) => {
+        this.allCuisines = cuisines;
+      }
+    );
+  }
+
+  ngOnDestroy(): void {
+    this.subscription?.unsubscribe();
   }
 
   add(event: MatChipInputEvent): void {
     const value = (event.value || '').trim();
 
-    // Add our fruit
     if (value) {
-      this.fruits.push(value);
+      const cuisine = this.cuisines.filter((cuisine) => {
+        return cuisine.cuisineName == value;
+      });
+      this.cuisines.push(cuisine[0]);
     }
 
     // Clear the input value
     event.chipInput!.clear();
 
-    this.fruitCtrl.setValue(null);
+    this.cuisineCtrl.setValue(null);
+    console.log(this.cuisines);
   }
 
-  remove(fruit: string): void {
-    const index = this.fruits.indexOf(fruit);
-
-    if (index >= 0) {
-      this.fruits.splice(index, 1);
-    }
+  remove(cuisine: Cuisine): void {
+    this.cuisines = this.cuisines.filter((inCuisine) => {
+      return inCuisine.cuisineId != cuisine.cuisineId;
+    });
   }
 
   selected(event: MatAutocompleteSelectedEvent): void {
-    this.fruits.push(event.option.viewValue);
-    this.fruitInput.nativeElement.value = '';
-    this.fruitCtrl.setValue(null);
+    const cuisine = this.cuisines.filter((cuisine) => {
+      return cuisine.cuisineName == event.option.value;
+    });
+    this.cuisines.push(cuisine[0]);
+    this.cuisineInput.nativeElement.value = '';
+    this.cuisineCtrl.setValue(null);
   }
 
-  private _filter(value: string): string[] {
+  private _filter(value: string) {
     const filterValue = value.toLowerCase();
 
-    return this.allFruits.filter((fruit) =>
-      fruit.toLowerCase().includes(filterValue)
+    return this.allCuisines?.filter((cuisine) =>
+      cuisine.cuisineName.toLowerCase().includes(filterValue)
     );
-  }
-  ngOnInit(): void {}
-
-  openDialog() {
-    console.error('Openning!');
-    this.dialog.open(DailogComponent);
-    console.error('Openning!');
   }
 
   onLoginButton(loginInfo: { email: 'string'; password: 'string' }) {
@@ -132,7 +133,7 @@ export class AuthComponent {
     isOwner: boolean;
   }) {
     const user: User = {
-      roleName: registerationInfo.isOwner ? 'Owner' : 'User',
+      roleName: registerationInfo.isOwner ? 'owner' : 'User',
       userEmail: registerationInfo.email,
       userName: registerationInfo.FirstName,
       userPhoneNumber: registerationInfo.phoneNumber,
