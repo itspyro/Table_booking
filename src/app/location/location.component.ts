@@ -1,26 +1,26 @@
 import { Component, Input, OnInit } from '@angular/core';
+import { NgForm } from '@angular/forms';
 import { Router } from '@angular/router';
 import { RestaurantService } from 'app/services/restaurants.service';
 
 @Component({
   selector: 'app-location',
   templateUrl: './location.component.html',
-  styleUrls: ['./location.component.css']
+  styleUrls: ['./location.component.css'],
 })
 export class LocationComponent implements OnInit {
+  cities: string[] = [];
 
-  cities:string[]=[];
-
-  @Input() size:string="60vw";
-  @Input() hint:string="Search Restaurants in preferred city.";
+  @Input() size: string = '60vw';
+  @Input() hint: string = 'Search Restaurants in preferred city.';
 
   ngOnInit(): void {
     this.resService.getAllCities();
-    this.resService.citiesList.subscribe((data)=>{
-      this.cities=data;
-    })
+    this.resService.citiesList.subscribe((data) => {
+      this.cities = data;
+    });
   }
-  constructor(private router: Router,private resService:RestaurantService) {}
+  constructor(private router: Router, private resService: RestaurantService) {}
 
   // displayLocation = (latitude, longitude) => {
   //   var request = new XMLHttpRequest();
@@ -83,8 +83,8 @@ export class LocationComponent implements OnInit {
   //   );
   // };
 
-  onSubmit() {
+  onSubmit(form) {
+    this.resService.selectCity(form.city);
     this.router.navigate(['restaurants']);
   }
-
 }

@@ -22,6 +22,7 @@ export class RestaurantService implements OnInit {
   openingTime: string = '';
   closingTime: string = '';
   cities = [];
+  selectedCity: string = 'New Delhi';
 
   restaurantId!: number;
   review = new AddReview();
@@ -66,7 +67,9 @@ export class RestaurantService implements OnInit {
       }>(environment.backendUrl + environment.restaurantAllEndpoint)
       .subscribe({
         next: (resData) => {
-          this.restaurants = resData.restaurants;
+          this.restaurants = resData.restaurants.filter((restaurant) => {
+            return restaurant.address.city == this.selectedCity;
+          });
           this.restaurantList.next(this.restaurants.slice());
         },
       });
@@ -199,5 +202,10 @@ export class RestaurantService implements OnInit {
       .subscribe((response) => {
         this.getReviewsByRestId();
       });
+  }
+
+  selectCity(city: string) {
+    this.selectedCity = city;
+    this.getRestaurants();
   }
 }
