@@ -1,5 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { RatingChangeEvent } from 'angular-star-rating';
+import { RestaurantService } from 'app/services/restaurants.service';
 import { Review } from 'app/services/review.model';
 
 @Component({
@@ -8,7 +9,7 @@ import { Review } from 'app/services/review.model';
   styleUrls: ['./reviews.component.css'],
 })
 export class ReviewsComponent implements OnInit {
-  @Input() reviews?: Review[];
+  reviews?: Review[];
 
   // reviews = [{
   //   username: 'Karanjit',
@@ -25,9 +26,14 @@ export class ReviewsComponent implements OnInit {
   //   review: 'wrong order'
   // }];
 
-  constructor() {}
+  constructor(private restService:RestaurantService) {}
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.restService.getReviewsByRestId();
+    this.restService.selectedRestaurantReviews.subscribe((res)=>{
+      this.reviews = res;
+    })
+  }
 
   onRatingChange(event: RatingChangeEvent, index: number) {
     // ...

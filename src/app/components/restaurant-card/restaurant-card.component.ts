@@ -16,9 +16,6 @@ export class RestaurantCardComponent implements OnInit, OnDestroy {
     private restaurantService: RestaurantService,
     private router: Router
   ) {}
-  // ngOnDestroy(): void {
-  //   throw new Error('Method not implemented.');
-  // }
 
   ngOnInit(): void {
     this.restaurantService.getRestaurants();
@@ -30,7 +27,6 @@ export class RestaurantCardComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
-    this.restaurants;
     this.subscription?.unsubscribe();
   }
 

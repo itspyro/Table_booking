@@ -1,4 +1,4 @@
-import { HttpClient, HttpStatusCode } from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 import { Injectable, OnInit } from '@angular/core';
 import { Restaurant } from './restaurant.model';
 import { Subject } from 'rxjs';
@@ -19,13 +19,13 @@ export class RestaurantService implements OnInit {
   cuisines: Cuisine[] = [];
   menu: Recipe[] = [];
   reviews: Review[] = [];
-  openingTime:string="";
-  closingTime:string="";
-  cities=[];
+  openingTime: string = '';
+  closingTime: string = '';
+  cities = [];
 
-  restaurantId!:number;
-  review = new AddReview;
-  
+  restaurantId!: number;
+  review = new AddReview();
+
   restaurantList = new Subject<Restaurant[]>();
   cuisineList = new Subject<Cuisine[]>();
   selectedRestaurant = new Subject<RestProfile>();
@@ -33,23 +33,22 @@ export class RestaurantService implements OnInit {
   selectedRestaurantReviews = new Subject<Review[]>();
   citiesList = new Subject<string[]>();
 
-
   constructor(private http: HttpClient) {}
 
   ngOnInit(): void {}
 
-  getAllCities(){
+  getAllCities() {
     this.http
       .get<{
-        httpStatusCode:number;
-        responseMessage:string;
-        cities:[]
+        httpStatusCode: number;
+        responseMessage: string;
+        cities: [];
       }>(environment.backendUrl + environment.cityEndpoint)
       .subscribe({
         next: (resData) => {
           this.cities = resData.cities;
           this.citiesList.next(this.cities);
-        }
+        },
       });
   }
 
@@ -76,18 +75,23 @@ export class RestaurantService implements OnInit {
         restaurant: RestProfile;
       }>(environment.backendUrl + environment.restaurantIdEndpoint + id + '/')
       .subscribe((resData) => {
-        this.restaurantId = resData.restaurant.restaurantId
+        this.restaurantId = resData.restaurant.restaurantId;
         this.selectedRestaurant.next(resData.restaurant);
       });
   }
 
-  setTimings(openingTime:string,closingTime:string){
-    this.closingTime=closingTime;
-    this.openingTime=openingTime;
+  setTimings(openingTime: string, closingTime: string) {
+    this.closingTime = closingTime;
+    this.openingTime = openingTime;
   }
 
+<<<<<<< HEAD
   returnTimings(){
     return {  openingTime:this.openingTime, closingTime:this.closingTime,rest_id:this.restaurantId };
+=======
+  returnTimings() {
+    return { openingTime: this.openingTime, closingTime: this.closingTime };
+>>>>>>> 8692c3fbfe686aca8591db940920f3998f0ff188
   }
   getCuisines() {
     this.http
@@ -121,13 +125,17 @@ export class RestaurantService implements OnInit {
       });
   }
 
-  getReviewsByRestId(restaurantId: number) {
+  getReviewsByRestId() {
     this.http
       .get<{
         httpStatusCode: number;
         responseMessage: string;
         reviews: Review[];
-      }>(environment.backendUrl + environment.reviewIdEndpoint + restaurantId)
+      }>(
+        environment.backendUrl +
+          environment.reviewIdEndpoint +
+          this.restaurantId
+      )
       .subscribe((resData) => {
         this.reviews = resData.reviews;
         this.selectedRestaurantReviews.next(this.reviews.slice());
@@ -178,18 +186,19 @@ export class RestaurantService implements OnInit {
     this.restaurantList.next(filteredRestaurants);
   }
 
-  addReview(data:any){
+  addReview(data: any) {
     this.review.review = data.review;
     this.review.rating = data.rating;
     this.review.restaurantId = this.restaurantId;
     this.review.userId = 1;
     const DATE = new Date();
-    this.review.timestamp = DATE.getTime()
-    
-    this.http.post(
-      environment.backendUrl+environment.addReviewEndpoint,this.review
-    ).subscribe((response)=>{
-      console.log(response)
-    })
+    this.review.timestamp = DATE.getTime();
+
+    this.http
+      .post(environment.backendUrl + environment.addReviewEndpoint, this.review)
+      .subscribe((response) => {
+        console.log(response);
+        this.getReviewsByRestId();
+      });
   }
 }

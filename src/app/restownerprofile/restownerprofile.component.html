@@ -165,7 +165,8 @@
           <div *ngFor="let bench of benches">
             <div class="block1">
               <label *ngIf="!bench.isModify">{{ bench.benchType }}</label>
-              <mat-form-field *ngIf="bench.isModify" appearance="fill">
+              <input *ngIf="bench.isModify" type="text" ngModel name="benchType" [(ngModel)]="bench.benchType">
+              <!-- <mat-form-field *ngIf="bench.isModify" appearance="fill">
                 <mat-label>Bench Type</mat-label>
                 <mat-select [(ngModel)]="bench.benchType" name="benchTye">
                   <mat-option
@@ -175,7 +176,7 @@
                     {{ benchtype }}
                   </mat-option>
                 </mat-select>
-              </mat-form-field>
+              </mat-form-field> -->
               <label *ngIf="!bench.isModify">{{ bench.capacity + " Person" }}</label>
               <input *ngIf="bench.isModify" type="number" ngModel name="capacity" [(ngModel)]="bench.capacity"/>
               <label *ngIf="!bench.isModify">{{ bench.price }}</label>
@@ -189,7 +190,8 @@
 
           <form #table="ngForm" (ngSubmit)="addTable(table)">
             <input type="number" ngModel name="capacity" /> Capacity
-            <mat-form-field appearance="fill">
+            <input type="text" ngModel name="benchType" /> Bench Type
+            <!-- <mat-form-field appearance="fill">
               <mat-label>Bench Type</mat-label>
               <mat-select [(ngModel)]="selectedBenchType" name="benchTye">
                 <mat-option
@@ -199,7 +201,7 @@
                   {{ benchtype }}
                 </mat-option>
               </mat-select>
-            </mat-form-field>
+            </mat-form-field> -->
             <input type="number" ngModel name="noOfTable" /> No of Table:
             <input type="number" ngModel name="price" /> Price
             <button mat-raised-button color="primary" type="submit">

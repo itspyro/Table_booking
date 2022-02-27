@@ -4,7 +4,10 @@
       <mat-card-title>Login/Register</mat-card-title>
       <mat-card-subtitle>Restaurant Table </mat-card-subtitle>
     </mat-card-header>
-    <mat-card-content>
+    <mat-card-content *ngIf="isLoading"
+      ><mat-spinner></mat-spinner
+    ></mat-card-content>
+    <mat-card-content *ngIf="!isLoading">
       <mat-tab-group>
         <mat-tab label="Login">
           <form #loginForm="ngForm" (ngSubmit)="onLoginButton(loginForm.value)">
@@ -18,9 +21,9 @@
                 name="email"
                 required
                 email
-                style="color:black"
+                style="color: black"
               />
-              <mat-icon  matSuffix color="accent">email</mat-icon>
+              <mat-icon matSuffix color="accent">email</mat-icon>
             </mat-form-field>
 
             <mat-form-field class="example-full-width">
@@ -33,13 +36,16 @@
                 name="password"
                 required
                 minlength="6"
-                style="color: black;"
+                style="color: black"
               />
-              <mat-icon  matSuffix color="primary">vpn_key</mat-icon>
+              <mat-icon matSuffix color="primary">vpn_key</mat-icon>
             </mat-form-field>
-            <button  mat-button
-            type="submit"
-            color="primary" [disabled]="!loginForm.valid">
+            <button
+              mat-button
+              type="submit"
+              color="primary"
+              [disabled]="!loginForm.valid"
+            >
               Login
             </button>
           </form>
@@ -49,22 +55,21 @@
             #registerForm="ngForm"
             (ngSubmit)="onSubmitButton(registerForm.value)"
           >
-        
             <mat-form-field class="example-full-width">
-              <mat-label>Firstname</mat-label>
+              <mat-label>Username</mat-label>
               <input
                 type="text"
                 matInput
-                placeholder="Firstname"
-                name="Firstname"
+                placeholder="Username"
+                name="Username"
                 ngModel
                 required
                 minlength="3"
-                style="color:black"
+                style="color: black"
               />
               <mat-icon matSuffix color="primary">man</mat-icon>
             </mat-form-field>
-              <mat-form-field class="example-full-width">
+            <!-- <mat-form-field class="example-full-width">
               <mat-label>Lastname</mat-label>
               <input
                 type="text"
@@ -74,10 +79,10 @@
                 ngModel
                 required
                 minlength="3"
-                style="color:black"
-              />
-              <mat-icon matSuffix color="primary">man</mat-icon>
-            </mat-form-field>
+                style="color: black"
+              />  -->
+            <!-- <mat-icon matSuffix color="primary">man</mat-icon>
+            </mat-form-field> -->
 
             <mat-form-field class="example-full-width">
               <mat-label>Email</mat-label>
@@ -89,7 +94,7 @@
                 ngModel
                 required
                 email
-                style="color:black"
+                style="color: black"
               />
               <mat-icon matSuffix color="primary">email</mat-icon>
             </mat-form-field>
@@ -104,7 +109,7 @@
                 name="password"
                 required
                 minlength="6"
-                style="color:black"
+                style="color: black"
               />
               <mat-icon matSuffix color="primary">vpn_key</mat-icon>
             </mat-form-field>
@@ -118,11 +123,13 @@
                 name="phoneNo"
                 required
                 minlength="10"
-                style="color:black"
+                style="color: black"
               />
               <mat-icon matSuffix color="primary">phone</mat-icon>
             </mat-form-field>
-            <mat-checkbox ngModel name="isOwner"></mat-checkbox>
+            <mat-checkbox ngModel name="isOwner"
+              >Register as Restaurant Owner ?</mat-checkbox
+            >
             <fieldset
               ngModelGroup="restDetails"
               *ngIf="registerForm.value.isOwner"
@@ -131,96 +138,143 @@
                 <div mat-card-content>
                   <mat-form-field appearance="fill">
                     <mat-label>GST NO.</mat-label>
-                    <input matInput ngModel name="gstNo" required  style="color:black"/>
+                    <input
+                      matInput
+                      ngModel
+                      name="gstNo"
+                      required
+                      style="color: black"
+                    />
                   </mat-form-field>
                 </div>
                 <div mat-card-content>
                   <mat-form-field appearance="fill">
                     <mat-label>restaurant Name</mat-label>
-                    <input matInput ngModel name="restaurantName" required  style="color:black" />
+                    <input
+                      matInput
+                      ngModel
+                      name="restaurantName"
+                      required
+                      style="color: black"
+                    />
                   </mat-form-field>
                 </div>
 
                 <div mat-card-content>
-                 
-                    <mat-label>Location</mat-label>
-                    
-                 
+                  <mat-label>Location</mat-label>
                 </div>
                 <div mat-card-content>
                   <mat-form-field appearance="fill">
                     <mat-label>Address Line 1</mat-label>
-                    <input matInput ngModel name="addressline1" required   style="color:black"/>
+                    <input
+                      matInput
+                      ngModel
+                      name="addressline1"
+                      required
+                      style="color: black"
+                    />
                   </mat-form-field>
                 </div>
                 <div mat-card-content>
                   <mat-form-field appearance="fill">
                     <mat-label>Address Line 2</mat-label>
-                    <input matInput ngModel name="addressline2" required   style="color:black"/>
+                    <input
+                      matInput
+                      ngModel
+                      name="addressline2"
+                      required
+                      style="color: black"
+                    />
                   </mat-form-field>
                 </div>
                 <div mat-card-content>
                   <mat-form-field appearance="fill">
                     <mat-label>Pin Code</mat-label>
-                    <input matInput ngModel name="pincode" required   style="color:black"/>
+                    <input
+                      matInput
+                      ngModel
+                      name="pincode"
+                      required
+                      style="color: black"
+                    />
                   </mat-form-field>
                 </div>
                 <div mat-card-content>
                   <mat-form-field appearance="fill">
                     <mat-label>City</mat-label>
-                    <input matInput ngModel name="City" required   style="color:black"/>
+                    <input
+                      matInput
+                      ngModel
+                      name="City"
+                      required
+                      style="color: black"
+                    />
                   </mat-form-field>
                 </div>
                 <div mat-card-content>
                   <mat-form-field appearance="fill">
                     <mat-label>No of Table Capacity</mat-label>
-                    <input matInput ngModel name="tableCapacity"  style="color:black" />
+                    <input
+                      matInput
+                      ngModel
+                      name="tableCapacity"
+                      style="color: black"
+                    />
                   </mat-form-field>
                 </div>
 
                 <div mat-card-content>
                   <mat-form-field appearance="fill">
-                    <mat-label>Charge Par Table </mat-label>
-                    <input matInput ngModel name="tableCharge"  style="color:black" />
+                    <mat-label>Charge Per Table </mat-label>
+                    <input
+                      matInput
+                      ngModel
+                      name="tableCharge"
+                      style="color: black"
+                    />
                   </mat-form-field>
                 </div>
 
                 <div mat-card-content>
                   <mat-form-field appearance="fill">
-                    <mat-label>Cusine Add</mat-label>
+                    <mat-label>Add Cuisines</mat-label>
                     <mat-chip-list #chipList>
-                    <input matInput ngModel name="cusine"  style="color:black"/>
-                    <mat-chip
-                    *ngFor="let fruit of fruits"
-                    (removed)="remove(fruit)">
-                    {{fruit}}
-                    <button matChipRemove>
-                      <mat-icon>cancel</mat-icon>
-                    </button>
-                  </mat-chip>
-                  <input
-                    placeholder="New fruit ..."
-                    #fruitInput
-                    [matAutocomplete]="auto"
-                    [matChipInputFor]="chipList"
-                    [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
-                    (matChipInputTokenEnd)="add($event)">
-                </mat-chip-list>
-                <mat-autocomplete #auto="matAutocomplete"  (optionSelected)="selected($event)">
-                  <mat-option *ngFor="let fruit of filteredFruits | async" [value]="fruit">
-                    {{fruit}}
-                  </mat-option>
-
-</mat-autocomplete> 
-
+                      <mat-chip
+                        *ngFor="let cuisine of cuisines"
+                        (removed)="remove(cuisine)"
+                      >
+                        {{ cuisine.cuisineName }}
+                        <button matChipRemove>
+                          <mat-icon>cancel</mat-icon>
+                        </button>
+                      </mat-chip>
+                      <input
+                        placeholder="Select Cuisine ..."
+                        #cuisineInput
+                        [matAutocomplete]="auto"
+                        [matChipInputFor]="chipList"
+                        [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
+                        (matChipInputTokenEnd)="add($event)"
+                      />
+                    </mat-chip-list>
+                    <mat-autocomplete
+                      #auto="matAutocomplete"
+                      (optionSelected)="selected($event)"
+                    >
+                      <mat-option
+                        *ngFor="let cuisine of filteredCuisines | async"
+                        [value]="cuisine"
+                      >
+                        {{ cuisine.cuisineName }}
+                      </mat-option>
+                    </mat-autocomplete>
                   </mat-form-field>
-               
                 </div>
 
                 <div mat-card-content>
                   <mat-form-field appearance="fill">
                     <mat-label>Menu Add</mat-label>
-                    <input matInput ngModel name="menu"  style="color:black" />
+                    <input matInput ngModel name="menu" style="color: black" />
                   </mat-form-field>
                 </div>
                 <div mat-card-content>
