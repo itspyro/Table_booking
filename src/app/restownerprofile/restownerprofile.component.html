@@ -3,6 +3,24 @@
     <mat-card>
       <mat-card-header>
         <mat-card-title>User profile</mat-card-title>
+        <button
+            mat-raised-button
+            color="primary"
+            (click)="onModifyUser()"
+            *ngIf="!isModifyUser"
+            class="button"
+          >
+            Modify
+          </button>
+          <button
+          class="button"
+            mat-raised-button
+            color="primary"
+            (click)="onSubmitUser()"
+            *ngIf="isModifyUser"
+          >
+            Submit
+          </button>
       </mat-card-header>
       <div class="profile-image">
         <img
@@ -13,19 +31,32 @@
         />
       </div>
       <mat-card-content>
-        <div class="infomation">
-          <div class="left-info">
-            <div>
-              <p>User Name:</p>
-              <p>Email</p>
-              <p>Phone No.</p>
-            </div>
-            <div class="fixed">
-              <p>{{ user.userName }}</p>
-              <p>{{ user.userEmail }}</p>
-              <p>{{ user.userPhoneNumber }}</p>
-            </div>
-          </div>
+        <div class="block">
+          <label>User Name: </label>
+          <input
+            type="text"
+            [disabled]="!isModifyUser"
+            [(ngModel)]="user.userName"
+            value="{{ user.userName }}"
+          />
+        </div>
+        <div class="block">
+          <label>Email </label>
+          <input
+            type="text"
+            [disabled]="!isModifyUser"
+            [(ngModel)]="user.userEmail"
+            value="{{ user.userEmail }}"
+          />
+        </div>
+        <div class="block">
+          <label>Phone No:</label>
+          <input
+            type="text"
+            [disabled]="!isModifyUser"
+            [(ngModel)]="user.userPhoneNumber"
+            value="{{ user.userPhoneNumber }}"
+          />
         </div>
         <mat-checkbox [(ngModel)]="isOwnerCheckbox" (change)="checkIsOwner()"
           >Manage Restaurant</mat-checkbox
