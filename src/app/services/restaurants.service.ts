@@ -10,6 +10,8 @@ import { AddReview } from './addreview.model';
 import { environment } from '../../environments/environment';
 import { Recipe } from './recipe.model';
 import { AuthService } from './auth.service';
+import { Payment } from './payment.model';
+
 
 @Injectable({
   providedIn: 'root',
@@ -26,6 +28,7 @@ export class RestaurantService implements OnInit {
 
   restaurantId!: number;
   review = new AddReview();
+  payment = new Payment();
   userId?: number;
 
   restaurantList = new Subject<Restaurant[]>();
@@ -207,5 +210,24 @@ export class RestaurantService implements OnInit {
   selectCity(city: string) {
     this.selectedCity = city;
     this.getRestaurants();
+  }
+
+  addPayment(data:any) {
+    this.payment.amount = data.amount;
+    this.payment.userId=data.userId;
+    
+    this.http.post<{httpStatusCode:number, responseMessage:string}>(environment.backendUrl + '/api/bookings/payment', this.payment).subscribe({next : (resData) => {
+          var obj = JSON.parse(resData.responseMessage);
+          let options = {
+            key:"rzp_test_LecrG02AfeAeEm",
+            amount:obj.amount,
+            currency:obj.currency,
+            name:"OPEN TABLE",
+            description:"CheckOut",
+            image:"/Users/harshit.jain/Table_booking/src/assets/images/Project_logo.png",
+            order_id:obj.id,
+          }
+      }
+    });
   }
 }
