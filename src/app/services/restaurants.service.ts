@@ -85,13 +85,8 @@ export class RestaurantService implements OnInit {
     this.openingTime = openingTime;
   }
 
-<<<<<<< HEAD
   returnTimings(){
     return {  openingTime:this.openingTime, closingTime:this.closingTime,rest_id:this.restaurantId };
-=======
-  returnTimings() {
-    return { openingTime: this.openingTime, closingTime: this.closingTime };
->>>>>>> 8692c3fbfe686aca8591db940920f3998f0ff188
   }
   getCuisines() {
     this.http

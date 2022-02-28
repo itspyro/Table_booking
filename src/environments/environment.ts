@@ -21,7 +21,8 @@ export const environment = {
   addReviewEndpoint:'/api/review/create',
   updateRestInfoEndpoint:'/api/restaurant/update',
   updateBenchInfoEndpoint:'/api/bench/update',
-  cityEndpoint:'/api/city'
+  cityEndpoint:'/api/city',
+  checkAvailabilityEndpoint:'/api/checkAvailability/'
 };
 
 /*
