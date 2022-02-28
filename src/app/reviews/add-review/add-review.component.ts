@@ -1,26 +1,44 @@
 import { Component, OnInit } from '@angular/core';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { Router } from '@angular/router';
+import { AuthService } from 'app/services/auth.service';
 import { RestaurantService } from 'app/services/restaurants.service';
 
 @Component({
   selector: 'app-add-review',
   templateUrl: './add-review.component.html',
-  styleUrls: ['./add-review.component.css']
+  styleUrls: ['./add-review.component.css'],
 })
 export class AddReviewComponent implements OnInit {
+  isAuthenticated?: boolean;
+  userId?: number;
 
-  constructor(private _snackBar: MatSnackBar,private restService:RestaurantService) { }
+  constructor(
+    private _snackBar: MatSnackBar,
+    private restService: RestaurantService,
+    private authService: AuthService,
+    private router: Router
+  ) {}
 
   ngOnInit(): void {
+    this.authService.user.subscribe((user) => {
+      this.isAuthenticated = !!user;
+      this.userId = user?.userId;
+    });
   }
 
-  onSubmitReview(data:any){
-    if(data.rating===''||data.review===''||data.rating===undefined||data.review===undefined){
-     this._snackBar.open('Please enter every field','Okay')
-    }
-    else{
-      this.restService.addReview(data)
+  onSubmitReview(data: any) {
+    if (
+      data.rating === '' ||
+      data.review === '' ||
+      data.rating === undefined ||
+      data.review === undefined
+    ) {
+      this._snackBar.open('Please enter every field', 'Okay');
+    } else if (this.isAuthenticated) {
+      this.restService.addReview({ ...data, userId: this.userId });
+    } else {
+      this.router.navigate(['/auth']);
     }
   }
-
 }

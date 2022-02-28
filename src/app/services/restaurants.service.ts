@@ -10,6 +10,7 @@ import { AddReview } from './addreview.model';
 import { environment } from '../../environments/environment';
 import { Recipe } from './recipe.model';
 import { Router} from '@angular/router';
+import { AuthService } from './auth.service';
 
 @Injectable({
   providedIn: 'root',
@@ -22,9 +23,11 @@ export class RestaurantService implements OnInit {
   openingTime: string = '';
   closingTime: string = '';
   cities = [];
+  selectedCity: string = 'New Delhi';
 
   restaurantId!: number;
   review = new AddReview();
+  userId?: number;
 
   restaurantList = new Subject<Restaurant[]>();
   cuisineList = new Subject<Cuisine[]>();
@@ -33,9 +36,13 @@ export class RestaurantService implements OnInit {
   selectedRestaurantReviews = new Subject<Review[]>();
   citiesList = new Subject<string[]>();
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient, private authService: AuthService) {}
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.authService.user.subscribe((user) => {
+      this.userId = user?.userId;
+    });
+  }
 
   getAllCities() {
     this.http
@@ -61,7 +68,9 @@ export class RestaurantService implements OnInit {
       }>(environment.backendUrl + environment.restaurantAllEndpoint)
       .subscribe({
         next: (resData) => {
-          this.restaurants = resData.restaurants;
+          this.restaurants = resData.restaurants.filter((restaurant) => {
+            return restaurant.address.city == this.selectedCity;
+          });
           this.restaurantList.next(this.restaurants.slice());
         },
       });
@@ -139,10 +148,7 @@ export class RestaurantService implements OnInit {
 
   applyFilters(filters: Filter) {
     const filteredRestaurants = this.restaurants.filter((restaurant) => {
-      const restaurantCuisines: string[] = [];
-      restaurant.cuisines.map((cuisine) => {
-        restaurantCuisines.push(cuisine.cuisineName);
-      });
+      const restaurantCuisines: string[] = restaurant.cuisineNames;
       return (
         (filters.rating > 0 ? restaurant.rating >= filters.rating : true) &&
         (filters.pure_veg === true
@@ -169,11 +175,14 @@ export class RestaurantService implements OnInit {
         (filters.cuisine.Mediterranean === true
           ? restaurantCuisines.includes('Mediterranean')
           : true) &&
-        (filters.cuisine.PunjabiRasoi === true
-          ? restaurantCuisines.includes('Punjabi Rasoi')
+        (filters.cuisine.Punjabi === true
+          ? restaurantCuisines.includes('Punjabi')
           : true) &&
         (filters.cuisine.SouthIndian === true
           ? restaurantCuisines.includes('South Indian')
+          : true) &&
+        (filters.cuisine.Mexican === true
+          ? restaurantCuisines.includes('Mexican')
           : true)
       );
     });
@@ -185,15 +194,19 @@ export class RestaurantService implements OnInit {
     this.review.review = data.review;
     this.review.rating = data.rating;
     this.review.restaurantId = this.restaurantId;
-    this.review.userId = 1;
+    this.review.userId = data.userId;
     const DATE = new Date();
     this.review.timestamp = DATE.getTime();
 
     this.http
       .post(environment.backendUrl + environment.addReviewEndpoint, this.review)
       .subscribe((response) => {
-        console.log(response);
         this.getReviewsByRestId();
       });
+  }
+
+  selectCity(city: string) {
+    this.selectedCity = city;
+    this.getRestaurants();
   }
 }
