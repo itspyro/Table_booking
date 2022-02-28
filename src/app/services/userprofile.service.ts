@@ -17,14 +17,13 @@ export class UserprofileService {
   restaurantProfile = new Subject<Restaurant>();
   constructor(private http: HttpClient) {}
 
-  getUser() {
-    const USER_ID = 1;
+  getUser(userId:number) {
     this.http
       .get<{
         httpStatusCode: number;
         responseMessage: string;
         users: User;
-      }>(environment.backendUrl + environment.userIdEndpoint + USER_ID)
+      }>(environment.backendUrl + environment.userIdEndpoint + userId)
       .subscribe((data) => {
         console.log(data);
         this.userProfile.next(data.users[0]);
@@ -83,6 +82,13 @@ export class UserprofileService {
   updateBenchDetail(data:any){
     this.http.put(
       environment.backendUrl+environment.updateBenchInfoEndpoint,data
+    ).subscribe((res)=>{
+      console.log(res)
+    })
+  }
+  updateUserDetail(data:any){
+    this.http.put(
+      environment.backendUrl+environment.updateUserInfoEndpoint,data
     ).subscribe((res)=>{
       console.log(res)
     })

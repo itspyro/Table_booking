@@ -1,5 +1,3 @@
-import { Recipe } from './recipe.model';
-import { Review } from './review.model';
 import { Cuisine } from './cuisine.model';
 
 export interface Restaurant {
@@ -18,7 +16,6 @@ export interface Restaurant {
   rating: number;
   openingTime: string;
   closingTime: string;
-  cuisines: Cuisine[];
-  userId?:number;
+  cuisineNames: string[];
+  userId?: number;
 }
-  
