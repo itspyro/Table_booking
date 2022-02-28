@@ -175,6 +175,8 @@ export class AuthComponent implements OnInit, OnDestroy {
               contact: registerationInfo.phoneNo,
               nonVeg:
                 registerationInfo.restDetails.nonVeg == true ? true : false,
+              openingTime: '10:00 AM',
+              closingTime: '11: 00 PM',
             };
             this.restaurantService.addRestaurant(restaurant);
           }
