@@ -24,6 +24,7 @@ export class BookingService {
     this.http
       .post<{httpStatusCode:number,responseMessage:string}>(environment.backendUrl + environment.bookingEndpoint, data)
       .subscribe((resData) => {
+        console.log(resData);
           this.bookingResponse.next(resData);
         });
   }
