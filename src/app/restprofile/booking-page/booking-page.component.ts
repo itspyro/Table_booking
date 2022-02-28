@@ -54,18 +54,12 @@ export class BookingPageComponent implements OnInit {
   
   getSuitableTable(benches: Bench[],numOfPersons:number){
     if(benches.length==0)return;
-    benches=benches.filter((bench)=>bench.capacity>=numOfPersons);
     benches.sort(function (a: Bench, b:Bench) {
-        return (a.capacity<b.capacity)?1:0;
+        return ((a.capacity>b.capacity)?1:((a.capacity<b.capacity)?-1:0));
     });
-    let sum_cap=0,i=0;
-       
-    while(i<benches.length){
-      sum_cap+=benches[i].capacity;
-      this.allotedBench.push(benches[i]);
-      i++;
-      if(sum_cap>=numOfPersons)break;
-    }
+    console.log(benches);
+    console.log(benches[0]);
+    this.allotedBench.push(benches[0]);
   }
 
   onSubmit(ele){
