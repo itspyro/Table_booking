@@ -13,11 +13,11 @@ import {
   MatAutocompleteSelectedEvent,
 } from '@angular/material/autocomplete';
 import { FormControl } from '@angular/forms';
-import { User } from '../services/user.model';
 import { AuthService } from 'app/services/auth.service';
-import { Cuisine } from 'app/services/cuisine.model';
 import { RestaurantService } from 'app/services/restaurants.service';
-import { Router } from '@angular/router';
+import { Location } from '@angular/common';
+import { Cuisine } from 'app/services/cuisine.model';
+import { User } from 'app/services/user.model';
 
 @Component({
   selector: 'app-auth',
@@ -31,9 +31,10 @@ export class AuthComponent implements OnInit, OnDestroy {
   removable = true;
   separatorKeysCodes: number[] = [ENTER, COMMA];
   cuisineCtrl = new FormControl();
-  filteredCuisines: Observable<Cuisine[]>;
-  cuisines: Cuisine[] = [];
-  allCuisines: Cuisine[] = [];
+  filteredCuisines: Observable<string[]>;
+  cuisines: string[] = [];
+  allCuisines: string[] = [];
+  allRestCuisines?: Cuisine[];
 
   @ViewChild('cuisineInput')
   cuisineInput!: ElementRef<HTMLInputElement>;
@@ -45,11 +46,11 @@ export class AuthComponent implements OnInit, OnDestroy {
   constructor(
     private authService: AuthService,
     private restaurantService: RestaurantService,
-    private router: Router
+    private _location: Location
   ) {
     this.filteredCuisines = this.cuisineCtrl.valueChanges.pipe(
       startWith(null),
-      map((cuisine) =>
+      map((cuisine: string | null) =>
         cuisine ? this._filter(cuisine) : this.allCuisines.slice()
       )
     );
@@ -59,7 +60,11 @@ export class AuthComponent implements OnInit, OnDestroy {
     this.restaurantService.getCuisines();
     this.subscription = this.restaurantService.cuisineList.subscribe(
       (cuisines) => {
-        this.allCuisines = cuisines;
+        this.allRestCuisines = cuisines;
+        this.allCuisines = [];
+        cuisines.map((cuisine) => {
+          this.allCuisines.push(cuisine.cuisineName);
+        });
       }
     );
   }
@@ -72,10 +77,8 @@ export class AuthComponent implements OnInit, OnDestroy {
     const value = (event.value || '').trim();
 
     if (value) {
-      const cuisine = this.cuisines.filter((cuisine) => {
-        return cuisine.cuisineName == value;
-      });
-      this.cuisines.push(cuisine[0]);
+      this.cuisines.push(value);
+      console.log(this.cuisines);
     }
 
     event.chipInput!.clear();
@@ -84,26 +87,26 @@ export class AuthComponent implements OnInit, OnDestroy {
     console.log(this.cuisines);
   }
 
-  remove(cuisine: Cuisine): void {
-    this.cuisines = this.cuisines.filter((inCuisine) => {
-      return inCuisine.cuisineId != cuisine.cuisineId;
-    });
+  remove(cuisine: string): void {
+    const index = this.cuisines.indexOf(cuisine);
+
+    if (index >= 0) {
+      this.cuisines.splice(index, 1);
+    }
   }
 
   selected(event: MatAutocompleteSelectedEvent): void {
-    const cuisine = this.cuisines.filter((cuisine) => {
-      return cuisine.cuisineName == event.option.value;
-    });
-    this.cuisines.push(cuisine[0]);
+    this.cuisines.push(event.option.viewValue);
     this.cuisineInput.nativeElement.value = '';
     this.cuisineCtrl.setValue(null);
+    console.log(this.cuisines);
   }
 
-  private _filter(value: string) {
+  private _filter(value: string): string[] {
     const filterValue = value.toLowerCase();
 
     return this.allCuisines?.filter((cuisine) =>
-      cuisine.cuisineName.toLowerCase().includes(filterValue)
+      cuisine.toLowerCase().includes(filterValue)
     );
   }
 
@@ -118,7 +121,7 @@ export class AuthComponent implements OnInit, OnDestroy {
         next: (resData) => {
           console.log(resData);
           if (resData.httpStatusCode == 200) {
-            this.router.navigate(['/profile']);
+            this._location.back();
           }
           this.isLoading = false;
         },
@@ -129,18 +132,24 @@ export class AuthComponent implements OnInit, OnDestroy {
   }
 
   onSubmitButton(registerationInfo: {
-    FirstName: string;
-    LastName: string;
+    Username: string;
     email: string;
     password: string;
-    phoneNumber: string;
+    phoneNo: string;
     isOwner: boolean;
+    restDetails: any;
   }) {
+    let restCuisines: Cuisine[] = [];
+
+    restCuisines = this.allRestCuisines!.filter((restcuisine) => {
+      return this.cuisines.includes(restcuisine.cuisineName);
+    });
+
     const user: User = {
       roleName: registerationInfo.isOwner ? 'owner' : 'User',
       userEmail: registerationInfo.email,
-      userName: registerationInfo.FirstName,
-      userPhoneNumber: registerationInfo.phoneNumber,
+      userName: registerationInfo.Username,
+      userPhoneNumber: registerationInfo.phoneNo,
     };
     this.isLoading = true;
     this.authService
@@ -151,6 +160,24 @@ export class AuthComponent implements OnInit, OnDestroy {
       .subscribe({
         next: (resData) => {
           this.isLoading = false;
+          if (registerationInfo.isOwner) {
+            const restaurant = {
+              userId: resData.userId,
+              cuisineIds: restCuisines,
+              restaurantName: registerationInfo.restDetails.restaurantName,
+              address: {
+                addressLine1: registerationInfo.restDetails.addressLine1,
+                addressLine2: registerationInfo.restDetails.addressLine2,
+                city: registerationInfo.restDetails.city,
+                pincode: registerationInfo.restDetails.pincode,
+              },
+              gstIn: registerationInfo.restDetails.gstIn,
+              contact: registerationInfo.phoneNo,
+              nonVeg:
+                registerationInfo.restDetails.nonVeg == true ? true : false,
+            };
+            this.restaurantService.addRestaurant(restaurant);
+          }
         },
         error: (error) => {
           this.isLoading = false;

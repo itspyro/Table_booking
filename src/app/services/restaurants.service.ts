@@ -10,6 +10,7 @@ import { AddReview } from './addreview.model';
 import { environment } from '../../environments/environment';
 import { Recipe } from './recipe.model';
 import { AuthService } from './auth.service';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Injectable({
   providedIn: 'root',
@@ -35,7 +36,11 @@ export class RestaurantService implements OnInit {
   selectedRestaurantReviews = new Subject<Review[]>();
   citiesList = new Subject<string[]>();
 
-  constructor(private http: HttpClient, private authService: AuthService) {}
+  constructor(
+    private http: HttpClient,
+    private authService: AuthService,
+    private _snackbar: MatSnackBar
+  ) {}
 
   ngOnInit(): void {
     this.authService.user.subscribe((user) => {
@@ -201,6 +206,19 @@ export class RestaurantService implements OnInit {
       .post(environment.backendUrl + environment.addReviewEndpoint, this.review)
       .subscribe((response) => {
         this.getReviewsByRestId();
+      });
+  }
+
+  addRestaurant(rest: any) {
+    this.http
+      .post<{
+        httpStatusCode: number;
+        responseMessage: string;
+      }>(environment.backendUrl + environment.createRestaurantEndpoint, rest)
+      .subscribe((resData) => {
+        if (resData.httpStatusCode == 200) {
+          this._snackbar.open('Restaurant Created Successfully');
+        }
       });
   }
 

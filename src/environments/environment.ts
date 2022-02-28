@@ -7,6 +7,7 @@ export const environment = {
   backendUrl: 'http://localhost:8080',
   restaurantAllEndpoint: '/api/restaurant/all',
   restaurantIdEndpoint: '/api/restaurant/',
+  createRestaurantEndpoint: '/api/restaurant/create',
   cuisineAllEndpoint: '/api/cuisines/',
   recipesIdEndpoint: '/api/recipe/restaurant/',
   reviewIdEndpoint: '/api/review/restaurant/',
@@ -16,13 +17,13 @@ export const environment = {
   userRestaurantEndpoint: '/api/user/restaurant/',
   benchCreateEndpoint: '/api/bench/create',
   benchAllEndpoint: '/api/bench/restaurant/',
-  benchDeleteEndpoint:'/api/bench/delete/',
-  bookingEndpoint:'/api/bookings/create',
-  addReviewEndpoint:'/api/review/create',
-  updateRestInfoEndpoint:'/api/restaurant/update',
-  updateBenchInfoEndpoint:'/api/bench/update',
-  cityEndpoint:'/api/city',
-  updateUserInfoEndpoint:'/api/user/update',
+  benchDeleteEndpoint: '/api/bench/delete/',
+  bookingEndpoint: '/api/bookings/create',
+  addReviewEndpoint: '/api/review/create',
+  updateRestInfoEndpoint: '/api/restaurant/update',
+  updateBenchInfoEndpoint: '/api/bench/update',
+  cityEndpoint: '/api/city',
+  updateUserInfoEndpoint: '/api/user/update',
 };
 
 /*
