@@ -1,29 +1,46 @@
 <div class="booking">
-    <form #bookForm="ngForm" class="form">
+    <form #bookForm="ngForm" class="form" (ngSubmit)="onSubmit(bookForm.value)">
         <mat-form-field appearance="fill">
             <mat-label>Enter number of persons</mat-label>
-            <input matInput type="number" placeholder="1" name="num_persons" min="1" value="1" required>
+            <input matInput type="number" name="noOfPersons" ngModel name="numOfPersons" min="1" value="1" required>
         </mat-form-field>
 
         <mat-form-field color="primary" appearance="fill">
             <mat-label>Select Booking Date</mat-label>
-            <input matInput [matDatepicker]="picker2">
+            <input matInput [matDatepicker]="picker2" name="date" ngModel [min]="curr_date" min={{curr_date}} required>
             <mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle>
             <mat-datepicker #picker2 color="primary"></mat-datepicker>
         </mat-form-field>
         
-
         <div class="timePick">
-            <input [ngxTimepicker]="toggleTimepicker" [disableClick]="true" placeholder="Select Arrival Time" readonly>
+            <input [ngxTimepicker]="toggleTimepicker" name="arrivalTime" ngModel [disableClick]="true" placeholder="Select Arrival Time" readonly required>
             <ngx-material-timepicker-toggle [for]="toggleTimepicker"></ngx-material-timepicker-toggle>
             <ngx-material-timepicker #toggleTimepicker [theme]="darkTheme"></ngx-material-timepicker>
         </div>
 
         <div class="timePick">
-            <input [ngxTimepicker]="toggleTimepicker1" [disableClick]="true" placeholder="Select Departure Times" readonly>
+            <input [ngxTimepicker]="toggleTimepicker1" name="departureTime" ngModel [disableClick]="true" placeholder="Select Departure Times" readonly required>
             <ngx-material-timepicker-toggle [for]="toggleTimepicker1"></ngx-material-timepicker-toggle>
             <ngx-material-timepicker #toggleTimepicker1 [theme]="darkTheme"></ngx-material-timepicker>
         </div>
+
+        <mat-slide-toggle name="private" ngModel>Private table required ?</mat-slide-toggle>
+
+        <mat-accordion>
+            <mat-expansion-panel>
+              <mat-expansion-panel-header>
+                <mat-panel-title>
+                  Click here to order your food in advance
+                </mat-panel-title>
+              </mat-expansion-panel-header>
+              <div>
+                  Preorder Food
+              </div>
+            </mat-expansion-panel>
+          </mat-accordion> 
+        
+
+        <button mat-button type="submit" [disabled]="!bookForm.valid">Submit</button>
     
     </form>
     

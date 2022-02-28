@@ -1,6 +1,7 @@
 export interface Bench{
   benchId:number,
   benchType:string,
-  capacity:string
+  capacity:number,
+  price: number
 }
   
