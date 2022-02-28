@@ -23,6 +23,9 @@ export const environment = {
   updateBenchInfoEndpoint:'/api/bench/update',
   cityEndpoint:'/api/city',
   updateUserInfoEndpoint:'/api/user/update',
+  addRecipeEndpoint:'/api/recipe/create',
+  updateRecipeEndpoint:'/api/recipe/update',
+  deleteRecipeEndpoint:'/api/recipe/delete/',
 };
 
 /*
