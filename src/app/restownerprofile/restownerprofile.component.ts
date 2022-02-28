@@ -9,6 +9,8 @@ import { NgForm } from '@angular/forms';
 import { AuthUser } from 'app/services/auth-user.model';
 import { AuthService } from 'app/services/auth.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { Recipe } from 'app/services/recipe.model';
+import { RestaurantService } from 'app/services/restaurants.service';
 
 @Component({
   selector: 'app-restownerprofile',
@@ -52,13 +54,14 @@ export class RestownerprofileComponent implements OnInit {
   };
   table = new Table();
   benches!: Table[];
+  recipe = new Recipe;
+  recipes!: Recipe[];
 
   change: string[] = [];
-  constructor(
-    private userservice: UserprofileService,
-    private authservice: AuthService,
-    private _snackBar: MatSnackBar
-  ) {}
+  constructor(private userservice: UserprofileService,
+              private restService: RestaurantService,
+              private authservice:AuthService,
+              private _snackBar: MatSnackBar) { }
 
   ngOnInit(): void {
     this.authservice.user.subscribe((res) => {
@@ -74,8 +77,12 @@ export class RestownerprofileComponent implements OnInit {
           this.userservice.getAllBenches(this.restaurant.restaurantId);
           this.userservice.benchList.subscribe((data) => {
             this.benches = data;
-          });
-        });
+          })
+          this.restService.getRecipeByRestId(this.restaurant.restaurantId);
+          this.restService.selectedRestaurantMenu.subscribe((data)=>{
+            this.recipes = data
+          })
+        })
       }
     });
   }
@@ -141,11 +148,43 @@ export class RestownerprofileComponent implements OnInit {
     data.isModify = false;
     this.userservice.updateBenchDetail(data);
   }
-  onModifyUser() {
+
+  onModifyUser(){
     this.isModifyUser = true;
   }
   onSubmitUser() {
     this.userservice.updateUserDetail(this.user);
     this.isModifyUser = false;
+  }
+
+
+
+  onModifyRecipeButton(data:any){
+    data.isModify = true
+  }
+  onSubmitRecipeButton(data:any){
+    data.isModify = false;
+    this.restService.updateRecipe(data)
+    
+  }
+  onDeleteRecipeButton(data:any){
+    this.recipes.forEach((element,index)=>{
+      if(element.recipeId === data.recipeId){
+        this.recipes.splice(index,1)
+      }
+    })
+    this.restService.deleteRecipe(data.recipeId)
+  }
+  addRecipe(data){
+    this.recipe.recipeName = data.value.recipeName;
+    this.recipe.restaurantId = this.restaurant.restaurantId;
+    this.recipe.price = data.value.price;
+    if(this.recipe.price==undefined||this.recipe.price==0||
+      this.recipe.recipeName==undefined||this.recipe.recipeName==""){
+        this._snackBar.open("Please enter everyfield",'ok')
+      }else{
+        this.restService.addRecipe(this.recipe)
+      }
+      data.reset();
   }
 }

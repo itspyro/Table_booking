@@ -18,13 +18,16 @@ export const environment = {
   benchCreateEndpoint: '/api/bench/create',
   benchAllEndpoint: '/api/bench/restaurant/',
   benchDeleteEndpoint: '/api/bench/delete/',
-  bookingEndpoint: '/api/bookings/create',
-  addReviewEndpoint: '/api/review/create',
-  updateRestInfoEndpoint: '/api/restaurant/update',
-  updateBenchInfoEndpoint: '/api/bench/update',
-  cityEndpoint: '/api/city',
+  bookingEndpoint:'/api/bookings/create',
+  addReviewEndpoint:'/api/review/create',
+  updateRestInfoEndpoint:'/api/restaurant/update',
+  updateBenchInfoEndpoint:'/api/bench/update',
+  cityEndpoint:'/api/city',
   checkAvailabilityEndpoint: '/api/checkAvailability/',
   updateUserInfoEndpoint: '/api/user/update',
+  addRecipeEndpoint:'/api/recipe/create',
+  updateRecipeEndpoint:'/api/recipe/update',
+  deleteRecipeEndpoint:'/api/recipe/delete/',
 };
 
 /*

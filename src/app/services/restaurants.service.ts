@@ -227,4 +227,29 @@ export class RestaurantService implements OnInit {
     this.selectedCity = city;
     this.getRestaurants();
   }
+
+  addRecipe(data:any){
+    this.http.post(
+      environment.backendUrl+environment.addRecipeEndpoint,data
+    ).subscribe((res)=>{
+      console.log(res)
+      this.getRecipeByRestId(data.restaurantId)
+    })
+  }
+
+  deleteRecipe(recipeId:any){
+    this.http.delete(
+      environment.backendUrl+environment.deleteRecipeEndpoint+recipeId
+    ).subscribe((res)=>{
+      console.log(res)
+    })
+  }
+
+  updateRecipe(data:any){
+    this.http.put(
+      environment.backendUrl+environment.updateRecipeEndpoint,data
+    ).subscribe((res)=>{
+      console.log(res)
+    })
+  }
 }
