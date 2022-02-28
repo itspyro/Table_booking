@@ -9,6 +9,7 @@ import { Review } from './review.model';
 import { AddReview } from './addreview.model';
 import { environment } from '../../environments/environment';
 import { Recipe } from './recipe.model';
+import { Router} from '@angular/router';
 import { AuthService } from './auth.service';
 
 @Injectable({
@@ -93,8 +94,8 @@ export class RestaurantService implements OnInit {
     this.openingTime = openingTime;
   }
 
-  returnTimings() {
-    return { openingTime: this.openingTime, closingTime: this.closingTime };
+  returnTimings(){
+    return {  openingTime:this.openingTime, closingTime:this.closingTime,rest_id:this.restaurantId };
   }
   getCuisines() {
     this.http
