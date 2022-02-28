@@ -195,19 +195,9 @@
           </div>
           <div *ngFor="let bench of benches">
             <div class="block1">
+
               <label *ngIf="!bench.isModify">{{ bench.benchType }}</label>
               <input *ngIf="bench.isModify" type="text" ngModel name="benchType" [(ngModel)]="bench.benchType">
-              <!-- <mat-form-field *ngIf="bench.isModify" appearance="fill">
-                <mat-label>Bench Type</mat-label>
-                <mat-select [(ngModel)]="bench.benchType" name="benchTye">
-                  <mat-option
-                    *ngFor="let benchtype of benchType"
-                    [value]="benchtype"
-                  >
-                    {{ benchtype }}
-                  </mat-option>
-                </mat-select>
-              </mat-form-field> -->
               <label *ngIf="!bench.isModify">{{ bench.capacity + " Person" }}</label>
               <input *ngIf="bench.isModify" type="number" ngModel name="capacity" [(ngModel)]="bench.capacity"/>
               <label *ngIf="!bench.isModify">{{ bench.price }}</label>
@@ -222,17 +212,6 @@
           <form #table="ngForm" (ngSubmit)="addTable(table)">
             <input type="number" ngModel name="capacity" /> Capacity
             <input type="text" ngModel name="benchType" /> Bench Type
-            <!-- <mat-form-field appearance="fill">
-              <mat-label>Bench Type</mat-label>
-              <mat-select [(ngModel)]="selectedBenchType" name="benchTye">
-                <mat-option
-                  *ngFor="let benchtype of benchType"
-                  [value]="benchtype"
-                >
-                  {{ benchtype }}
-                </mat-option>
-              </mat-select>
-            </mat-form-field> -->
             <input type="number" ngModel name="noOfTable" /> No of Table:
             <input type="number" ngModel name="price" /> Price
             <button mat-raised-button color="primary" type="submit">
@@ -241,6 +220,40 @@
           </form>
         </mat-card-content>
       </mat-card-header>
+    </mat-card>
+    <mat-card>
+      <mat-card-header>
+        <mat-card-title>Recipe</mat-card-title>
+      </mat-card-header>
+      <mat-card-content>
+        <br/>
+          <div class="block1">
+            <label>Recipe Name</label>
+            <label>Price</label>
+          </div>
+          <div *ngFor="let recipe of recipes">
+            <div class="block1">
+
+              <label *ngIf="!recipe.isModify">{{ recipe.recipeName }}</label>
+              <input *ngIf="recipe.isModify" type="text" ngModel name="recipeName" [(ngModel)]="recipe.recipeName">
+
+              <label *ngIf="!recipe.isModify">{{ recipe.price }}</label>
+              <input *ngIf="recipe.isModify" type="text" ngModel name="price" [(ngModel)]="recipe.price">
+
+              <button *ngIf="!recipe.isModify" mat-raised-button color="primary" (click)="onModifyRecipeButton(recipe)">Modify</button>
+              <button *ngIf="recipe.isModify" mat-raised-button color="primary" (click)="onSubmitRecipeButton(recipe)">Submit</button>
+              <button mat-raised-button color="primary" (click)="onDeleteRecipeButton(recipe)">Delete</button>
+            </div>
+          </div>
+          <form #recipe="ngForm" (ngSubmit)="addRecipe(recipe)">
+            <input type="text" ngModel name="recipeName" /> Recipe Name
+            <input type="number" ngModel name="price" /> Price
+
+            <button mat-raised-button color="primary" type="submit">
+              Add Recipe
+            </button>
+          </form>
+      </mat-card-content>
     </mat-card>
   </div>
 </div>

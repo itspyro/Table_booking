@@ -24,7 +24,7 @@ const routes: Routes = [
   {
     path: 'booking/:id',
     component: BookingPageComponent,
-    canActivate: [AuthGuard],
+    canActivate: [AuthGuard]
   },
   {
     path: 'payment',

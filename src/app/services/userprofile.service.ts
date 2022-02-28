@@ -17,7 +17,7 @@ export class UserprofileService {
   restaurantProfile = new Subject<Restaurant>();
   constructor(private http: HttpClient) {}
 
-  getUser(userId:number) {
+  getUser(userId: number) {
     this.http
       .get<{
         httpStatusCode: number;
@@ -46,7 +46,7 @@ export class UserprofileService {
     this.http
       .post(environment.backendUrl + environment.benchCreateEndpoint, data)
       .subscribe((res) => {
-        this.getAllBenches(data.restaurantId)
+        this.getAllBenches(data.restaurantId);
       });
   }
 
@@ -63,34 +63,34 @@ export class UserprofileService {
       });
   }
 
-  deleteBench(id:any){
-    this.http.delete(
-      environment.backendUrl+environment.benchDeleteEndpoint+id
-    ).subscribe((response)=>{
-      console.log(response)
-    })
+  deleteBench(id: any) {
+    this.http
+      .delete(environment.backendUrl + environment.benchDeleteEndpoint + id)
+      .subscribe((response) => {
+        console.log(response);
+      });
   }
 
-  updateRestaurantDetail(data:any){
-    this.http.put(
-      environment.backendUrl+environment.updateRestInfoEndpoint,data
-    ).subscribe((res)=>{
-      console.log(res)
-    })
+  updateRestaurantDetail(data: any) {
+    this.http
+      .put(environment.backendUrl + environment.updateRestInfoEndpoint, data)
+      .subscribe((res) => {
+        console.log(res);
+      });
   }
 
-  updateBenchDetail(data:any){
-    this.http.put(
-      environment.backendUrl+environment.updateBenchInfoEndpoint,data
-    ).subscribe((res)=>{
-      console.log(res)
-    })
+  updateBenchDetail(data: any) {
+    this.http
+      .put(environment.backendUrl + environment.updateBenchInfoEndpoint, data)
+      .subscribe((res) => {
+        console.log(res);
+      });
   }
-  updateUserDetail(data:any){
-    this.http.put(
-      environment.backendUrl+environment.updateUserInfoEndpoint,data
-    ).subscribe((res)=>{
-      console.log(res)
-    })
+  updateUserDetail(data: any) {
+    this.http
+      .put(environment.backendUrl + environment.updateUserInfoEndpoint, data)
+      .subscribe((res) => {
+        console.log(res);
+      });
   }
 }

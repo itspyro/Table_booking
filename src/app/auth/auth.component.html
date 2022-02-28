@@ -141,7 +141,7 @@
                     <input
                       matInput
                       ngModel
-                      name="gstNo"
+                      name="gstIn"
                       required
                       style="color: black"
                     />
@@ -169,7 +169,7 @@
                     <input
                       matInput
                       ngModel
-                      name="addressline1"
+                      name="addressLine1"
                       required
                       style="color: black"
                     />
@@ -181,7 +181,7 @@
                     <input
                       matInput
                       ngModel
-                      name="addressline2"
+                      name="addressLine2"
                       required
                       style="color: black"
                     />
@@ -205,13 +205,13 @@
                     <input
                       matInput
                       ngModel
-                      name="City"
+                      name="city"
                       required
                       style="color: black"
                     />
                   </mat-form-field>
                 </div>
-                <div mat-card-content>
+                <!-- <div mat-card-content>
                   <mat-form-field appearance="fill">
                     <mat-label>No of Table Capacity</mat-label>
                     <input
@@ -221,9 +221,9 @@
                       style="color: black"
                     />
                   </mat-form-field>
-                </div>
+                </div> -->
 
-                <div mat-card-content>
+                <!-- <div mat-card-content>
                   <mat-form-field appearance="fill">
                     <mat-label>Charge Per Table </mat-label>
                     <input
@@ -233,7 +233,7 @@
                       style="color: black"
                     />
                   </mat-form-field>
-                </div>
+                </div> -->
 
                 <div mat-card-content>
                   <mat-form-field appearance="fill">
@@ -243,7 +243,7 @@
                         *ngFor="let cuisine of cuisines"
                         (removed)="remove(cuisine)"
                       >
-                        {{ cuisine.cuisineName }}
+                        {{ cuisine }}
                         <button matChipRemove>
                           <mat-icon>cancel</mat-icon>
                         </button>
@@ -265,25 +265,25 @@
                         *ngFor="let cuisine of filteredCuisines | async"
                         [value]="cuisine"
                       >
-                        {{ cuisine.cuisineName }}
+                        {{ cuisine }}
                       </mat-option>
                     </mat-autocomplete>
                   </mat-form-field>
                 </div>
 
-                <div mat-card-content>
+                <!-- <div mat-card-content>
                   <mat-form-field appearance="fill">
                     <mat-label>Menu Add</mat-label>
                     <input matInput ngModel name="menu" style="color: black" />
                   </mat-form-field>
-                </div>
-                <div mat-card-content>
+                </div> -->
+                <!-- <div mat-card-content>
                   <section class="example-section">
                     <mat-checkbox class="example-margin" name="private" ngModel
                       >Private</mat-checkbox
                     >
                   </section>
-                </div>
+                </div> -->
                 <div mat-card-content>
                   <section class="example-section">
                     <mat-checkbox class="example-margin" name="pureVeg" ngModel

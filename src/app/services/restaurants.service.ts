@@ -9,12 +9,17 @@ import { Review } from './review.model';
 import { AddReview } from './addreview.model';
 import { environment } from '../../environments/environment';
 import { Recipe } from './recipe.model';
+import { Router} from '@angular/router';
 import { AuthService } from './auth.service';
+
 import { Payment } from './payment.model';
 import swal from 'sweetalert';
 
 
 declare var Razorpay:any;
+
+import { MatSnackBar } from '@angular/material/snack-bar';
+
 
 @Injectable({
   providedIn: 'root',
@@ -41,7 +46,11 @@ export class RestaurantService implements OnInit {
   selectedRestaurantReviews = new Subject<Review[]>();
   citiesList = new Subject<string[]>();
 
-  constructor(private http: HttpClient, private authService: AuthService) {}
+  constructor(
+    private http: HttpClient,
+    private authService: AuthService,
+    private _snackbar: MatSnackBar
+  ) {}
 
   ngOnInit(): void {
     this.authService.user.subscribe((user) => {
@@ -100,8 +109,8 @@ export class RestaurantService implements OnInit {
     this.openingTime = openingTime;
   }
 
-  returnTimings() {
-    return { openingTime: this.openingTime, closingTime: this.closingTime };
+  returnTimings(){
+    return {  openingTime:this.openingTime, closingTime:this.closingTime,rest_id:this.restaurantId };
   }
   getCuisines() {
     this.http
@@ -211,10 +220,24 @@ export class RestaurantService implements OnInit {
       });
   }
 
+  addRestaurant(rest: any) {
+    this.http
+      .post<{
+        httpStatusCode: number;
+        responseMessage: string;
+      }>(environment.backendUrl + environment.createRestaurantEndpoint, rest)
+      .subscribe((resData) => {
+        if (resData.httpStatusCode == 200) {
+          this._snackbar.open('Restaurant Created Successfully');
+        }
+      });
+  }
+
   selectCity(city: string) {
     this.selectedCity = city;
     this.getRestaurants();
   }
+
 
   addPayment(data:any) {
     this.payment.amount = data.amount;
@@ -286,5 +309,31 @@ export class RestaurantService implements OnInit {
     this.http.post(environment.backendUrl + '/api/bookings/update-payment', data).subscribe();
   }
   
+
+  addRecipe(data:any){
+    this.http.post(
+      environment.backendUrl+environment.addRecipeEndpoint,data
+    ).subscribe((res)=>{
+      console.log(res)
+      this.getRecipeByRestId(data.restaurantId)
+    })
+  }
+
+  deleteRecipe(recipeId:any){
+    this.http.delete(
+      environment.backendUrl+environment.deleteRecipeEndpoint+recipeId
+    ).subscribe((res)=>{
+      console.log(res)
+    })
+  }
+
+  updateRecipe(data:any){
+    this.http.put(
+      environment.backendUrl+environment.updateRecipeEndpoint,data
+    ).subscribe((res)=>{
+      console.log(res)
+    })
+  }
+
 }
 
