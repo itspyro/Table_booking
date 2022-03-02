@@ -126,7 +126,7 @@ export class RestownerprofileComponent implements OnInit {
       this.table.price === undefined ||
       this.table.noOfBench === undefined
     ) {
-      console.log('Please enter every field');
+      this._snackBar.open("Please enter everyfield",'ok')
     } else {
       this.userservice.addBench(this.table);
     }

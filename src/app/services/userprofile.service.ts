@@ -2,6 +2,7 @@ import { HttpClient, HttpStatusCode } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { environment } from 'environments/environment';
 import { Subject } from 'rxjs';
+import { OrderDetails } from './order-details.model';
 import { Restaurant } from './restaurant.model';
 import { Table } from './table.model';
 import { User } from './user.model';
@@ -15,6 +16,9 @@ export class UserprofileService {
 
   userProfile = new Subject<User>();
   restaurantProfile = new Subject<Restaurant>();
+  private _snackBar: any;
+  orders!: OrderDetails[];
+  orderList = new Subject<OrderDetails[]>();
   constructor(private http: HttpClient) {}
 
   getUser(userId: number) {
@@ -25,7 +29,6 @@ export class UserprofileService {
         users: User;
       }>(environment.backendUrl + environment.userIdEndpoint + userId)
       .subscribe((data) => {
-        console.log(data);
         this.userProfile.next(data.users[0]);
       });
   }
@@ -67,7 +70,6 @@ export class UserprofileService {
     this.http
       .delete(environment.backendUrl + environment.benchDeleteEndpoint + id)
       .subscribe((response) => {
-        console.log(response);
       });
   }
 
@@ -75,7 +77,6 @@ export class UserprofileService {
     this.http
       .put(environment.backendUrl + environment.updateRestInfoEndpoint, data)
       .subscribe((res) => {
-        console.log(res);
       });
   }
 
@@ -83,14 +84,25 @@ export class UserprofileService {
     this.http
       .put(environment.backendUrl + environment.updateBenchInfoEndpoint, data)
       .subscribe((res) => {
-        console.log(res);
       });
   }
   updateUserDetail(data: any) {
     this.http
       .put(environment.backendUrl + environment.updateUserInfoEndpoint, data)
       .subscribe((res) => {
-        console.log(res);
       });
+  }
+
+  getOrderDetail(userId:any){
+    this.http.get<{
+      httpStatusCode: number,
+      responseMessage: string,
+      userBookings: OrderDetails[]
+    }>
+      (environment.backendUrl + '/api/bookings/user/' + userId)
+      .subscribe((res) => {
+        this.orders = res.userBookings;
+        this.orderList.next(this.orders.slice());
+      })
   }
 }
