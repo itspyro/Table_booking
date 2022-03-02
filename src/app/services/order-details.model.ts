@@ -15,5 +15,6 @@ export interface OrderDetails{
         date:string;
         persons:number;
         tableOrderId:number;
+        tablePrice:number;
     };
 }

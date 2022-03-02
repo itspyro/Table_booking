@@ -35,13 +35,22 @@ export class OrdersComponent implements OnInit {
       console.log(this.orders)
     })
   }
-
-  getTotal(index: number): number {
-    let total: number = 0;
-  
+  getTotalFood(index:number){
+    let total:number = 0;
     this.orders[index].foodOrder.forEach((element, index) => {
       total += element.price
     })
+
+    return total;
+  }
+
+  getTotal(index: number): number {
+    let total: number = 0;
+    total+=this.orders[index].tableOrder.tablePrice
+    this.orders[index].foodOrder.forEach((element, index) => {
+      total += element.price
+    })
+
     return total;
   }
 }
