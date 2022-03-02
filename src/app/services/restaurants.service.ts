@@ -19,6 +19,7 @@ import swal from 'sweetalert';
 declare var Razorpay:any;
 
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { OrderDetails, RestOrderDetails } from './order-details.model';
 
 
 @Injectable({
@@ -29,6 +30,7 @@ export class RestaurantService implements OnInit {
   cuisines: Cuisine[] = [];
   menu: Recipe[] = [];
   reviews: Review[] = [];
+  restOrders!:RestOrderDetails[];
   openingTime: string = '';
   closingTime: string = '';
   cities = [];
@@ -40,6 +42,7 @@ export class RestaurantService implements OnInit {
   userId?: number;
 
   restaurantList = new Subject<Restaurant[]>();
+  restOrderList = new Subject<RestOrderDetails[]>();
   cuisineList = new Subject<Cuisine[]>();
   selectedRestaurant = new Subject<RestProfile>();
   selectedRestaurantMenu = new Subject<Recipe[]>();
@@ -309,21 +312,11 @@ export class RestaurantService implements OnInit {
     this.http.post(environment.backendUrl + '/api/bookings/update-payment', data).subscribe();
   }
   
-
   addRecipe(data:any){
     this.http.post(
       environment.backendUrl+environment.addRecipeEndpoint,data
     ).subscribe((res)=>{
-      console.log(res)
       this.getRecipeByRestId(data.restaurantId)
-    })
-  }
-
-  deleteRecipe(recipeId:any){
-    this.http.delete(
-      environment.backendUrl+environment.deleteRecipeEndpoint+recipeId
-    ).subscribe((res)=>{
-      console.log(res)
     })
   }
 
@@ -331,9 +324,32 @@ export class RestaurantService implements OnInit {
     this.http.put(
       environment.backendUrl+environment.updateRecipeEndpoint,data
     ).subscribe((res)=>{
-      console.log(res)
+
     })
   }
 
+  deleteRecipe(recipeId:any){
+    this.http.delete(
+      environment.backendUrl+environment.deleteRecipeEndpoint+recipeId
+    ).subscribe((res)=>{
+
+    })
+  }
+
+  getRestOrderDetails(userId:number,restaurantId:number){
+    this.http.get<{httpStatusCode: number,
+    responseMessage: string,
+    restaurantBookings: RestOrderDetails[]}>(
+      environment.backendUrl+environment.userOrderEndpoint+userId+"/restaurant/"+restaurantId
+    ).subscribe((res)=>{
+      if(res.restaurantBookings===undefined||res.restaurantBookings===null){ 
+      }else{
+        this.restOrders = res.restaurantBookings;
+        this.restOrderList.next(this.restOrders)
+      }
+    })
+  }
+
+  
 }
 

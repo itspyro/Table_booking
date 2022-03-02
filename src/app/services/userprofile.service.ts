@@ -44,12 +44,10 @@ export class UserprofileService {
         this.restaurantProfile.next(data.restaurants[0]);
       });
   }
-
-  addBench(data: any) {
+  updateRestaurantDetail(data: any) {
     this.http
-      .post(environment.backendUrl + environment.benchCreateEndpoint, data)
+      .put(environment.backendUrl + environment.updateRestInfoEndpoint, data)
       .subscribe((res) => {
-        this.getAllBenches(data.restaurantId);
       });
   }
 
@@ -66,6 +64,14 @@ export class UserprofileService {
       });
   }
 
+  addBench(data: any) {
+    this.http
+      .post(environment.backendUrl + environment.benchCreateEndpoint, data)
+      .subscribe((res) => {
+        this.getAllBenches(data.restaurantId);
+      });
+  }
+
   deleteBench(id: any) {
     this.http
       .delete(environment.backendUrl + environment.benchDeleteEndpoint + id)
@@ -73,12 +79,6 @@ export class UserprofileService {
       });
   }
 
-  updateRestaurantDetail(data: any) {
-    this.http
-      .put(environment.backendUrl + environment.updateRestInfoEndpoint, data)
-      .subscribe((res) => {
-      });
-  }
 
   updateBenchDetail(data: any) {
     this.http
@@ -93,16 +93,20 @@ export class UserprofileService {
       });
   }
 
-  getOrderDetail(userId:any){
+  getUserOrderDetail(userId:any){
     this.http.get<{
       httpStatusCode: number,
       responseMessage: string,
       userBookings: OrderDetails[]
     }>
-      (environment.backendUrl + '/api/bookings/user/' + userId)
+      (environment.backendUrl + environment.userOrderEndpoint + userId)
       .subscribe((res) => {
-        this.orders = res.userBookings;
-        this.orderList.next(this.orders.slice());
+        if(res.userBookings===undefined||res.userBookings===null ){
+         
+        }else{
+          this.orders = res.userBookings;
+          this.orderList.next(this.orders.slice());
+        }
       })
   }
 }
