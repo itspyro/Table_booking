@@ -34,6 +34,7 @@
             {{ "₹" + item.recipe.price + " x " + item.quantity }}
           </p>
         </div>
+        <p class="order-total-price">Food Cost: {{ getTotalFood(i) }} ₹</p>
       </mat-card-content>
       <hr class="total" />
       <mat-card-content class="order-card-total">
@@ -42,9 +43,10 @@
         </p>
         <div class="order-total">
           <p class="order-time">
-            <!-- {{ order.tableOrder.date }} at {{ order.tableOrder.arrival }} -->
+            {{ order.tableOrder.date }} at {{ order.tableOrder.arrivalTime }}
           </p>
-          <p class="order-total-price">₹ {{ getTotal(i) }}</p>
+          <p class="order-total-price">Table Cost: {{ order.tableOrder.tablePrice }} ₹</p>
+          <p class="order-total-price">{{ getTotal(i) }} ₹ </p>
         </div>
       </mat-card-content>
       <hr />
