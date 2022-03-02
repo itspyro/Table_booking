@@ -8,6 +8,7 @@ import { OrdersComponent } from './orders/orders.component';
 import { RestownerprofileComponent } from './restownerprofile/restownerprofile.component';
 import { RestprofileComponent } from './restprofile/restprofile.component';
 import { AuthGuard } from './services/auth.guard';
+import { PaymentComponent } from './payment/payment.component';
 
 const routes: Routes = [
   { path: '', component: AboutComponent },
@@ -25,6 +26,11 @@ const routes: Routes = [
     component: BookingPageComponent,
     canActivate: [AuthGuard]
   },
+  {
+    path: 'payment',
+    component: PaymentComponent,
+    canActivate: [AuthGuard],
+  }, 
   { path: '**', redirectTo: '' },
 ];
 
