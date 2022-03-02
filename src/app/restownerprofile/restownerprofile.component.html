@@ -208,15 +208,19 @@
               <button mat-raised-button color="primary" (click)="onDeleteButton(bench)">Delete</button>
             </div>
           </div>
-
+          <hr>
           <form #table="ngForm" (ngSubmit)="addTable(table)">
-            <input type="number" ngModel name="capacity" /> Capacity
-            <input type="text" ngModel name="benchType" /> Bench Type
-            <input type="number" ngModel name="noOfTable" /> No of Table:
-            <input type="number" ngModel name="price" /> Price
+            <div class="block1">
+              Capacity: <input type="number" ngModel name="capacity" /> 
+            Bench Type: <input type="text" ngModel name="benchType" /> 
+            <br>
+            No of Table: <input type="number" ngModel name="noOfTable" /> 
+            Price: <input type="number" ngModel name="price" />
+            <br>
             <button mat-raised-button color="primary" type="submit">
               Add Table
             </button>
+            </div>
           </form>
         </mat-card-content>
       </mat-card-header>
@@ -245,13 +249,16 @@
               <button mat-raised-button color="primary" (click)="onDeleteRecipeButton(recipe)">Delete</button>
             </div>
           </div>
+          <hr>
           <form #recipe="ngForm" (ngSubmit)="addRecipe(recipe)">
-            <input type="text" ngModel name="recipeName" /> Recipe Name
-            <input type="number" ngModel name="price" /> Price
-
-            <button mat-raised-button color="primary" type="submit">
-              Add Recipe
-            </button>
+            <div class="block1">
+              Recipe Name:<input type="text" ngModel name="recipeName" /> 
+              Price: <input type="number" ngModel name="price" /> 
+  
+              <button mat-raised-button color="primary" type="submit">
+                Add Recipe
+              </button>
+            </div>
           </form>
       </mat-card-content>
     </mat-card>
