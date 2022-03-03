@@ -28,6 +28,7 @@ export const environment = {
   addRecipeEndpoint:'/api/recipe/create',
   updateRecipeEndpoint:'/api/recipe/update',
   deleteRecipeEndpoint:'/api/recipe/delete/',
+  userOrderEndpoint:'/api/bookings/user/'
 };
 
 /*

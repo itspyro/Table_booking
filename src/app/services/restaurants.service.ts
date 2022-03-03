@@ -20,6 +20,7 @@ declare var Razorpay:any;
 
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { foodOrder } from './foodOrder.model';
+import { OrderDetails, RestOrderDetails } from './order-details.model';
 
 
 @Injectable({
@@ -30,6 +31,7 @@ export class RestaurantService implements OnInit {
   cuisines: Cuisine[] = [];
   menu: Recipe[] = [];
   reviews: Review[] = [];
+  restOrders!:RestOrderDetails[];
   openingTime: string = '';
   closingTime: string = '';
   cities = [];
@@ -43,6 +45,7 @@ export class RestaurantService implements OnInit {
   userId?: number;
 
   restaurantList = new Subject<Restaurant[]>();
+  restOrderList = new Subject<RestOrderDetails[]>();
   cuisineList = new Subject<Cuisine[]>();
   selectedRestaurant = new Subject<RestProfile>();
   selectedRestaurantMenu = new Subject<Recipe[]>();
@@ -249,14 +252,20 @@ export class RestaurantService implements OnInit {
 
 
   addPayment(data:any) {
-    this.payment.amount = data.amount;
-    this.payment.userId=data.userId;
-    if(this.payment.amount==null){
+    this.payment.payment = data.amount;
+    this.payment.userId = data.userId;
+    console.log(this.payment.userId);
+    this.payment.arrivalTime=23664824742;
+    this.payment.departureTime=34762864373;
+    this.payment.restaurantId=5;
+    this.payment.benchId = 27;
+    
+    if(this.payment.payment==null){
       swal("Payment Failed", "please check the order!", "error");
       return;
     }
     
-    this.http.post<{httpStatusCode:number, responseMessage:string}>(environment.backendUrl + '/api/bookings/payment', this.payment).subscribe({next : (resData) => {
+    this.http.post<{httpStatusCode:number, responseMessage:string}>(environment.backendUrl + '/api/bookings/create', this.payment).subscribe({next : (resData) => {
           var obj = JSON.parse(resData.responseMessage);
           if(resData.httpStatusCode===200){
             let options = {
@@ -265,7 +274,7 @@ export class RestaurantService implements OnInit {
               currency:obj.currency,
               name:"OPEN TABLE",
               description:"CheckOut",
-              image:"/Users/harshit.jain/Table_booking/src/assets/images/Project_logo.png",
+              image:"/Users/aakriti.sahrawat/Table_booking/src/assets/images/Project_logo.png",
               order_id:obj.id,
               handler: (response)=> {
                 
@@ -309,30 +318,21 @@ export class RestaurantService implements OnInit {
     console.log(response.razorpay_payment_id);
     console.log(response.razorpay_order_id);
     console.log(response.razorpay_signature);
-                swal("Good job!", "You clicked the button!", "success");
+                
                const data = {
-                  payment_id:response.razorpay_payment_id,
-                  order_id:response.razorpay_order_id,
+                  paymentId:response.razorpay_payment_id,
+                  orderId:response.razorpay_order_id,
                   status:"paid",
                 };
     this.http.post(environment.backendUrl + '/api/bookings/update-payment', data).subscribe();
+    swal("Good job!", "You clicked the button!", "success");
   }
   
-
   addRecipe(data:any){
     this.http.post(
       environment.backendUrl+environment.addRecipeEndpoint,data
     ).subscribe((res)=>{
-      console.log(res)
       this.getRecipeByRestId(data.restaurantId)
-    })
-  }
-
-  deleteRecipe(recipeId:any){
-    this.http.delete(
-      environment.backendUrl+environment.deleteRecipeEndpoint+recipeId
-    ).subscribe((res)=>{
-      console.log(res)
     })
   }
 
@@ -340,9 +340,32 @@ export class RestaurantService implements OnInit {
     this.http.put(
       environment.backendUrl+environment.updateRecipeEndpoint,data
     ).subscribe((res)=>{
-      console.log(res)
+
     })
   }
 
+  deleteRecipe(recipeId:any){
+    this.http.delete(
+      environment.backendUrl+environment.deleteRecipeEndpoint+recipeId
+    ).subscribe((res)=>{
+
+    })
+  }
+
+  getRestOrderDetails(userId:number,restaurantId:number){
+    this.http.get<{httpStatusCode: number,
+    responseMessage: string,
+    restaurantBookings: RestOrderDetails[]}>(
+      environment.backendUrl+environment.userOrderEndpoint+userId+"/restaurant/"+restaurantId
+    ).subscribe((res)=>{
+      if(res.restaurantBookings===undefined||res.restaurantBookings===null){ 
+      }else{
+        this.restOrders = res.restaurantBookings;
+        this.restOrderList.next(this.restOrders)
+      }
+    })
+  }
+
+  
 }
 

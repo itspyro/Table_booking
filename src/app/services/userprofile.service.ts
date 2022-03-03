@@ -2,6 +2,7 @@ import { HttpClient, HttpStatusCode } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { environment } from 'environments/environment';
 import { Subject } from 'rxjs';
+import { OrderDetails } from './order-details.model';
 import { Restaurant } from './restaurant.model';
 import { Table } from './table.model';
 import { User } from './user.model';
@@ -15,6 +16,9 @@ export class UserprofileService {
 
   userProfile = new Subject<User>();
   restaurantProfile = new Subject<Restaurant>();
+  private _snackBar: any;
+  orders!: OrderDetails[];
+  orderList = new Subject<OrderDetails[]>();
   constructor(private http: HttpClient) {}
 
   getUser(userId: number) {
@@ -25,7 +29,6 @@ export class UserprofileService {
         users: User;
       }>(environment.backendUrl + environment.userIdEndpoint + userId)
       .subscribe((data) => {
-        console.log(data);
         this.userProfile.next(data.users[0]);
       });
   }
@@ -41,12 +44,10 @@ export class UserprofileService {
         this.restaurantProfile.next(data.restaurants[0]);
       });
   }
-
-  addBench(data: any) {
+  updateRestaurantDetail(data: any) {
     this.http
-      .post(environment.backendUrl + environment.benchCreateEndpoint, data)
+      .put(environment.backendUrl + environment.updateRestInfoEndpoint, data)
       .subscribe((res) => {
-        this.getAllBenches(data.restaurantId);
       });
   }
 
@@ -63,34 +64,49 @@ export class UserprofileService {
       });
   }
 
+  addBench(data: any) {
+    this.http
+      .post(environment.backendUrl + environment.benchCreateEndpoint, data)
+      .subscribe((res) => {
+        this.getAllBenches(data.restaurantId);
+      });
+  }
+
   deleteBench(id: any) {
     this.http
       .delete(environment.backendUrl + environment.benchDeleteEndpoint + id)
       .subscribe((response) => {
-        console.log(response);
       });
   }
 
-  updateRestaurantDetail(data: any) {
-    this.http
-      .put(environment.backendUrl + environment.updateRestInfoEndpoint, data)
-      .subscribe((res) => {
-        console.log(res);
-      });
-  }
 
   updateBenchDetail(data: any) {
     this.http
       .put(environment.backendUrl + environment.updateBenchInfoEndpoint, data)
       .subscribe((res) => {
-        console.log(res);
       });
   }
   updateUserDetail(data: any) {
     this.http
       .put(environment.backendUrl + environment.updateUserInfoEndpoint, data)
       .subscribe((res) => {
-        console.log(res);
       });
+  }
+
+  getUserOrderDetail(userId:any){
+    this.http.get<{
+      httpStatusCode: number,
+      responseMessage: string,
+      userBookings: OrderDetails[]
+    }>
+      (environment.backendUrl + environment.userOrderEndpoint + userId)
+      .subscribe((res) => {
+        if(res.userBookings===undefined||res.userBookings===null ){
+         
+        }else{
+          this.orders = res.userBookings;
+          this.orderList.next(this.orders.slice());
+        }
+      })
   }
 }

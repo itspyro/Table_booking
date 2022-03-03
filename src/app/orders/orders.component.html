@@ -1,20 +1,26 @@
 <div class="orders-container">
-  <div *ngFor="let order of orders; let i = index">
-    <mat-card class="order-card">
-      <mat-card-header class="order-card-header">
+  <div *ngIf="isOwner">See restaurnat orders <input type="checkbox" [(ngModel)]="isOwnerCheckbox"></div>
+  <div *ngIf="!checkIsOwner()">
+
+  <div *ngFor="let order of orders  ; let i = index">
+    <mat-card class="order-card" >
+      <mat-card-header class="order-card-header" >
         <div
           class="restaurant-image"
           mat-card-avatar
           [ngStyle]="{
-            'background-image': 'url(' + order.restaurant.image + ')'
+            'background-image': 'url(' +  + ')'
           }"
         ></div>
         <div class="order-card-text">
           <mat-card-title class="order-card-restaurant">{{
-            order.restaurant.name
+            order.restaurant.restaurantName
           }}</mat-card-title>
           <mat-card-subtitle class="order-card-location">{{
-            order.restaurant.address
+            order.restaurant.address.addressLine1
+          }}</mat-card-subtitle>
+          <mat-card-subtitle class="order-card-location">{{
+            order.restaurant.address.city
           }}</mat-card-subtitle>
         </div>
       </mat-card-header>
@@ -22,15 +28,16 @@
       <mat-card-content class="order-card-items">
         <div
           class="order-food-items"
-          *ngFor="let item of order.foodOrder.items"
+          *ngFor="let item of order.foodOrder"
         >
           <p class="order-food-item">
-            {{ item.title }}
+            {{ item.recipe.recipeName }}
           </p>
           <p class="order-food-item-quantity">
-            {{ "₹" + item.price + " x " + item.quantity }}
+            {{ "₹" + item.recipe.price + " x " + item.quantity }}
           </p>
         </div>
+        <p class="order-total-price">Food Cost: {{ getTotalFoodCost(i,order) }} ₹</p>
       </mat-card-content>
       <hr class="total" />
       <mat-card-content class="order-card-total">
@@ -39,17 +46,62 @@
         </p>
         <div class="order-total">
           <p class="order-time">
-            {{ order.tableOrder.date }} at {{ order.tableOrder.arrival }}
+            {{ order.tableOrder.date }} at {{ order.tableOrder.arrivalTime }}
           </p>
-          <p class="order-total-price">₹ {{ getTotal(i) }}</p>
+          <p class="order-total-price">Table Cost: {{ order.tableOrder.tablePrice }} ₹</p>
+          <p class="order-total-price">{{ getTotal(i,order) }} ₹ </p>
         </div>
       </mat-card-content>
       <hr />
       <div class="order-card-footer">
-        <button class="order-cancel-button" mat-raised-button>
-          Cancel Booking
-        </button>
+        
       </div>
     </mat-card>
+  </div>
+</div>
+<div *ngIf="checkIsOwner()">
+  <div *ngFor="let order of restOrders  ; let i = index">
+    <mat-card class="order-card" >
+      <mat-card-header class="order-card-header" >
+        <div class="order-card-text">
+          <mat-card-title class="order-card-restaurant">{{
+            order.user.userName
+          }}</mat-card-title>
+        </div>
+      </mat-card-header>
+      <!-- <hr /> -->
+      <mat-card-content class="order-card-items">
+        <div
+          class="order-food-items"
+          *ngFor="let item of order.foodOrder"
+        >
+          <p class="order-food-item">
+            {{ item.recipe.recipeName }}
+          </p>
+          <p class="order-food-item-quantity">
+            {{ "₹" + item.recipe.price + " x " + item.quantity }}
+          </p>
+        </div>
+        <p class="order-total-price">Food Cost: {{ getTotalFoodCost(i,order) }} ₹</p>
+      </mat-card-content>
+      <hr class="total" />
+      <mat-card-content class="order-card-total">
+        <p class="order-table-details">
+          Table for {{ order.tableOrder.persons }}
+        </p>
+        <div class="order-total">
+          <p class="order-time">
+            {{ order.tableOrder.date }} at {{ order.tableOrder.arrivalTime }}
+          </p>
+          <p class="order-total-price">Table Cost: {{ order.tableOrder.tablePrice }} ₹</p>
+          <p class="order-total-price">{{ getTotal(i,order) }} ₹ </p>
+        </div>
+      </mat-card-content>
+      <hr />
+      <div class="order-card-footer">
+        
+      </div>
+    </mat-card>
+  </div>
   </div>
 </div>

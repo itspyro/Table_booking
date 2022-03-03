@@ -1,4 +1,12 @@
+import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
+import { MatSnackBar } from '@angular/material/snack-bar';
+import { AuthService } from 'app/services/auth.service';
+import { OrderDetails, RestOrderDetails } from 'app/services/order-details.model';
+import { RestaurantService } from 'app/services/restaurants.service';
+import { User } from 'app/services/user.model';
+import { UserprofileService } from 'app/services/userprofile.service';
+import { environment } from 'environments/environment';
 
 @Component({
   selector: 'app-orders',
@@ -6,112 +14,75 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./orders.component.css'],
 })
 export class OrdersComponent implements OnInit {
-  orders = [
-    {
-      id: 1,
-      restaurant: {
-        id: 1,
-        name: 'The Oven',
-        address: 'Aliganj, Lucknow',
-        image:
-          'https://img.rawpixel.com/s3fs-private/rawpixel_images/website_content/lr/upwk61661577-wikimedia-image-kowapeej.jpg?w=1300&dpr=1&fit=default&crop=default&q=80&vib=3&con=3&usm=15&bg=F4F4F3&auto=format&ixlib=js-2.2.1&s=e77babb39ae491920ebbbbbd3242d288',
-      },
-      foodOrder: {
-        id: 1,
-        items: [
-          {
-            title: 'Fried Chicken Momo',
-            price: 89,
-            quantity: 2,
-          },
-          {
-            title: 'Fried Paneer Momo',
-            price: 89,
-            quantity: 1,
-          },
-        ],
-      },
-      tableOrder: {
-        id: 1,
-        persons: 2,
-        arrival: '10:00 AM',
-        date: '14 Feb 2022',
-      },
-    },
-    {
-      id: 1,
-      restaurant: {
-        id: 1,
-        name: 'PizzaHut',
-        address: 'WTP, Jaipur',
-        image: 'https://thumbs.dreamstime.com/z/pizza-hut-logo-22575794.jpg',
-      },
-      foodOrder: {
-        id: 1,
-        items: [
-          {
-            title: 'Pizza - Margherita, Large',
-            price: 589,
-            quantity: 1,
-          },
-          {
-            title: 'Coca Cola',
-            price: 40,
-            quantity: 1,
-          },
-        ],
-      },
-      tableOrder: {
-        id: 1,
-        persons: 2,
-        arrival: '5:00 PM',
-        date: '10 Feb 2022',
-      },
-    },
-    {
-      id: 1,
-      restaurant: {
-        id: 1,
-        name: 'McDonalds',
-        address: 'Silvercity, Dehradun',
-        image:
-          'https://cdn.pixabay.com/photo/2016/04/20/00/41/mcdonalds-1340199_1280.jpg',
-      },
-      foodOrder: {
-        id: 1,
-        items: [
-          {
-            title: 'Big Mac',
-            price: 199,
-            quantity: 4,
-          },
-          {
-            title: 'Fries',
-            price: 89,
-            quantity: 4,
-          },
-        ],
-      },
-      tableOrder: {
-        id: 1,
-        persons: 4,
-        arrival: '6:00 PM',
-        date: '12 Feb 2022',
-      },
-    },
-  ];
+  isOwner: boolean = false;
+  isOwnerCheckbox: boolean = false;
 
-  constructor() {}
+  orders: OrderDetails[] = [];
+  restOrders: RestOrderDetails[] = [];
+  userId!: any;
+  userRestId!: any;
+  constructor(private http: HttpClient, private auth: AuthService,
+    private _snackBar: MatSnackBar,
+    private userService: UserprofileService,
+    private restService:RestaurantService) { }
 
-  ngOnInit(): void {}
 
-  getTotal(index: number): number {
-    const order = this.orders[index];
+  ngOnInit(): void {
+    this.auth.user.subscribe((res) => {
+      this.userId = res?.userId;
+    })
+    this.userService.getUser(this.userId);
+    this.userService.userProfile.subscribe((res) => {
+      if (res.roleName === "owner") {
+        this.isOwner = true;
+        this.userService.getRestaurantByUser(this.userId);
+        this.userService.restaurantProfile.subscribe((res) => {
+          this.userRestId = res.restaurantId;
+          this.restService.getRestOrderDetails(this.userId,this.userRestId);
+          this.restService.restOrderList.subscribe((res)=>{
+            this.restOrders = res;
+          })
+        })
+      } else {
+        this.isOwner = false
+      }
+    })
+
+    this.userService.getUserOrderDetail(this.userId);
+    this.userService.orderList.subscribe((res) => {
+      if (res === undefined || res === null) {
+        this._snackBar.open('You Do not have any order', 'okay')
+      } else {
+        this.orders = res
+      }
+    })
+
+    this.restService.getRestOrderDetails
+  }
+
+  getTotalFoodCost(i: number,data:any) {
     let total: number = 0;
-    order.foodOrder.items.map((item) => {
-      total += item.price * item.quantity;
-    });
-
+    data.foodOrder.forEach((element, index) => {
+      total += element.price
+    })
     return total;
   }
+
+  getTotal(i: number,data:any): number {
+    let total: number = 0;
+    total += data.tableOrder.tablePrice
+    data.foodOrder.forEach((element, index) => {
+      total += element.price
+    })
+    return total;
+  }
+
+  checkIsOwner(){
+    if(this.isOwner==true&&this.isOwnerCheckbox==true){
+      return true;
+    }else{
+      return false;
+    }
+  }
+
 }
