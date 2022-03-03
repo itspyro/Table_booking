@@ -26,20 +26,13 @@
 
         <mat-slide-toggle name="private" ngModel>Private table required ?</mat-slide-toggle>
 
-        <mat-accordion>
-            <mat-expansion-panel>
-              <mat-expansion-panel-header>
-                <mat-panel-title>
-                  Click here to order your food in advance
-                </mat-panel-title>
-              </mat-expansion-panel-header>
-              <div>
-                  <app-menu></app-menu>
-              </div>
-            </mat-expansion-panel>
-          </mat-accordion> 
         
+        <app-menu></app-menu>
 
+        <h3>Amount</h3>
+        <p>{{amount}}</p>
+        <!-- <input ngModel matInput type="number" name="amount" min="1" value={{amount}}> -->
+    
         <button mat-button type="submit" [disabled]="!bookForm.valid">Submit</button>
     
     </form>

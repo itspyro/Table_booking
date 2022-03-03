@@ -19,6 +19,7 @@ import swal from 'sweetalert';
 declare var Razorpay:any;
 
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { foodOrder } from './foodOrder.model';
 import { OrderDetails, RestOrderDetails } from './order-details.model';
 
 
@@ -35,6 +36,8 @@ export class RestaurantService implements OnInit {
   closingTime: string = '';
   cities = [];
   selectedCity: string = 'New Delhi';
+  orderedItems:foodOrder[]=[];
+
 
   restaurantId!: number;
   review = new AddReview();
@@ -104,6 +107,12 @@ export class RestaurantService implements OnInit {
         console.log(resData);
         this.restaurantId = resData.restaurant.restaurantId;
         this.selectedRestaurant.next(resData.restaurant);
+        let menuItems=resData.restaurant.recipeDto;
+        if(this.orderedItems.length==0){
+          for(let i in menuItems){
+            this.orderedItems.push({ ...menuItems[i],quantity:0 });
+          }
+        }
       });
   }
 
@@ -243,13 +252,16 @@ export class RestaurantService implements OnInit {
 
 
   addPayment(data:any) {
-    this.payment.payment = data.amount;
+    this.payment.payment = data.payment;
     this.payment.userId = data.userId;
-    console.log(this.payment.userId);
-    this.payment.arrivalTime=23664824742;
-    this.payment.departureTime=34762864373;
-    this.payment.restaurantId=5;
-    this.payment.benchId = 27;
+    //console.log(this.payment.userId);
+    this.payment.arrivalTime=data.arrivalTime;
+    this.payment.departureTime=data.departureTime;
+    this.payment.restaurantId=data.restaurantId;
+    this.payment.benchId = data.benchId;
+    this.payment.foodOrder=data.foodOrder;
+
+    console.log(this.payment);
     
     if(this.payment.payment==null){
       swal("Payment Failed", "please check the order!", "error");
@@ -265,7 +277,7 @@ export class RestaurantService implements OnInit {
               currency:obj.currency,
               name:"OPEN TABLE",
               description:"CheckOut",
-              image:"/Users/harshit.jain/Table_booking/src/assets/images/Project_logo.png",
+              image:"/Users/aakriti.sahrawat/Table_booking/src/assets/images/Project_logo.png",
               order_id:obj.id,
               handler: (response)=> {
                 

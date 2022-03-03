@@ -79,6 +79,7 @@ export class RestprofileComponent implements OnInit {
     this.restaurantService.selectedRestaurant.subscribe((restaurant) => {
       this.restaurant = restaurant;
       this.isLoading = !this.restaurant;
+      console.log(this.restaurant);
       this.restaurantService.setTimings(restaurant.openingTime,restaurant.closingTime);
     });
   }

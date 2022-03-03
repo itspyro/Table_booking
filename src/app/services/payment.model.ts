@@ -7,4 +7,10 @@ export class Payment{
     restaurantId!:number;
     arrivalTime!:number;
     departureTime!:number;
+    foodOrder!:{
+        recipies:{
+            recipeId:number,
+            quantity:number
+        }[]
+    }
 }
