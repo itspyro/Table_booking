@@ -24,8 +24,9 @@ export class BookingPageComponent implements OnInit {
   allotedBench:Bench[]=[];
   bookingId:number=0;
   userId?:number=0;
-  //menuItems:Recipe[]=[];
   orderedItems:foodOrder[]=[];
+  isAuthenticated:boolean=false;
+  amount:number=120;
 
   constructor(private restService:RestaurantService, private bookService:BookingService,private authservice:AuthService) { }
 
@@ -59,6 +60,7 @@ export class BookingPageComponent implements OnInit {
     // });
 
     this.authservice.user.subscribe((data)=>{
+      this.isAuthenticated = !!data;
       this.userId=data?.userId;
     })
   }
@@ -68,9 +70,23 @@ export class BookingPageComponent implements OnInit {
     benches.sort(function (a: Bench, b:Bench) {
         return ((a.capacity>b.capacity)?1:((a.capacity<b.capacity)?-1:0));
     });
-    console.log(benches);
-    console.log(benches[0]);
+    // console.log(benches);
+    // console.log(benches[0]);
+    this.allotedBench=[];
     this.allotedBench.push(benches[0]);
+  }
+
+  paymentStarted(data:any) : void{
+    this.restService.addPayment({...data, userId:this.userId});
+  }
+
+  calculateCost(foodOrder,bench){
+      let total=0;
+      total+=(bench.price);
+      for(let i in foodOrder){
+        total+=(foodOrder[i].quantity*foodOrder[i].price);
+      }
+      return total;
   }
 
   onSubmit(ele){
@@ -125,47 +141,59 @@ export class BookingPageComponent implements OnInit {
 
         console.log('Alloted Table is: ',this.allotedBench);
 
-        
+        let amount=this.calculateCost(this.orderedItems,this.allotedBench[0]);
+        this.amount=amount;
+        console.log(amount);
+        var foodOrderItem:{recipeId:number,quantity:number}[]=[];
+
+        for(let i in this.orderedItems){
+          if(this.orderedItems[i].quantity!=0){
+            foodOrderItem.push({
+              recipeId:this.orderedItems[i].recipeId,
+              quantity:this.orderedItems[i].quantity
+            });
+          }
+          
+        }
 
         var bookTableRequest={
-          noOfPersons:this.numOfPersons,
           arrivalTime:arrivalTime,
           departureTime:departureTime,
           restaurantId:this.rest_id,
-          payment:this.allotedBench[0].price,
-          paymentId:"1",
+          payment:amount,
           userId:1,
-          benchId:this.allotedBench[0].benchId
+          benchId:this.allotedBench[0].benchId,
+          foodOrder:{
+            recipies:foodOrderItem
+          }
         };
 
+        console.log(bookTableRequest);
         //call the book table api
 
-        this.bookService.bookTable(bookTableRequest);
-        this.bookService.bookingResponse.subscribe((response)=>{
-          if(response.httpStatusCode==200){
-            this.bookingId=parseInt(response.responseMessage);
+        this.paymentStarted(bookTableRequest);
 
-            // calling foodOrderApi
+        // this.restService.bookTable(bookTableRequest);
+        // this.bookService.bookingResponse.subscribe((response)=>{
+        //   if(response.httpStatusCode==200){
+        //     this.bookingId=parseInt(response.responseMessage);
 
-            // var foodOrderResponse={
-            //   bookingId:this.bookingId,
+        //     // calling foodOrderApi
 
-            // };
-          }
-          else{
-            console.log("Booking Failed !!!");
-          }
-        });
+        //     // var foodOrderResponse={
+        //     //   bookingId:this.bookingId,
+
+        //     // };
+        //   }
+        //   else{
+        //     console.log("Booking Failed !!!");
+        //   }
+        // });
         
       }
 
 
-    })
-
-    
-
-
-    
+    }) 
 
   }
 

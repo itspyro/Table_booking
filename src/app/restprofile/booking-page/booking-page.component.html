@@ -28,8 +28,11 @@
 
         
         <app-menu></app-menu>
-            
 
+        <h3>Amount</h3>
+        <p>{{amount}}</p>
+        <!-- <input ngModel matInput type="number" name="amount" min="1" value={{amount}}> -->
+    
         <button mat-button type="submit" [disabled]="!bookForm.valid">Submit</button>
     
     </form>
