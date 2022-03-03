@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { RestaurantService } from 'app/services/restaurants.service';
 import { BookingService } from 'app/services/booking.service';
 import { NgxMaterialTimepickerTheme } from 'ngx-material-timepicker';
+import { AuthService } from 'app/services/auth.service';
 
 @Component({
   selector: 'app-payment',
@@ -13,7 +14,10 @@ export class PaymentComponent implements OnInit {
   closingTime:string="";
   isAuthenticated?: boolean;
   userId?: number;
-  constructor(private restService:RestaurantService) { }
+  constructor(
+    private restService: RestaurantService,
+    private authService: AuthService,
+  ) {}
 
   darkTheme: NgxMaterialTimepickerTheme = {
     container: {
@@ -32,6 +36,10 @@ export class PaymentComponent implements OnInit {
 
 
   ngOnInit(): void {
+    this.authService.user.subscribe((user) => {
+      this.isAuthenticated = !!user;
+      this.userId = user?.userId;
+    });
     var obj:{openingTime:string,closingTime:string}=this.restService.returnTimings();
     this.openingTime=obj.openingTime;
     this.closingTime=obj.closingTime;

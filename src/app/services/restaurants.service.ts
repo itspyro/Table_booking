@@ -240,14 +240,20 @@ export class RestaurantService implements OnInit {
 
 
   addPayment(data:any) {
-    this.payment.amount = data.amount;
-    this.payment.userId=data.userId;
-    if(this.payment.amount==null){
+    this.payment.payment = data.amount;
+    this.payment.userId = data.userId;
+    console.log(this.payment.userId);
+    this.payment.arrivalTime=23664824742;
+    this.payment.departureTime=34762864373;
+    this.payment.restaurantId=5;
+    this.payment.benchId = 27;
+    
+    if(this.payment.payment==null){
       swal("Payment Failed", "please check the order!", "error");
       return;
     }
     
-    this.http.post<{httpStatusCode:number, responseMessage:string}>(environment.backendUrl + '/api/bookings/payment', this.payment).subscribe({next : (resData) => {
+    this.http.post<{httpStatusCode:number, responseMessage:string}>(environment.backendUrl + '/api/bookings/create', this.payment).subscribe({next : (resData) => {
           var obj = JSON.parse(resData.responseMessage);
           if(resData.httpStatusCode===200){
             let options = {
@@ -300,13 +306,14 @@ export class RestaurantService implements OnInit {
     console.log(response.razorpay_payment_id);
     console.log(response.razorpay_order_id);
     console.log(response.razorpay_signature);
-                swal("Good job!", "You clicked the button!", "success");
+                
                const data = {
-                  payment_id:response.razorpay_payment_id,
-                  order_id:response.razorpay_order_id,
+                  paymentId:response.razorpay_payment_id,
+                  orderId:response.razorpay_order_id,
                   status:"paid",
                 };
     this.http.post(environment.backendUrl + '/api/bookings/update-payment', data).subscribe();
+    swal("Good job!", "You clicked the button!", "success");
   }
   
 
