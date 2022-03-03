@@ -1,5 +1,7 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { Recipe } from 'app/services/recipe.model';
+import { RestaurantService } from 'app/services/restaurants.service'; 
+import { foodOrder } from 'app/services/foodOrder.model';
 
 @Component({
   selector: 'app-menu',
@@ -7,17 +9,56 @@ import { Recipe } from 'app/services/recipe.model';
   styleUrls: ['./menu.component.css'],
 })
 export class MenuComponent implements OnInit {
-  @Input() menuItems?: Recipe[];
+  orderedItems:foodOrder[]=[];
+  
 
-  constructor() {}
+  constructor(public restService:RestaurantService) {}
 
-  ngOnInit(): void {}
-
-  onAdd(index: number) {
-    // ...
+  ngOnInit(): void {
+    this.orderedItems=this.restService.orderedItems;
+    console.log("Ordered Item : ",this.restService.orderedItems);
   }
 
-  onRemove(index: number) {
-    // ...
+  onAdd(id: number) {
+    this.restService.orderedItems.find((item,ind)=>{
+      if(item.recipeId===id){
+        this.restService.orderedItems[ind].quantity++;
+      }
+      //console.log("Ordered Item : ",this.restService.orderedItems[ind]);
+    })
+    
+  }
+
+  // getQuantity(id:number){
+  //   let ans=0;
+  //   this.restService.orderedItems.find((item)=>{
+  //     if(item.recipeId==id){
+  //       ans=item.quantity;
+  //     }
+  //   })
+  //   return ans;
+  // }
+
+  onRemove(id: number) {
+    this.restService.orderedItems.find((item,ind)=>{
+      if(item.recipeId===id){
+        var temp=this.restService.orderedItems[ind].quantity;
+        this.restService.orderedItems[ind].quantity=Math.max(0,temp-1);
+      }
+      //console.log("Ordered Item : ",this.restService.orderedItems[ind]);
+    })
+  }
+
+  onChange(quantity:string,recipeId:number){
+    //console.log("RecipeId :",recipeId);
+    this.restService.orderedItems.find((item,ind)=>{
+      if(item.recipeId===recipeId){
+        this.restService.orderedItems[ind].quantity=parseInt(quantity);
+        //console.log("Ordered Item : ",this.restService.orderedItems[ind]);
+      }
+     
+    })
+
+    
   }
 }

@@ -33,6 +33,7 @@ import { NgxMaterialTimepickerModule } from 'ngx-material-timepicker';
 import { AddReviewComponent } from './reviews/add-review/add-review.component';
 import { BookingPageComponent } from './restprofile/booking-page/booking-page.component';
 import { AuthInterceptorService } from './services/auth-interceptor.service';
+import { PaymentComponent } from './payment/payment.component';
 
 @NgModule({
   declarations: [
@@ -55,6 +56,7 @@ import { AuthInterceptorService } from './services/auth-interceptor.service';
     UserprofileComponent,
     AddReviewComponent,
     BookingPageComponent,
+    PaymentComponent,
   ],
   imports: [
     BrowserModule,

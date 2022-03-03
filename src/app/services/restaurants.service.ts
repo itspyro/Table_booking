@@ -11,7 +11,16 @@ import { environment } from '../../environments/environment';
 import { Recipe } from './recipe.model';
 import { Router} from '@angular/router';
 import { AuthService } from './auth.service';
+
+import { Payment } from './payment.model';
+import swal from 'sweetalert';
+
+
+declare var Razorpay:any;
+
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { foodOrder } from './foodOrder.model';
+
 
 @Injectable({
   providedIn: 'root',
@@ -25,9 +34,12 @@ export class RestaurantService implements OnInit {
   closingTime: string = '';
   cities = [];
   selectedCity: string = 'New Delhi';
+  orderedItems:foodOrder[]=[];
+
 
   restaurantId!: number;
   review = new AddReview();
+  payment = new Payment();
   userId?: number;
 
   restaurantList = new Subject<Restaurant[]>();
@@ -87,10 +99,17 @@ export class RestaurantService implements OnInit {
         httpStatusCode: number;
         responseMessage: string;
         restaurant: RestProfile;
-      }>(environment.backendUrl + environment.restaurantIdEndpoint + id + '/')
+      }>(environment.backendUrl + environment.restaurantIdEndpoint + id)
       .subscribe((resData) => {
+        console.log(resData);
         this.restaurantId = resData.restaurant.restaurantId;
         this.selectedRestaurant.next(resData.restaurant);
+        let menuItems=resData.restaurant.recipeDto;
+        if(this.orderedItems.length==0){
+          for(let i in menuItems){
+            this.orderedItems.push({ ...menuItems[i],quantity:0 });
+          }
+        }
       });
   }
 
@@ -228,6 +247,78 @@ export class RestaurantService implements OnInit {
     this.getRestaurants();
   }
 
+
+  addPayment(data:any) {
+    this.payment.amount = data.amount;
+    this.payment.userId=data.userId;
+    if(this.payment.amount==null){
+      swal("Payment Failed", "please check the order!", "error");
+      return;
+    }
+    
+    this.http.post<{httpStatusCode:number, responseMessage:string}>(environment.backendUrl + '/api/bookings/payment', this.payment).subscribe({next : (resData) => {
+          var obj = JSON.parse(resData.responseMessage);
+          if(resData.httpStatusCode===200){
+            let options = {
+              key:"rzp_test_LecrG02AfeAeEm",
+              amount:obj.amount,
+              currency:obj.currency,
+              name:"OPEN TABLE",
+              description:"CheckOut",
+              image:"/Users/harshit.jain/Table_booking/src/assets/images/Project_logo.png",
+              order_id:obj.id,
+              handler: (response)=> {
+                
+                this.updatePayment(response);
+                
+              },
+              prefill: {
+                  "name": "",
+                  "email": "",
+                  "contact": ""
+              },
+              notes: {
+                  "address": "Order Booking"
+              },
+              theme: {
+                  "color": "#A6EA12"
+              }
+            }
+            let rzp = new Razorpay(options);
+            rzp.on('payment.failed', function (response){
+              console.log(response.error.code);
+              console.log(response.error.description);
+              console.log(response.error.source);
+              console.log(response.error.step);
+              console.log(response.error.reason);
+              console.log(response.error.metadata.order_id);
+              console.log(response.error.metadata.payment_id);
+              swal("Payment Failed", "oops payment failed!", "error");
+            });
+            rzp.open();
+          }
+
+      }
+    });
+
+    
+    
+  }
+
+  updatePayment(response){
+    console.log(response.razorpay_payment_id);
+    console.log(response.razorpay_order_id);
+    console.log(response.razorpay_signature);
+                swal("Good job!", "You clicked the button!", "success");
+               const data = {
+                  payment_id:response.razorpay_payment_id,
+                  order_id:response.razorpay_order_id,
+                  status:"paid",
+                };
+    this.http.post(environment.backendUrl + '/api/bookings/update-payment', data).subscribe();
+  }
+  
+
   addRecipe(data:any){
     this.http.post(
       environment.backendUrl+environment.addRecipeEndpoint,data
@@ -252,4 +343,6 @@ export class RestaurantService implements OnInit {
       console.log(res)
     })
   }
+
 }
+

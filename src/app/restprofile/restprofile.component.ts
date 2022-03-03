@@ -72,6 +72,7 @@ export class RestprofileComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
+    console.log(+atob(this.route.snapshot.params['id']));
     this.restaurantService.getRestaurantsById(
       +atob(this.route.snapshot.params['id'])
     );

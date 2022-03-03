@@ -1,5 +1,4 @@
-
-  <div class="menu" *ngFor="let menuItem of menuItems; let i = index">
+  <div class="menu" *ngFor="let menuItem of orderedItems; let i = index">
     <mat-card class="menu-card">
       <mat-card-header class="menu-card-header">
         <mat-card-title class="menu-item-title">
@@ -12,20 +11,20 @@
       <div class="end">
         <div class="quantity">
           <mat-icon>restaurant</mat-icon>
-          <div>0</div>
+          <input value={{menuItem.quantity}} type="number" min="0" #quant (change)="onChange(quant.value,menuItem.recipeId)" />
         </div>
         <div>
           <button
             class="item-button item-button-add"
             mat-raised-button
-            (click)="onAdd(i)"
+            (click)="onAdd(menuItem.recipeId)"
           >
             +
           </button>
           <button
             class="item-button item-button-remove"
             mat-raised-button
-            (click)="onRemove(i)"
+            (click)="onRemove(menuItem.recipeId)"
           >
             -
           </button>

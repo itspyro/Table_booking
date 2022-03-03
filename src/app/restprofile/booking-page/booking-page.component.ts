@@ -4,6 +4,8 @@ import { BookingService } from 'app/services/booking.service';
 import { NgxMaterialTimepickerTheme } from 'ngx-material-timepicker';
 import {Bench} from 'app/services/bench.model';
 import { AuthService } from 'app/services/auth.service';
+import { foodOrder } from 'app/services/foodOrder.model';
+import { Recipe } from 'app/services/recipe.model';
 
 
 @Component({
@@ -22,6 +24,8 @@ export class BookingPageComponent implements OnInit {
   allotedBench:Bench[]=[];
   bookingId:number=0;
   userId?:number=0;
+  //menuItems:Recipe[]=[];
+  orderedItems:foodOrder[]=[];
 
   constructor(private restService:RestaurantService, private bookService:BookingService,private authservice:AuthService) { }
 
@@ -47,6 +51,13 @@ export class BookingPageComponent implements OnInit {
     this.closingTime=obj.closingTime;
     this.rest_id=obj.rest_id;
     this.curr_date=new Date();
+    this.orderedItems=this.restService.orderedItems;
+
+    // this.restService.selectedRestaurant.subscribe((restaurant) => {
+    //   this.menuItems = restaurant.recipeDto;
+    //   console.log(this.menuItems);
+    // });
+
     this.authservice.user.subscribe((data)=>{
       this.userId=data?.userId;
     })
@@ -65,6 +76,7 @@ export class BookingPageComponent implements OnInit {
   onSubmit(ele){
     console.log(ele);
     var date=ele.date;
+
     var year=date.getFullYear();
     var month=date.getMonth();
     var day=date.getDate();
@@ -112,6 +124,8 @@ export class BookingPageComponent implements OnInit {
       else{
 
         console.log('Alloted Table is: ',this.allotedBench);
+
+        
 
         var bookTableRequest={
           noOfPersons:this.numOfPersons,
