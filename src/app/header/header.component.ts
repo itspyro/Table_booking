@@ -24,7 +24,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
   @Input() curr_url: string = '';
 
   showLocation() {
-    return !(this.curr_url == '/' || this.curr_url == '/auth');
+    return !(this.curr_url == '/' || this.curr_url == '/auth'||this.curr_url.startsWith("/booking"));
   }
 
   onNavigateHome() {

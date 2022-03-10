@@ -6,6 +6,9 @@ import {Bench} from 'app/services/bench.model';
 import { AuthService } from 'app/services/auth.service';
 import { foodOrder } from 'app/services/foodOrder.model';
 import { Recipe } from 'app/services/recipe.model';
+import { MatSnackBar } from '@angular/material/snack-bar';
+import { F } from '@angular/cdk/keycodes';
+import { ActivatedRoute} from '@angular/router';
 
 
 @Component({
@@ -26,9 +29,12 @@ export class BookingPageComponent implements OnInit {
   userId?:number=0;
   orderedItems:foodOrder[]=[];
   isAuthenticated:boolean=false;
-  amount:number=120;
+  amount:number=0;
+  validate:boolean=true;
 
-  constructor(private restService:RestaurantService, private bookService:BookingService,private authservice:AuthService) { }
+
+  constructor(private restService:RestaurantService, private bookService:BookingService,private authservice:AuthService,private _snackBar: MatSnackBar,
+    private route: ActivatedRoute) { }
 
   darkTheme: NgxMaterialTimepickerTheme = {
     container: {
@@ -50,9 +56,10 @@ export class BookingPageComponent implements OnInit {
     var obj:{openingTime:string,closingTime:string,rest_id:number}=this.restService.returnTimings();
     this.openingTime=obj.openingTime;
     this.closingTime=obj.closingTime;
-    this.rest_id=obj.rest_id;
+    this.rest_id=+atob(this.route.snapshot.params['id']);
     this.curr_date=new Date();
     this.orderedItems=this.restService.orderedItems;
+    this.amount=this.restService.total_amt;
 
     // this.restService.selectedRestaurant.subscribe((restaurant) => {
     //   this.menuItems = restaurant.recipeDto;
@@ -80,13 +87,50 @@ export class BookingPageComponent implements OnInit {
     this.restService.addPayment({...data, userId:this.userId});
   }
 
-  calculateCost(foodOrder,bench){
-      let total=0;
-      total+=(bench.price);
-      for(let i in foodOrder){
-        total+=(foodOrder[i].quantity*foodOrder[i].price);
-      }
-      return total;
+  calculateCost(bench){
+      // let total=0;
+      // total+=(bench.price);
+      // for(let i in foodOrder){
+      //   total+=(foodOrder[i].quantity*foodOrder[i].price);
+      // }
+      // return total;
+      this.restService.total_amt+=bench.price;
+  }
+
+  checkValidTime(arrTime:string,deptTime:string){
+    //console.log(arrTime,deptTime);
+    var in_time=arrTime.split(' ');
+    var out_time=deptTime.split(' ');
+
+    var in_min=parseInt(in_time[0].split(':')[1]);
+    var out_min=parseInt(out_time[0].split(':')[1]);
+    var in_hr=parseInt(in_time[0].split(':')[0]);
+    var out_hr=parseInt(out_time[0].split(':')[0]);
+
+    if(in_time[1]=="PM"&&in_hr!=12||in_time[1]=="AM"&&in_hr==12){
+      in_hr+=12;
+    }
+    if(out_time[1]=="PM"&&out_hr!=12||out_time[1]=="AM"&&out_hr==12){
+      out_hr+=12;
+    }
+
+    var arrivalTime=new Date();
+    var departureTime=new Date();
+    arrivalTime.setHours(in_hr);
+    arrivalTime.setMinutes(in_min);
+    departureTime.setHours(out_hr);
+    departureTime.setMinutes(out_min);
+
+    let compare=(arrivalTime.getTime()>=departureTime.getTime());
+    //console.log(arrivalTime.getTime(),departureTime.getTime());
+    if(compare){
+      this._snackBar.open('Departure Time should be greater than Arrival Time', 'okay');
+      this.validate=false;
+    }
+    else{
+      this.validate=true;
+    }
+
   }
 
   onSubmit(ele){
@@ -105,10 +149,10 @@ export class BookingPageComponent implements OnInit {
     var in_hr=parseInt(in_time[0].split(':')[0]);
     var out_hr=parseInt(out_time[0].split(':')[0]);
 
-    if(in_time[1]=="PM"){
+    if(in_time[1]=="PM"&&in_hr!=12||in_time[1]=="AM"&&in_hr==12){
       in_hr+=12;
     }
-    if(out_time[1]=="PM"){
+    if(out_time[1]=="PM"&&out_hr!=12||out_time[1]=="AM"&&out_hr==12){
       out_hr+=12;
     }
 
@@ -141,9 +185,9 @@ export class BookingPageComponent implements OnInit {
 
         console.log('Alloted Table is: ',this.allotedBench);
 
-        let amount=this.calculateCost(this.orderedItems,this.allotedBench[0]);
-        this.amount=amount;
-        console.log(amount);
+        this.calculateCost(this.allotedBench[0]);
+        this.amount=this.restService.total_amt;
+        console.log(this.restService.total_amt);
         var foodOrderItem:{recipeId:number,quantity:number}[]=[];
 
         for(let i in this.orderedItems){
@@ -160,7 +204,7 @@ export class BookingPageComponent implements OnInit {
           arrivalTime:arrivalTime,
           departureTime:departureTime,
           restaurantId:this.rest_id,
-          payment:amount,
+          payment:this.amount,
           userId:1,
           benchId:this.allotedBench[0].benchId,
           foodOrder:{

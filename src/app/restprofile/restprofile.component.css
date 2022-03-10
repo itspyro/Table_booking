@@ -22,7 +22,7 @@
     height: 50%;
 }
 .photo{
-    background: url('assets/images/screenshot-2022-02-03-at-2.11.27-am.png');
+    /* background: url('assets/images/screenshot-2022-02-03-at-2.11.27-am.png'); */
     height: 100%;
     background-size:cover;
     background-position: center;
