@@ -23,6 +23,7 @@ export class MenuComponent implements OnInit {
     this.restService.orderedItems.find((item,ind)=>{
       if(item.recipeId===id){
         this.restService.orderedItems[ind].quantity++;
+        this.restService.total_amt+=this.restService.orderedItems[ind].price;
       }
       //console.log("Ordered Item : ",this.restService.orderedItems[ind]);
     })
@@ -44,6 +45,9 @@ export class MenuComponent implements OnInit {
       if(item.recipeId===id){
         var temp=this.restService.orderedItems[ind].quantity;
         this.restService.orderedItems[ind].quantity=Math.max(0,temp-1);
+        if(temp-1>0){
+          this.restService.total_amt-=this.restService.orderedItems[ind].price;
+        }
       }
       //console.log("Ordered Item : ",this.restService.orderedItems[ind]);
     })
@@ -53,7 +57,9 @@ export class MenuComponent implements OnInit {
     //console.log("RecipeId :",recipeId);
     this.restService.orderedItems.find((item,ind)=>{
       if(item.recipeId===recipeId){
+        const temp=this.restService.orderedItems[ind].quantity;
         this.restService.orderedItems[ind].quantity=parseInt(quantity);
+        this.restService.total_amt+=(this.restService.orderedItems[ind].quantity-temp)*(this.restService.orderedItems[ind].price);
         //console.log("Ordered Item : ",this.restService.orderedItems[ind]);
       }
      

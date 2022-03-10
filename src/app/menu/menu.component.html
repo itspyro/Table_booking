@@ -15,19 +15,22 @@
         </div>
         <div>
           <button
-            class="item-button item-button-add"
+            class="item-button item-button-add" type="button"
             mat-raised-button
             (click)="onAdd(menuItem.recipeId)"
           >
             +
           </button>
           <button
-            class="item-button item-button-remove"
+            class="item-button item-button-remove" type="button"
             mat-raised-button
             (click)="onRemove(menuItem.recipeId)"
           >
             -
           </button>
+        </div>
+        <div class="quantity">
+          <p style="margin: 0;font-size: 1.1vw;">{{"₹" +menuItem.price*menuItem.quantity}}</p>
         </div>
         
       </div>

@@ -15,7 +15,8 @@
     flex-direction: column;
     margin: 4%;
     padding: 2%;
-    background-color: rgba(255, 255, 255,0.5);
+    background-color: rgba(0,0,0,0.5);
+    color: white;
 }
 
 mat-form-field{
@@ -28,10 +29,10 @@ mat-form-field{
     display: flex;
     height: 3.5vw;
     background-color:transparent;
-    border-bottom: 0.1vw black solid;
+    border-bottom: 0.1vw white solid;
 }
 .timePick:hover{
-    border-bottom: 0.17vw black solid;
+    border-bottom: 0.17vw white solid;
 }
 .timePick input{
     width: 90%;
@@ -44,7 +45,30 @@ mat-form-field{
 
 button {
     background-color: chartreuse;
-    color: antiquewhite;
+    color: black;
+    cursor:not-allowed;
     height:auto;
     width: 150px;
 }
+.amount{
+    font-size: 1.2vw;
+}
+mat-icon.white{
+    color: white;
+}
+.white{
+    color: white;
+}
+
+mat-label{
+    color: rgb(194, 193, 193);
+}
+::ng-deep.ng-star-inserted {
+    color: white;
+}
+::placeholder{
+    color: rgb(194, 193, 193);
+}
+/* ::ng-deep.mat-form-field-underline,::ng-deep.mat-form-field-ripple{
+    background-color: white;
+} */

@@ -11,6 +11,7 @@ import { environment } from '../../environments/environment';
 import { Recipe } from './recipe.model';
 import { Router} from '@angular/router';
 import { AuthService } from './auth.service';
+import { NgZone } from '@angular/core';
 
 import { Payment } from './payment.model';
 import swal from 'sweetalert';
@@ -37,6 +38,7 @@ export class RestaurantService implements OnInit {
   cities = [];
   selectedCity: string = 'New Delhi';
   orderedItems:foodOrder[]=[];
+  total_amt=0;
 
 
   restaurantId!: number;
@@ -55,7 +57,9 @@ export class RestaurantService implements OnInit {
   constructor(
     private http: HttpClient,
     private authService: AuthService,
-    private _snackbar: MatSnackBar
+    private _snackbar: MatSnackBar,
+    private router: Router,
+    private ngZone:NgZone
   ) {}
 
   ngOnInit(): void {
@@ -328,7 +332,22 @@ export class RestaurantService implements OnInit {
                   status:"paid",
                 };
     this.http.post(environment.backendUrl + '/api/bookings/update-payment', data).subscribe();
-    swal("Good job!", "You clicked the button!", "success");
+    // swal("Good job!", "You clicked the button!", "success");
+    // this.router.navigate(['/api/restaurant/all']);
+
+    swal({
+        title: "Good Job!",
+        text:"You booked a table!",
+        type: "success"
+    }).then(()=>{
+      this.ngZone.run(()=>{
+        for(let i in this.orderedItems){
+          this.orderedItems[i].quantity=0;
+        }
+        this.router.navigate(['/']);
+      })
+    });
+    
   }
   
   addRecipe(data:any){

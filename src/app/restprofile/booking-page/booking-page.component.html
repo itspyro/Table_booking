@@ -14,13 +14,21 @@
         
         <div class="timePick">
             <input [ngxTimepicker]="toggleTimepicker" name="arrivalTime" ngModel [disableClick]="true" placeholder="Select Arrival Time" readonly required>
-            <ngx-material-timepicker-toggle [for]="toggleTimepicker"></ngx-material-timepicker-toggle>
+            <ngx-material-timepicker-toggle [for]="toggleTimepicker">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 30 30" width="30px" height="30px" ngxMaterialTimepickerToggleIcon>
+                    <path fill="#fff" d="M15,3C8.373,3,3,8.373,3,15c0,6.627,5.373,12,12,12s12-5.373,12-12C27,8.373,21.627,3,15,3z M16,16H7.995 C7.445,16,7,15.555,7,15.005v-0.011C7,14.445,7.445,14,7.995,14H14V5.995C14,5.445,14.445,5,14.995,5h0.011 C15.555,5,16,5.445,16,5.995V16z"/>
+                </svg>
+            </ngx-material-timepicker-toggle>
             <ngx-material-timepicker #toggleTimepicker [theme]="darkTheme"></ngx-material-timepicker>
         </div>
 
-        <div class="timePick">
-            <input [ngxTimepicker]="toggleTimepicker1" name="departureTime" ngModel [disableClick]="true" placeholder="Select Departure Times" readonly required>
-            <ngx-material-timepicker-toggle [for]="toggleTimepicker1"></ngx-material-timepicker-toggle>
+        <div class="timePick" [style.borderColor]="!validate?'red':'white'">
+            <input [ngxTimepicker]="toggleTimepicker1" name="departureTime" ngModel [disableClick]="true" placeholder="Select Departure Times" (ngModelChange)="checkValidTime(bookForm.value.arrivalTime,$event)" readonly required>
+            <ngx-material-timepicker-toggle [for]="toggleTimepicker1">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 30 30" width="30px" height="30px" ngxMaterialTimepickerToggleIcon>
+                    <path fill="#fff" d="M15,3C8.373,3,3,8.373,3,15c0,6.627,5.373,12,12,12s12-5.373,12-12C27,8.373,21.627,3,15,3z M16,16H7.995 C7.445,16,7,15.555,7,15.005v-0.011C7,14.445,7.445,14,7.995,14H14V5.995C14,5.445,14.445,5,14.995,5h0.011 C15.555,5,16,5.445,16,5.995V16z"/>
+                </svg>
+            </ngx-material-timepicker-toggle>
             <ngx-material-timepicker #toggleTimepicker1 [theme]="darkTheme"></ngx-material-timepicker>
         </div>
 
@@ -29,11 +37,13 @@
         
         <app-menu></app-menu>
 
-        <h3>Amount</h3>
-        <p>{{amount}}</p>
+        <div class="amount">
+            <p>Amount : ₹ {{amount}}</p>
+        </div>
+        
         <!-- <input ngModel matInput type="number" name="amount" min="1" value={{amount}}> -->
     
-        <button mat-button type="submit" [disabled]="!bookForm.valid">Submit</button>
+        <button mat-button type="submit" [disabled]="!bookForm.valid||!validate" [style.cursor]="!bookForm.valid&&!validate?'pointer':'not-allowed'">Checkout</button>
     
     </form>
     
