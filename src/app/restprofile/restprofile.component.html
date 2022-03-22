@@ -3,7 +3,7 @@
 </div>
 
 <div class="rest_profile" *ngIf="!isLoading">
-  <div class="gallery container-fluid">
+  <!-- <div class="gallery container-fluid">
     <div class="row row1">
       <div class="col-sm-8 photo" style="background: url('assets/images/Indian Accent.jpeg');background-size:cover; background-position: center; background-repeat: no-repeat;"></div>
       <div class="col-sm-4">
@@ -17,7 +17,43 @@
         </div>
       </div>
     </div>
-  </div>
+  </div> -->
+
+  <!-- <div class="gallery">
+    <img src={{this.photos[0]}} alt="photo" style="height: 100%; width: 70%;"/>
+  </div> -->
+
+  <!-- <ngb-carousel *ngIf="!!photos">
+    <ng-template ngbSlide *ngFor="let photo of photos">
+      <div class="picsum-img-wrapper">
+        <img src={{photo}}>
+      </div>
+    </ng-template>
+  </ngb-carousel> -->
+
+<carousel [interval]="myInterval" [(activeSlide)]="activeSlideIndex"  >
+<slide *ngFor="let photo of photos; let index=index">
+<img [src]="photo" alt="image slide" style="display: block; height: 40vw; width: 90vw;">
+
+</slide>
+</carousel>
+
+  <!-- <div ng-app="mycarousel" ng-controller="divdynamic">
+
+    <div id="dynamiccontentcarousel" class="carousel slide" data-ride="carousel" data-interval="2000">
+
+        <ol class="carousel-indicators">
+            <li data-target="#dynamiccontentcarousel" *ngFor="let photo of photos; let i=index" [ngClass]="{active : i==active}" (click)="active=i"></li>
+        </ol>
+
+        <div class="carousel-inner" role="listbox">
+            <div class="item" *ngFor="let photo of photos; let i=index"[ngClass]="{active : i==active}">
+                <img src="{{photo}}" alt=" carousel {{i}}" />
+            </div>
+        </div>
+    </div>
+ -->
+
 
   <div class="detail">
     <div class="left">
@@ -71,9 +107,6 @@
         <button mat-raised-button (click)="openAddReview()">
           Add Review <mat-icon>post_add</mat-icon>
         </button>
-        <button mat-raised-button>
-          Directions <mat-icon>directions</mat-icon>
-        </button>
       </div>
     </div>
   </div>
@@ -106,13 +139,13 @@
       >
         <mat-icon>restaurant_menu</mat-icon>Menu
       </a>
-      <a
+      <!-- <a
         mat-tab-link
         (click)="activeLink = 'Photos'"
         [active]="activeLink == 'Photos'"
       >
         <mat-icon>collections</mat-icon>Photos
-      </a>
+      </a> -->
     </nav>
     <mat-tab-nav-panel #tabPanel>
       <app-rest-overview

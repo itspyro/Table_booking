@@ -9,7 +9,8 @@ import { Recipe } from 'app/services/recipe.model';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { F } from '@angular/cdk/keycodes';
 import { ActivatedRoute} from '@angular/router';
-
+import { NgZone } from '@angular/core';
+import swal from 'sweetalert';
 
 @Component({
   selector: 'app-booking-page',
@@ -34,7 +35,8 @@ export class BookingPageComponent implements OnInit {
 
 
   constructor(private restService:RestaurantService, private bookService:BookingService,private authservice:AuthService,private _snackBar: MatSnackBar,
-    private route: ActivatedRoute) { }
+    private route: ActivatedRoute,
+    private ngZone:NgZone) { }
 
   darkTheme: NgxMaterialTimepickerTheme = {
     container: {
@@ -95,6 +97,7 @@ export class BookingPageComponent implements OnInit {
       // }
       // return total;
       this.restService.total_amt+=bench.price;
+
   }
 
   checkValidTime(arrTime:string,deptTime:string){
@@ -179,43 +182,55 @@ export class BookingPageComponent implements OnInit {
       this.getSuitableTable(this.benches,this.numOfPersons);
 
       if(this.allotedBench.length==0){
-        console.log('Table not available !!!');
+        this._snackBar.open('Table not available !!!',"okay");
       }
       else{
 
         console.log('Alloted Table is: ',this.allotedBench);
 
         this.calculateCost(this.allotedBench[0]);
-        this.amount=this.restService.total_amt;
-        console.log(this.restService.total_amt);
-        var foodOrderItem:{recipeId:number,quantity:number}[]=[];
-
-        for(let i in this.orderedItems){
-          if(this.orderedItems[i].quantity!=0){
-            foodOrderItem.push({
-              recipeId:this.orderedItems[i].recipeId,
-              quantity:this.orderedItems[i].quantity
-            });
-          }
-          
-        }
-
-        var bookTableRequest={
-          arrivalTime:arrivalTime,
-          departureTime:departureTime,
-          restaurantId:this.rest_id,
-          payment:this.amount,
-          userId:1,
-          benchId:this.allotedBench[0].benchId,
-          foodOrder:{
-            recipies:foodOrderItem
-          }
-        };
-
-        console.log(bookTableRequest);
-        //call the book table api
-
-        this.paymentStarted(bookTableRequest);
+        
+        swal({
+            title: "Order Breakup",
+            text:"FoodOrder Cost = "+this.amount+"\nTable Cost = "+this.allotedBench[0].price,
+            type: "success"
+        }).then(()=>{
+          this.ngZone.run(()=>{
+            this.amount=this.restService.total_amt;
+            console.log(this.restService.total_amt);
+            
+            
+            var foodOrderItem:{recipeId:number,quantity:number}[]=[];
+    
+            for(let i in this.orderedItems){
+              if(this.orderedItems[i].quantity!=0){
+                foodOrderItem.push({
+                  recipeId:this.orderedItems[i].recipeId,
+                  quantity:this.orderedItems[i].quantity
+                });
+              }
+              
+            }
+    
+            var bookTableRequest={
+              arrivalTime:arrivalTime,
+              departureTime:departureTime,
+              restaurantId:this.rest_id,
+              payment:this.amount,
+              userId:1,
+              benchId:this.allotedBench[0].benchId,
+              foodOrder:{
+                recipies:foodOrderItem
+              }
+            };
+    
+            console.log(bookTableRequest);
+            //call the book table api
+            
+            this.paymentStarted(bookTableRequest);
+          })
+        });
+        
 
         // this.restService.bookTable(bookTableRequest);
         // this.bookService.bookingResponse.subscribe((response)=>{

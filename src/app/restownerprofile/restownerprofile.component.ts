@@ -1,4 +1,5 @@
 import { AfterViewInit, Component, OnInit } from '@angular/core';
+import { HttpClient, HttpStatusCode } from '@angular/common/http';
 import { User } from 'app/services/user.model';
 import { Restaurant } from 'app/services/restaurant.model';
 
@@ -11,6 +12,8 @@ import { AuthService } from 'app/services/auth.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Recipe } from 'app/services/recipe.model';
 import { RestaurantService } from 'app/services/restaurants.service';
+import { environment } from '../../environments/environment';
+
 
 @Component({
   selector: 'app-restownerprofile',
@@ -25,6 +28,7 @@ export class RestownerprofileComponent implements OnInit {
   authUser?: AuthUser;
   userId: any;
   isModifyUser: boolean = false;
+  selectedFile?:File=undefined;
 
   user: User = {
     roleName: '',
@@ -61,7 +65,8 @@ export class RestownerprofileComponent implements OnInit {
   constructor(private userservice: UserprofileService,
               private restService: RestaurantService,
               private authservice:AuthService,
-              private _snackBar: MatSnackBar) { }
+              private _snackBar: MatSnackBar,
+              private http:HttpClient) { }
 
   ngOnInit(): void {
     this.authservice.user.subscribe((res) => {
@@ -96,9 +101,16 @@ export class RestownerprofileComponent implements OnInit {
     this.restaurant.userId = this.user.userId;
     this.userservice.updateRestaurantDetail(this.restaurant);
   }
+   manage(){
+    
+    this.checkIsOwner();
+    if(this.isOwner)
+      this.isOwnerCheckbox=!this.isOwnerCheckbox;
+      
+   }
 
   checkIsOwner() {
-    if (this.user.roleName == 'owner' && this.isOwnerCheckbox == true) {
+    if (this.user.roleName == 'owner') {
       this.isOwner = true;
     } else if (this.isOwnerCheckbox == true) {
       this._snackBar.open('You are not a owner', 'okay');
@@ -131,6 +143,32 @@ export class RestownerprofileComponent implements OnInit {
       this.userservice.addBench(this.table);
     }
     data.reset();
+  }
+
+  onUpload(){
+    
+     const fd=new FormData();
+
+     fd.append('file',this.selectedFile!,this.selectedFile!.name)
+
+     this.http.post<{httpStatusCode:number,responseMessage:string}>(environment.backendUrl+environment.photoUpload,fd).subscribe((data)=>{
+      console.log(data); 
+      if(data.httpStatusCode==200){
+         const uploadPath=data.responseMessage;
+         let saveRequest={
+              photoUrl:uploadPath,
+              restaurantId:this.restaurant.restaurantId
+          };
+         this.http.post<{httpStatusCode:number,responseMessage:string}>(environment.backendUrl+environment.photoSaveToDb,saveRequest).subscribe((data1)=>{
+          console.log(data1);
+        })
+       }
+     })
+  }
+
+  onFileUpload(event){
+    console.log(event);
+    this.selectedFile=<File>event.target.files[0];
   }
 
   onDeleteButton(data: any) {

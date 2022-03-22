@@ -13,6 +13,14 @@
     margin: 2% 2% 0% 2%;
     padding: 2%;
 }
+.carousel-inner > .item > img,
+  .carousel-inner > .item > a > img {
+    width: 70%;
+    margin: auto;
+  }
+  .carousel-inner .item{
+    float:left;
+  }
 .row1{
     height: 100%;
     box-shadow: 0.2vw 0.2vw 0.5vw rgb(88, 111, 64);
@@ -91,7 +99,7 @@
 }
 .buttons{
     display: flex;
-    justify-content: space-between;
+    justify-content: space-evenly;
 }
 .buttons button{
     background-color: rgb(222, 235, 210);

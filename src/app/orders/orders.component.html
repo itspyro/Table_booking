@@ -1,5 +1,5 @@
 <div class="orders-container">
-  <div *ngIf="isOwner">See restaurnat orders <input type="checkbox" [(ngModel)]="isOwnerCheckbox"></div>
+  <div *ngIf="isOwner"><button type="button" mat-raised-button (click)="manage()">{{isOwnerCheckbox?"See your orders":"See restaurant orders"}} </button></div>
   <div *ngIf="!checkIsOwner()">
 
   <div *ngFor="let order of orders  ; let i = index">
