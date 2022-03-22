@@ -28,7 +28,10 @@ export const environment = {
   addRecipeEndpoint:'/api/recipe/create',
   updateRecipeEndpoint:'/api/recipe/update',
   deleteRecipeEndpoint:'/api/recipe/delete/',
-  userOrderEndpoint:'/api/bookings/user/'
+  userOrderEndpoint:'/api/bookings/user/',
+  photoUpload:'/api/photos/upload',
+  photoSaveToDb:'/api/photos/create',
+  restaurantPhotos:'/api/photos/restaurant'
 };
 
 /*

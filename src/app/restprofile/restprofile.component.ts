@@ -18,6 +18,16 @@ export class RestprofileComponent implements OnInit {
   id: number = 0;
   restaurant?: RestProfile;
   isLoading: boolean = true;
+  photos:string[]=[];
+  active:number=0;
+
+myInterval = 1500;
+activeSlideIndex = 0;
+slides: {image: string; text?: string}[] = [
+{image: 'assets/images/nature/3.jpg'},
+{image: 'assets/images/nature/2.jpg'},
+{image: 'assets/images/nature/1.jpg'}
+];
 
   week_days = [
     'Sunday',
@@ -82,6 +92,21 @@ export class RestprofileComponent implements OnInit {
       console.log(this.restaurant);
       this.restaurantService.setTimings(restaurant.openingTime,restaurant.closingTime);
     });
+
+    this.restaurantService.getPhotosByRestaurantId( +atob(this.route.snapshot.params['id'])).subscribe((photoData)=>{
+      this.photos=[];
+      photoData.photos.map((photo)=>{
+        this.photos.push(photo.photoUrl);
+      })
+    })
+
+  }
+
+  decreaseActive(){
+    this.active--;
+  }
+  increaseActive(){
+    this.active++;
   }
 
   isOpen() {

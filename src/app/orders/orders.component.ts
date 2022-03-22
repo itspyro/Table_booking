@@ -60,6 +60,11 @@ export class OrdersComponent implements OnInit {
     this.restService.getRestOrderDetails
   }
 
+  manage(){
+    this.checkIsOwner();
+    this.isOwnerCheckbox=!this.isOwnerCheckbox;
+   }
+
   getTotalFoodCost(i: number,data:any) {
     let total: number = 0;
     data.foodOrder.forEach((element, index) => {

@@ -28,14 +28,8 @@ export class AddReviewComponent implements OnInit {
   }
 
   onSubmitReview(data: any) {
-    if (
-      data.rating === '' ||
-      data.review === '' ||
-      data.rating === undefined ||
-      data.review === undefined
-    ) {
-      this._snackBar.open('Please enter every field', 'Okay');
-    } else if (this.isAuthenticated) {
+    
+    if (this.isAuthenticated) {
       this.restService.addReview({ ...data, userId: this.userId });
     } else {
       this.router.navigate(['/auth']);

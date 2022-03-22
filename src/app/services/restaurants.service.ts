@@ -120,6 +120,19 @@ export class RestaurantService implements OnInit {
       });
   }
 
+  getPhotosByRestaurantId(id:number){
+    return this.http.get<{
+      httpStatusCode:number;
+      responseMessage:string;
+      photos:
+      {
+        photoId:number;
+        photoUrl:string;
+      }[]
+    }>(environment.backendUrl+environment.restaurantPhotos+'/'+id);
+    
+  }
+
   setTimings(openingTime: string, closingTime: string) {
     this.closingTime = closingTime;
     this.openingTime = openingTime;

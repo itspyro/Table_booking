@@ -58,14 +58,15 @@
             value="{{ user.userPhoneNumber }}"
           />
         </div>
-        <mat-checkbox [(ngModel)]="isOwnerCheckbox" (change)="checkIsOwner()"
+        <!-- <mat-checkbox [(ngModel)]="isOwnerCheckbox" (change)="checkIsOwner()"
           >Manage Restaurant</mat-checkbox
-        >
+        > -->
+        <button mat-raised-button (click)="manage()">{{isOwnerCheckbox?"Hide Restaurant":"Manage Restaurant"}}</button>
       </mat-card-content>
     </mat-card>
   </div>
 
-  <div class="owner-profile" *ngIf="isOwner">
+  <div class="owner-profile" *ngIf="isOwnerCheckbox">
     <!-- please remove ! -->
     <div class="rest-info">
       <mat-card>
@@ -179,6 +180,11 @@
               [(ngModel)]="restaurant.description"
               value="{{ restaurant.description }}"
             ></textarea>
+          </div>
+          <div class="block">
+            <label>Upload Image</label>
+            <input type="file" (change)="onFileUpload($event)" />
+            <button type="button" mat-raised-button (click)="onUpload()">Upload</button>
           </div>
         </mat-card-content>
       </mat-card>

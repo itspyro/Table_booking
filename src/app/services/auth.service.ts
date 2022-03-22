@@ -43,10 +43,10 @@ export class AuthService {
   }
 
   private handleAuthentication(token: string, userId: number) {
-    const expirationDate = new Date(new Date().getTime() + 900000);
+    const expirationDate = new Date(new Date().getTime() + 3600000);
     const user = new AuthUser(token, userId, expirationDate);
     this.user.next(user);
-    this.autoLogout(900000);
+    this.autoLogout(3600000);
     sessionStorage.setItem('userData', JSON.stringify(user));
   }
 

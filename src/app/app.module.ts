@@ -35,6 +35,8 @@ import { BookingPageComponent } from './restprofile/booking-page/booking-page.co
 import { AuthInterceptorService } from './services/auth-interceptor.service';
 import { PaymentComponent } from './payment/payment.component';
 
+import {CarouselModule} from 'ngx-bootstrap/carousel';
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -73,6 +75,7 @@ import { PaymentComponent } from './payment/payment.component';
     MatAutocompleteModule,
     NgxMaterialTimepickerModule,
     MatNativeDateModule,
+    CarouselModule
   ],
 
   providers: [
